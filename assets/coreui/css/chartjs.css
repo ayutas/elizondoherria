@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+/*!* CoreUI Plugins - Chart.js for CoreUI 3
+* @version vv2.0.0-beta.0
+* @link https://coreui.io
+* Copyright (c) 2019 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license/plugins/chart.js)*/
+
+.chartjs-tooltip {
+    position: absolute;
+    z-index: 1021;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding: .25rem .5rem;
+    color: #fff;
+    pointer-events: none;
+    background: rgba(0, 0, 0, .7);
+    opacity: 0;
+    transition: all .25s ease;
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    border-radius: .25rem
+}
+
+.chartjs-tooltip .tooltip-header {
+    margin-bottom: .5rem
+}
+
+.chartjs-tooltip .tooltip-header-item {
+    font-size: .765625rem;
+    font-weight: 700
+}
+
+.chartjs-tooltip .tooltip-body-item {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: .765625rem;
+    white-space: nowrap
+}
+
+.chartjs-tooltip .tooltip-body-item-color {
+    display: inline-block;
+    width: .875rem;
+    height: .875rem;
+    margin-right: .875rem
+}
+
+.chartjs-tooltip .tooltip-body-item-value {
+    padding-left: 1rem;
+    margin-left: auto;
+    font-weight: 700
+}
+
+.chartjs-render-monitor {
+    animation-name: chartjs-render-animation;
+    animation-duration: 0.001s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    animation-play-state: running;
+}
+
+.chartjs-size-monitor,
+.chartjs-size-monitor-expand,
+.chartjs-size-monitor-shrink {
+    position: absolute;
+    direction: ltr;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+    visibility: hidden;
+    z-index: -1;
+}

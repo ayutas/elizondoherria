@@ -1,0 +1,16 @@
+.c-app {
+    --primary: #11549E;
+    --secondary: #A7CE39;
+    --success: #2eb85c;
+    --info: #39f;
+    --warning: #f9b115;
+    --danger: #e55353;
+    --light: #F5F5F5;
+    --dark: #C1C1C1;
+    color: #4c4f54;
+    background-color: #F5F5F5;
+    --color: #4c4f54;
+}
+
+
+/*# sourceMappingURL=app.css.map */
