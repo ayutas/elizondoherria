@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="fade-in">
                     <!-- titulo -->
-                    <h1>Clientes</h1>
+                    <h1>Cliente</h1>
                     <div clas="row">
                         <div class="container mt-4">
                         <?php if(session()->get('success')): ?>
@@ -20,14 +20,14 @@
                         </div>
                     <?php endif; ?> 
             
-                    <form class="" action="<?= $action ?>" method="post">
+                    <form class="" method="post">
                         <div class="form-row">
                             <div class="col-md-4">                        
                                 <!-- Campo Nombre -->
                                 <div class="form-group">
                                     <label class="medium mb-1" for="nombre">Nombre</label>
                                     <input class="form-control py-2" id="nombre" name="nombre" type="text"
-                                        placeholder="Introduce descripción" value="<?php if(isset($data[0]))
+                                        placeholder="Introduce nombre" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Nombre;
                                         }  
@@ -42,7 +42,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="apellidos">Apellidos</label>
                                     <input class="form-control py-2" id="apellidos" name="apellidos" type="text"
-                                        placeholder="Introduce apellido" value="<?php if(isset($data[0]))
+                                        placeholder="Introduce apellidos" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Apellidos;
                                         }  
@@ -74,7 +74,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="domicilio">Domicilio</label>
                                     <input class="form-control py-2" id="domicilio" name="domicilio" type="text"
-                                        placeholder="Introduce descripción" value="<?php if(isset($data[0]))
+                                        placeholder="Introduce domicilio" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Domicilio;
                                         }  
@@ -123,7 +123,7 @@
                                     <input class="form-control py-2" id="contacto" name="contacto" type="text"
                                         placeholder="Introduce nombre contacto" value="<?php if(isset($data[0]))
                                         {
-                                            echo $data[0]->contacto;
+                                            echo $data[0]->Contacto;
                                         }  
                                         else{
                                             echo set_value('contacto');
@@ -138,7 +138,7 @@
                                     <input class="form-control py-2" id="telefono" name="telefono" type="text"
                                         placeholder="Introduce telefono contacto" value="<?php if(isset($data[0]))
                                         {
-                                            echo $data[0]->telefono;
+                                            echo $data[0]->Telefono;
                                         }  
                                         else{
                                             echo set_value('telefono');
@@ -163,7 +163,22 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <!-- Campo Iban -->
+                                <div class="form-group">
+                                    <label class="medium mb-1" for="iban">IBAN</label>
+                                    <input class="form-control py-2" id="iban" name="iban" type="text"
+                                        placeholder="Introduce iban" value="<?php if(isset($data[0]))
+                                        {
+                                            echo $data[0]->Iban;
+                                        }  
+                                        else{
+                                            echo set_value('iban');
+                                        }
+                                        ?>" />
+                                </div>
+                            </div>                           
+                            <div class="col-md-3">
                                 <!-- Campo Banco -->
                                 <div id="comboBancos" class="form-group">
                                     <label class="medium mb-1" for="banco">Banco</label>
@@ -179,7 +194,7 @@
                                     </select>    
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <!-- Campo Agencia -->
                                 <div class="form-group">
                                     <label class="medium mb-1" for="agencia">Agencia</label>
@@ -194,7 +209,7 @@
                                         ?>" />
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <!-- Campo Cuenta -->
                                 <div class="form-group">
                                     <label class="medium mb-1" for="cuenta">Cuenta</label>
@@ -215,15 +230,15 @@
                                 <!-- Campo Notas -->
                                 <div class="form-group">
                                     <label class="medium mb-1" for="notas">Notas</label>
-                                    <input class="form-control py-2" id="notas" name="notas" type="text"
-                                        placeholder="Introduce notas" value="<?php if(isset($data[0]))
+                                    <textarea class="form-control py-2" id="notas" name="notas" rows="4" cols="50"
+                                        placeholder="Introduce notas"><?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Notas;
                                         }  
                                         else{
                                             echo set_value('notas');
                                         }
-                                        ?>" />
+                                        ?></textarea>
                                 </div>
                             </div>                            
                         </div>
@@ -259,12 +274,8 @@
                                             <button type="Button" onclick="AsignarArticulo()" id="btnAsignarArticulo" class="btn btn-primary mb-2 ml-2" >Asignar articulo</button>
                                         </div>
                                     </div>
-                                        <?php if(isset($columnsArticulos[0]))
-                                            {
-                                            dataTable("Articulos", $columnsArticulos, $dataArticulos, 'Articulos', '4', 'text-center', "0", 4, false, 0, 'tablaArticulos');
-                                            }
-                                        ?>
-                                    <div id="tablaGrupos">
+
+                                    <div id="tablaArticulosCliente">
                                         <table class="table table-responsive-sm table-sm mt-4"
                                             style="color:black;">
                                             <thead>
@@ -273,6 +284,7 @@
                                                     <th>Letra</th>
                                                     <th>Categoría</th>
                                                     <th>Precio</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody id="articulosCliente">
@@ -282,7 +294,8 @@
                                                     <td><?= $articulo->Numero ?></td>
                                                     <td><?= $articulo->Letra ?></td>
                                                     <td><?= $articulo->Categoría ?></td>
-                                                    <td><?= $articulo->Precio ?></td>   
+                                                    <td><?= $articulo->Precio ?></td>
+                                                    <td><button type="Button" onclick="QuitarArticulo(<?=$articulo->ID?>)" id="btnQuitarArticulo" class="btn btn-danger mb-2 ml-2" >Quitar</button></td>
                                                 </tr>
                                                 <?php }
                                                 } ?>
@@ -302,51 +315,53 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <!--Modal para busqueda de articulos disponibles -->
-                        <div class="modal fade" id="modalSeleccionArticulos" tabindex="-1" role="dialog" aria-labelledby="modalSeleccionArticulos" aria-hidden="true">
-                            <div class="modal-dialog" role="document"  style="max-width: 1350px!important;">
-                                <div class="modal-content">
-                                    <div style="background-color:white;" class="modal-header">
-                                        <h5 class="modal-title" id="modalSeleccionArticulosLabel">Artículos disponibles</h5>
-                                        <button id="btnCloseModalSeleccionArticulos" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span style="background-color:black;" aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div style="background-color:white;" class="modal-body" id="divModal">
-                                        <div class="row">
+                    </form>
+                    <!--Modal para busqueda de articulos disponibles -->
+                    <div class="modal fade" id="modalSeleccionArticulos" tabindex="-1" role="dialog" aria-labelledby="modalSeleccionArticulos" aria-hidden="true">
+                        <div class="modal-dialog" role="document"  style="max-width: 1350px!important;">
+                            <div class="modal-content">
+                                <div style="background-color:white;" class="modal-header">
+                                    <h5 class="modal-title" id="modalSeleccionArticulosLabel"></h5>
+                                    <button id="btnCloseModalSeleccionArticulos" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span style="background-color:black;" aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div style="background-color:white;" class="modal-body" id="divModal">
+                                    <div class="row">
+                                        <!-- <div id="tablaSeleccion"> -->
                                             <div class="col-md-12">
                                             <?php if(isset($columnsArticulosDisponibles[0]))
-                                                dataTablePersonalizadaSeleccion($columnsArticulosDisponibles,$articulosDisponibles,$slug,'','text-center','', "Artículos (". count($articulosDisponibles).")",12,true,0,'datatableArticulosDisponibles',false,0,"AñadirArticuloALinea(this)");
+                                                dataTablePersonalizadaSeleccion($columnsArticulosDisponibles,$articulosDisponibles,$slug,'','text-center','', "Artículos (". count($articulosDisponibles).")",12,true,0,'datatableArticulosDisponibles',false,0,"AñadirArticulo(this)");
                                                 ?>   
                                             </div>
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Errores de formulario -->
-                        <?php if (isset($validation)){ ?>
-                        <div class="col-12">
-                            <div class="alert alert-danger" role="alert">
-                                <?= $validation->listErrors() ?>
-                            </div>
+                    </div>
+                    <!-- Errores de formulario -->
+                    <?php if (isset($validation)){ ?>
+                    <div class="col-12">
+                        <div class="alert alert-danger" role="alert">
+                            <?= $validation->listErrors() ?>
                         </div>
-                        <?php } ?>
+                    </div>
+                    <?php } ?>
 
-                        <div class="col-12 form-group mt-4 mb-0">
-                            <button class="btn btn-primary btn-block" type="submit"><?php if (isset($data[0]))
-                            { 
-                                echo 'Actualizar';
-                            }
-                            else
-                            {
-                                echo 'Crear';
-                            }
-                            ?></button>
-                        </div>
+                    <div class="col-12 form-group mt-4 mb-0">
+                        <button class="btn btn-primary btn-block" type="button" onclick="GuardarCliente()"><?php if (isset($data[0]))
+                        { 
+                            echo 'Actualizar';
+                        }
+                        else
+                        {
+                            echo 'Crear';
+                        }
+                        ?></button>
+                    </div>
                         
-                    </form>
+                    
                 </div>
             </div>
         </div>
@@ -354,122 +369,225 @@
 </div>
 <script>
 
+
+var ShowAlGuardar=1;
+var idCliente =0;
+
+$( document ).ready(function() {
+    <?php if (isset($data[0])){?> 
+        var data=<?php echo json_encode($data[0]); ?>;
+        idCliente=data.ID;
+    <?php }?>    
+});
+
 function AsignarArticulo(input)
-   {
-        var idCliente =0;
-        <?php if (isset($data[0])){?> idCliente=<?php echo json_encode($data[0]); } 
-        ?>;
-        console.log(idCliente);
-        if(idCliente!=0){
-            $('#modalSeleccionArticulos').data('idCliente',idCliente); 
+{
+    console.log(idCliente);
+    if(idCliente!=0){            
+        $("#modalSeleccionArticulos").modal('show');
+    } else{
+        if (confirm("Para poder asignar es necesario guardar el cliente. ¿Continuar guardando?")) {
+            ShowAlGuardar=0;
+            GuardarCliente();
             $("#modalSeleccionArticulos").modal('show');
-        } else{
-            if (confirm("Para poder asignar es necesario guardar el cliente. ¿Continuar guardando?")) {
-                CrearCliente();
+            ShowAlGuardar=1;
+        }
+    }
+}
+
+function GuardarCliente()
+{       
+    var nombre= $('#nombre').val();
+    var apellidos= $('#apellidos').val();
+    var dni= $('#dni').val();
+    var domicilio= $('#domicilio').val();
+    var poblacion= $('#poblacion').val();
+    var cpostal= $('#cpostal').val();
+    var contacto= $('#contacto').val();
+    var telefono= $('#telefono').val();
+    var email= $('#email').val();
+    // var iban= $('#iban').val();
+    var iban= "ES00";
+    var banco= $('#banco').val();
+    var agencia= $('#agencia').val();
+    var cuenta= $('#cuenta').val();
+    var notas= $('#notas').val();
+    console.log('idCliente: '+idCliente);
+    var parametros = JSON.stringify({
+        id:idCliente,
+        nombre:nombre,
+        apellidos:apellidos,
+        dni:dni,
+        domicilio:domicilio,
+        poblacion:poblacion,
+        cpostal:cpostal,
+        contacto:contacto,
+        telefono:telefono,
+        email:email,
+        iban:iban,
+        banco:banco,
+        agencia:agencia,
+        cuenta:cuenta,
+        notas:notas
+    });
+    $.ajax({
+        data: {
+            'data': parametros
+        },
+        dataType: "json",
+        //data: formData,
+        url: '<?= base_url() ?>/clientes/guardarCliente',
+        type: 'post',
+        beforeSend: function() {
+            $("#resultado").html("Procesando, espere por favor...");
+        },
+        success: function(response) {
+            if(ShowAlGuardar){
+                // similar behavior as an HTTP redirect
+                window.location.replace("<?= base_url() ?>/hilerria/clientes/show/"); //le pongo hilerria porque no se porque no lo coge desde el base_url??
+            } else {
+                idCliente = response[0];
+                $(".alert").html(
+                    "Se ha grabado el cliente <strong>Correctamente!</strong>");
+                if ($('.alert').hasClass('alert-warning')) {
+                    $('.alert').removeClass('alert-warning');
+                    $('.alert').addClass('alert-success');
+                };
+                if ($('.alert').hasClass('alert-danger')) {
+                    $('.alert').removeClass('alert-danger');
+                    $('.alert').addClass('alert-success');
+                };
+                $('.alert').show();
+                setInterval(function() {
+                    $('.alert').hide();
+                }, 5000)
+
             }
         }
-   }
+    });
 
-function CrearCliente()
-   {
-        if ($('#id_formulario').val() != 0) {
-            var idFormulario = $('#id_formulario').val();
-            var itemsSel = "";
-            var hayItems = 0;
+    // } else {
+    //     $(".alert").html("Debe elegir un chekclist para poder guardar sus items!");
+    //     if ($('.alert').hasClass('alert-success')) {
+    //         $('.alert').removeClass('alert-success');
+    //         $('.alert').addClass('alert-danger');
+    //     };
+    //     if ($('.alert').hasClass('alert-warning')) {
+    //         $('.alert').removeClass('alert-warning');
+    //         $('.alert').addClass('alert-danger');
+    //     };
+    //     $('.alert').show();
+    //     setInterval(function() {
+    //         $('.alert').hide();
+    //     }, 5000)
+    // }
 
-            itemsSel = "[";
-            $("#tablaItems input").each(function(e, x) {
-                if (x.checked) {
-                    itemsSel += '{"ID":' + x.value + '},';
-                    hayItems = 1;
+};
+
+    function AñadirArticulo(boton)
+    {
+        console.log('llego');
+        var linea = boton.parentElement.parentElement;
+        console.log('linea '+linea);
+        var table = $("#datatableArticulosDisponibles").dataTable();
+        var row = table.find("tr").eq(linea.rowIndex);
+        var data = $("#datatableArticulosDisponibles").dataTable().fnGetData(row);
+        console.log('data '+data);
+        var idArticulo=data.ID;
+        console.log('articulo '+idArticulo);
+        var numero=data.Número;
+        var letra=data.Letra;
+        var categoria=data.Categoría;
+        var precio=data.Precio;
+        console.log('articulo '+idArticulo, 'num'+numero, 'letra'+letra, 'cat'+categoria,'precio'+precio);
+
+        var parametros = JSON.stringify({
+            idCliente:idCliente,
+            idArticulo:idArticulo
+        });
+        $.ajax({
+            data: {
+                'data': parametros
+            },
+            dataType: "json",
+            //data: formData,
+            url: '<?= base_url() ?>/clientes/guardarArticuloCliente',
+            type: 'post',
+            beforeSend: function() {
+                $("#resultado").html("Procesando, espere por favor...");
+            },
+            success: function(response) {
+                    //Cargamos los articulos en la tabla
+                    console.log(response);
+                    var ArticulosCliente = response[0];
+                    var ArticulosDisponibles = response[1];
+                    CargarTablaArticulosCliente(ArticulosCliente);
+                    CargarTablaSeleccion(ArticulosDisponibles);
                 }
-            });
+            
+        });
+        $("#modalSeleccionArticulos").modal('hide');
+    }  
 
-            if (hayItems) {
-                itemsSel = itemsSel.slice(0, -1);
-            }
+function QuitarArticulo(id)
+{
+    console.log(id);
+    var parametros = JSON.stringify({
+            id:id,
+            idCliente:idCliente,
+        });
+        $.ajax({
+            data: {
+                'data': parametros
+            },
+            dataType: "json",
+            //data: formData,
+            url: '<?= base_url() ?>/clientes/quitarArticuloCliente',
+            type: 'post',
+            success: function(response) {
+                //Cargamos los articulos en la tabla
+                console.log(response);
+                var ArticulosCliente = response[0];
+                var ArticulosDisponibles = response[1];
+                CargarTablaArticulosCliente(ArticulosCliente);
+                CargarTablaSeleccion(ArticulosDisponibles);        
+            }    
+        });
+}    
 
-            itemsSel += "]";
+function CargarTablaArticulosCliente(dataArticulos)
+{
+    var html = '<table class="table table-responsive-sm table-sm mt-4" style="color:black;">';
+    html += '<thead>';
+    html += '<tr>';
+    html += '<th>Número</th>';
+    html += '<th>Letra</th>';
+    html += '<th>Categoría</th>';
+    html += '<th>Precio</th>';
+    html += '<th></th>';
+    html += '</tr>';
+    html += '</thead>';
+    html += '<tbody id="articulosCliente">';
+    dataArticulos.forEach(function(articulo) {
+        html += '<tr>';
+        html += '<td>'+ articulo.Numero +'</td>';
+        html += '<td>'+ articulo.Letra +'</td>';
+        html += '<td>'+ articulo.Categoría +'</td>';
+        html += '<td>'+ articulo.Precio +'</td>';
+        html += '<td><button type="Button" onclick="QuitarArticulo('+articulo.ID+')" id="btnQuitarArticulo" class="btn btn-danger mb-2 ml-2" >Quitar</button></td>';
+        html += '</tr>';
+    });
+    html += '</tbody>';
+    html += '</table>';
+    $('#tablaArticulosCliente').html(html);
+}
 
-            console.log(itemsSel);
-
-            var idArticulo = 0;
-            <?php if (isset($data[0])) { ?>
-            idArticulo =
-                <?php echo $data[0]->ID;
-                } ?>
-
-            var referenciaArt = $('#referencia').val();
-            var nombreArt = $('#descripcion').val();
-            var marcaArt = $('#marca').val();
-            var parametros = JSON.stringify({
-                idArticulo: idArticulo,
-                referenciaArt: referenciaArt,
-                nombreArt: nombreArt,
-                marcaArt: marcaArt,
-                idFormulario: idFormulario,
-                items: itemsSel
-            });
-
-
-            $.ajax({
-                data: {
-                    'data': parametros
-                },
-                dataType: "json",
-                //data: formData,
-                url: '<?= base_url() ?>/articulos/grabararticuloitemsformulario',
-                type: 'post',
-                beforeSend: function() {
-                    $("#resultado").html("Procesando, espere por favor...");
-                },
-                success: function(response) {
-                    if (response['redirect'] == true) {
-                        // similar behavior as an HTTP redirect
-                        window.location.replace("<?= base_url() ?>/articulos/edit/" +
-                            response['id']);
-
-                        // similar behavior as clicking on a link
-                        // window.location.href = "http://stackoverflow.com";
-                    } else {
-                        GruposArt = response[0];
-                        CargarComboGrupos();
-                        arrayItemsArt = response[1];
-                        $(".alert").html(
-                            "Se han grabado los items <strong>Correctamente!</strong>");
-                        if ($('.alert').hasClass('alert-warning')) {
-                            $('.alert').removeClass('alert-warning');
-                            $('.alert').addClass('alert-success');
-                        };
-                        if ($('.alert').hasClass('alert-danger')) {
-                            $('.alert').removeClass('alert-danger');
-                            $('.alert').addClass('alert-success');
-                        };
-                        $('.alert').show();
-                        setInterval(function() {
-                            $('.alert').hide();
-                        }, 5000)
-
-                    }
-                }
-            });
-
-        } else {
-            $(".alert").html("Debe elegir un chekclist para poder guardar sus items!");
-            if ($('.alert').hasClass('alert-success')) {
-                $('.alert').removeClass('alert-success');
-                $('.alert').addClass('alert-danger');
-            };
-            if ($('.alert').hasClass('alert-warning')) {
-                $('.alert').removeClass('alert-warning');
-                $('.alert').addClass('alert-danger');
-            };
-            $('.alert').show();
-            setInterval(function() {
-                $('.alert').hide();
-            }, 5000)
-        }
-
-    };
+function CargarTablaSeleccion(articulosDisponibles)
+{
+    // var table = $("#datatableArticulosDisponibles").dataTable();
+    $("#datatableArticulosDisponibles").DataTable().clear();
+    $("#datatableArticulosDisponibles").DataTable().rows.add(articulosDisponibles);
+    $("#datatableArticulosDisponibles").DataTable().draw();
+}
 
 </script>

@@ -25,7 +25,7 @@ helper('html');
                     </form>
 
                     <?php
-                    dataTable("Clientes", $columnsclientes, $dataclientes, 'Clientes', '2,3', 'text-center', "0", 4, false, 0, 'tablaClientes');
+                    dataTable("Clientes", $columnsclientes, $dataclientes, 'Clientes', '4,5', 'text-center', "0", 4, false, 0, 'tablaClientes');
                     ?>
                 </div>
                 <!-- <div clas="row">

@@ -64,7 +64,6 @@ class Clientes extends BaseController
 
 		$data['id'] = $id;
 
-
 		if ($id == "") {
 
 			if ($id == "") {
@@ -77,55 +76,63 @@ class Clientes extends BaseController
 			}
 		}
 
-		// Comprobamos el metodo de la petición
-		if ($this->request->getMethod() == 'post') {
+		// // Comprobamos el metodo de la petición
+		// if ($this->request->getMethod() == 'post') {
 
-			// reglas de validación
-			$rules = [
+		// 	// reglas de validación
+		// 	$rules = [
 
-				'descripcion' =>  'required|min_length[3]|max_length[150]'
-			];
+		// 		'descripcion' =>  'required|min_length[3]|max_length[150]'
+		// 	];
 
-			// Comprobación de las validaciones
-			if (!$this->validate($rules)) {
+		// 	// Comprobación de las validaciones
+		// 	if (!$this->validate($rules)) {
 
-				$newData = [
-					'DESCRIPCION' => $this->request->getVar('descripcion')
-				];
+		// 		$newData = [
+		// 			'DESCRIPCION' => $this->request->getVar('descripcion')
+		// 		];
 
-				// Guardamos el error para mostrar en la vista
-				$data['validation'] = $this->validator;
-				//return var_dump($data);
+		// 		// Guardamos el error para mostrar en la vista
+		// 		$data['validation'] = $this->validator;
+		// 		//return var_dump($data);
 
-			} else {
+		// 	} else {
 
-				// Acutlizar delegacion
-				$newData = [
-					'ID' => $id,
-					'DESCRIPCION' => $this->request->getVar('descripcion')
-				];
+		// 		// Acutlizar delegacion
+		// 		$newData = [
+		// 			'ID' => $id,
+		// 			'DESCRIPCION' => $this->request->getVar('descripcion')
+		// 		];
 
-				//Guardamos
-				$ClienteModel->save($newData);
+		// 		//Guardamos
+		// 		$ClienteModel->save($newData);
 
 
-				// Creamos una session para mostrar el mensaje de registro correcto
-				$session = session();
-				$session->setFlashdata('success', 'Actualizado correctamente');
+		// 		// Creamos una session para mostrar el mensaje de registro correcto
+		// 		$session = session();
+		// 		$session->setFlashdata('success', 'Actualizado correctamente');
 
-				// Redireccionamos a la pagina
-				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
-			}
-		}
+		// 		// Redireccionamos a la pagina
+		// 		return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
+		// 	}
+		// }
 
-		$data['data'] = json_decode($ClienteModel->getAll($id));
+		$data['data'] = json_decode($ClienteModel->getById($id));
 		$articulosClientesModel = new ArticuloClienteModel();
 
 		$data['columnsArticulos'] = json_decode($articulosClientesModel->getByCliente($id));
 		$data['dataArticulos'] = json_decode($articulosClientesModel->getByCliente($id));
 
-		$data['columnsArticulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles());
-		$data['dataArticulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles());
+		$column1= array ('Field'=>'');
+		$column2= array ('Field'=>'ID');
+		$column3= array ('Field'=>'Número');
+        $column4= array ('Field'=>'Letra');
+        $column5= array ('Field'=>'Categoría');
+        $column6= array ('Field'=>'Precio');
+
+        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6);
+		$data['columnsArticulosDisponibles'] = $columnasDatatable;
+		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles());
 
 		$BancoModel = new BancoModel();
 		$data['bancos']=json_decode($BancoModel->getAll());
@@ -148,56 +155,57 @@ class Clientes extends BaseController
 
 		$ClienteModel = new ClienteModel();
 
-		// Comprobamos el metodo de la petición
-		if ($this->request->getMethod() == 'post') {
+		// // Comprobamos el metodo de la petición
+		// if ($this->request->getMethod() == 'post') {
 
-			$rules = [
-				'descripcion' =>  'required|min_length[3]|max_length[150]|is_unique[tbl_clientes.DESCRIPCION]'
-			];
+		// 	$rules = [
+		// 		'descripcion' =>  'required|min_length[3]|max_length[150]|is_unique[tbl_clientes.DESCRIPCION]'
+		// 	];
 
-			// Comprobación de las validaciones
-			if (!$this->validate($rules)) {
+		// 	// Comprobación de las validaciones
+		// 	if (!$this->validate($rules)) {
 
-				$newData = [
-					'DESCRIPCION' => $this->request->getVar('descripcion')
-				];
+		// 		$newData = [
+		// 			'DESCRIPCION' => $this->request->getVar('descripcion')
+		// 		];
 
-				// Guardamos el error para mostrar en la vista
-				$data['validation'] = $this->validator;
-				//return var_dump($data);
+		// 		// Guardamos el error para mostrar en la vista
+		// 		$data['validation'] = $this->validator;
+		// 		//return var_dump($data);
 
-			} else {
+		// 	} else {
 
-				// Acutlizar delegacion
-				$newData = [
-					'DESCRIPCION' => $this->request->getVar('descripcion')
-				];
+		// 		// Acutlizar delegacion
+		// 		$newData = [
+		// 			'DESCRIPCION' => $this->request->getVar('descripcion')
+		// 		];
 
-				//return var_dump($newData);
-				//Guardamos
-				$ClienteModel->save($newData);
+		// 		//return var_dump($newData);
+		// 		//Guardamos
+		// 		$ClienteModel->save($newData);
 
-				//return var_dump($ClienteModel);
+		// 		//return var_dump($ClienteModel);
 
 
-				// Creamos una session para mostrar el mensaje de registro correcto
-				$session = session();
-				$session->setFlashdata('success', 'Creado correctamente');
+		// 		// Creamos una session para mostrar el mensaje de registro correcto
+		// 		$session = session();
+		// 		$session->setFlashdata('success', 'Creado correctamente');
 
-				// Redireccionamos a la pagina
-				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
-			}
-		}
+		// 		// Redireccionamos a la pagina
+		// 		return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
+		// 	}
+		// }
 		$BancoModel = new BancoModel();
 		$data['bancos']=json_decode($BancoModel->getAll());
 
 		
-		$column1= array ('Field'=>'Número');
-        $column2= array ('Field'=>'Letra');
-        $column3= array ('Field'=>'Categoría');
-        $column4= array ('Field'=>'Precio');
+		$column1= array ('Field'=>'');
+		$column2= array ('Field'=>'Número');
+        $column3= array ('Field'=>'Letra');
+        $column4= array ('Field'=>'Categoría');
+        $column5= array ('Field'=>'Precio');
 
-        $columnasDatatable = array($column1,$column2,$column3,$column4);
+        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5);
 		$data['columnsArticulosDisponibles'] = $columnasDatatable;
 		$articulosClientesModel = new ArticuloClienteModel();
 		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles());
@@ -209,6 +217,84 @@ class Clientes extends BaseController
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/edit', $data);
 		echo view('dashboard/footer', $data);
+	}
+
+	public function guardarCliente()
+	{
+		$response = json_decode($this->request->getPost('data'));
+		$id = $response->id;
+		$nombre = $response->nombre;
+		$apellidos = $response->apellidos;
+		$dni = $response->dni;
+		$domicilio = $response->domicilio;
+		$poblacion = $response->poblacion;
+		$cpostal = $response->cpostal;
+		$contacto = $response->contacto;
+		$telefono = $response->telefono;
+		$email = $response->email;
+		$iban = $response->iban;
+		$banco = $response->banco;
+		$agencia = $response->agencia;
+		$cuenta = $response->cuenta;
+		$notas = $response->notas;
+
+		$model = new ClienteModel();
+		$newData = [
+			'NOMBRE' => $nombre,
+			'APELLIDOS' => $apellidos,
+			'DNI' => $dni,
+			'DOMICILIO' => $domicilio,
+			'POBLACION' => $poblacion,
+			'COD_POSTAL' => $cpostal,
+			'CONTACTO' => $contacto,
+			'TELEFONO' => $telefono,
+			'EMAIL' => $email,
+			'IBAN' => $iban,
+			'BANCO_ID' => $banco,
+			'AGENCIA' => $agencia,
+			'CUENTA' => $cuenta,
+			'NOTAS' => $notas
+
+		];
+		if($id!=0){
+			
+			$newData['ID'] = $id;
+			$model->save($newData);
+		} else{
+			$id = $model->insert($newData);
+		}
+		return json_encode(['id' => $id]);
+
+	}
+
+	public function guardarArticuloCliente()
+	{		
+		$response = json_decode($this->request->getPost('data'));
+		$idCliente = $response->idCliente;
+		$idArticulo = $response->idArticulo;
+
+		$model = new ArticuloClienteModel();
+		$newData = [
+			'ARTICULO_ID' => $idArticulo,
+			'CLIENTE_ID' => $idCliente
+		];
+		$id = $model->insert($newData);
+		$artDisponibles= json_decode($model->getArticulosDisponibles());
+		$articulosCliente=json_decode($model->getByCliente($idCliente));
+		return json_encode(array($articulosCliente,$artDisponibles));
+	}
+
+	public function quitarArticuloCliente()
+	{
+		$response = json_decode($this->request->getPost('data'));
+		$id = $response->id;
+		$idCliente = $response->idCliente;
+
+		$model = new ArticuloClienteModel();		
+		$id = $model->deleteById($id);
+		$artDisponibles= json_decode($model->getArticulosDisponibles());
+		$articulosCliente=json_decode($model->getByCliente($idCliente));
+		return json_encode(array($articulosCliente,$artDisponibles));
 	}
 
 	// Borrar

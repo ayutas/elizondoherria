@@ -35,13 +35,41 @@ class ClienteModel extends Model
         return $data;
     }
 
-    public function getAll($id=null){
+    public function getAll(){
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TC.ID As 'ID',
                         TC.NOMBRE As 'Nombre',
                         TC.APELLIDOS As 'Apellidos',
                         TC.DNI
+                FROM $this->table TC
+                WHERE ISNULL(TC.DELETED_AT)";   
+
+        $query = $db->query($sql);
+		
+		$results = $query->getResult();
+		
+        return json_encode($results);
+    }
+
+    public function getById($id=null){
+        $db = \Config\Database::connect();
+        
+        $sql = "SELECT  TC.ID As 'ID',
+                        TC.NOMBRE As 'Nombre',
+                        TC.APELLIDOS As 'Apellidos',
+                        TC.DNI,
+                        TC.DOMICILIO AS 'Domicilio',
+                        TC.POBLACION AS 'Poblacion',
+                        TC.COD_POSTAL AS 'CPostal',
+                        TC.CONTACTO AS 'Contacto',
+                        TC.TELEFONO AS 'Telefono',
+                        TC.EMAIL AS 'Email',
+                        TC.IBAN AS 'Iban',
+                        TC.BANCO_ID AS 'Banco',
+                        TC.AGENCIA AS 'Agencia',
+                        TC.CUENTA AS 'Cuenta',
+                        TC.NOTAS AS 'Notas'
                 FROM $this->table TC
                 WHERE ISNULL(TC.DELETED_AT)";   
 
@@ -53,7 +81,7 @@ class ClienteModel extends Model
 		$results = $query->getResult();
 		
         return json_encode($results);
-    }
+    }    
    
     public function deleteById($id)
     {

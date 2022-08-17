@@ -48,14 +48,16 @@ class ArticuloClienteModel extends Model
     public function getByCliente($idCliente){
         $db = \Config\Database::connect();
         
-        $sql = "SELECT  TA.NUMERO As 'Numero',
+        $sql = "SELECT  TAC.ID,
+                        TA.NUMERO As 'Numero',
                         TA.LETRA AS 'Letra',
-                        TC.NOMBRE AS 'Categoria',
+                        TC.NOMBRE AS 'Categoría',
                         TC.PRECIO AS 'Precio'
                 FROM $this->table as TAC
                 INNER JOIN tbl_articulos as TA ON TAC.ARTICULO_ID=TA.ID
                 INNER JOIN tbl_categorias as TC ON TA.CATEGORIA_ID=TC.ID
-                WHERE TAC.CLIENTE_ID=$idCliente";
+                WHERE TAC.CLIENTE_ID=$idCliente
+                AND ISNULL(TAC.DELETED_AT)";
 
         $query = $db->query($sql);
 		
@@ -67,7 +69,9 @@ class ArticuloClienteModel extends Model
     public function getArticulosDisponibles(){
         $db = \Config\Database::connect();
         
-        $sql = "SELECT  TA.NUMERO as 'Número',
+        $sql = "SELECT  '' as 'btnSeleccionar',
+                        TA.ID as 'ID',
+                        TA.NUMERO as 'Número',
                         TA.LETRA as 'Letra',
                         TC.NOMBRE AS 'Categoría',
                         TC.PRECIO AS 'Precio'
