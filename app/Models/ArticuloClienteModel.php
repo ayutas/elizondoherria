@@ -25,18 +25,18 @@ class ArticuloClienteModel extends Model
     }
 
 
-    public function getAll(){
+    public function getById($id){
         $db = \Config\Database::connect();
         
-        $sql = "SELECT  TAC.ID As 'ID',
-                        TD.DESCRIPCION As 'Delegacion',
-                        TAC.LINEA AS 'Línea',
-                        TAC.DESCRIPCION AS 'Nombre'                        					
+        $sql = "SELECT  TA.NUMERO,TA.LETRA,TG.NOMBRE AS 'CATEGORIA',TC.NOMBRE,TC.APELLIDOS,TC.DNI,
+                TC.DOMICILIO,TC.POBLACION,TC.COD_POSTAL,TC.TELEFONO,TC.EMAIL,TC.IBAN,
+                TB.CODIGO AS 'COD_BANCO',TB.NOMBRE AS 'NOMBRE_BANCO',TC.AGENCIA,TC.CUENTA,TC.NOTAS,TAC.CREATED_AT
                 FROM $this->table as TAC
-                INNER JOIN tbl_articulos AS TA ON TAC.ARTICULO_ID=TA.ID                    
+                INNER JOIN tbl_articulos AS TA ON TAC.ARTICULO_ID=TA.ID
+                INNER JOIN tbl_categorias AS TG ON TA.CATEGORIA_ID=TG.ID
                 INNER JOIN tbl_clientes TC ON TAC.CLIENTE_ID=TC.ID
-                WHERE ISNULL(TAC.DELETED_AT)";   
-     
+                INNER JOIN tbl_bancos TB ON TC.BANCO_ID=TB.ID
+                WHERE TAC.ID=$id";
 
         $query = $db->query($sql);
 		
