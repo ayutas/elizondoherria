@@ -285,6 +285,7 @@
                                                     <th>Categoría</th>
                                                     <th>Precio</th>
                                                     <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody id="articulosCliente">
@@ -296,6 +297,7 @@
                                                     <td><?= $articulo->Categoría ?></td>
                                                     <td><?= $articulo->Precio ?></td>
                                                     <td><button type="Button" onclick="QuitarArticulo(<?=$articulo->ID?>)" id="btnQuitarArticulo" class="btn btn-danger mb-2 ml-2" >Quitar</button></td>
+                                                    <td><button type="Button" onclick="ImprimirArticulo(<?=$articulo->ID?>)" id="btnImprimirArticulo" class="btn btn-info mb-2 ml-2" >Imprimir</button></td>
                                                 </tr>
                                                 <?php }
                                                 } ?>
@@ -565,6 +567,25 @@ function QuitarArticulo(id)
             }    
         });
 }    
+
+function ImprimirArticulo(id)
+{
+    console.log(id);
+    var parametros = JSON.stringify({
+        id:id,
+    });
+    $.ajax({
+        data: {
+            'data': parametros
+        },
+        dataType: "json",
+        //data: formData,
+        url: '<?= base_url() ?>/clientes/ImprimirArticuloCliente',
+        type: 'post',
+        success: function(response) {      
+        }    
+    });
+}   
 
 function CargarTablaArticulosCliente(dataArticulos)
 {
