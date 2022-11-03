@@ -187,7 +187,7 @@
                                         <?php if (isset($bancos)) {
                                             foreach ($bancos as $banco) { ?>
                                                 <option class="" value="<?php echo $banco->ID; ?>">
-                                                <?php echo $banco->Nombre; ?></option><?php
+                                                <?php echo $banco->Codigo .' - '.$banco->Nombre; ?></option><?php
                                                 }
                                             }
                                         ?>
