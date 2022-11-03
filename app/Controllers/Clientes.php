@@ -76,47 +76,6 @@ class Clientes extends BaseController
 			}
 		}
 
-		// // Comprobamos el metodo de la petición
-		// if ($this->request->getMethod() == 'post') {
-
-		// 	// reglas de validación
-		// 	$rules = [
-
-		// 		'descripcion' =>  'required|min_length[3]|max_length[150]'
-		// 	];
-
-		// 	// Comprobación de las validaciones
-		// 	if (!$this->validate($rules)) {
-
-		// 		$newData = [
-		// 			'DESCRIPCION' => $this->request->getVar('descripcion')
-		// 		];
-
-		// 		// Guardamos el error para mostrar en la vista
-		// 		$data['validation'] = $this->validator;
-		// 		//return var_dump($data);
-
-		// 	} else {
-
-		// 		// Acutlizar delegacion
-		// 		$newData = [
-		// 			'ID' => $id,
-		// 			'DESCRIPCION' => $this->request->getVar('descripcion')
-		// 		];
-
-		// 		//Guardamos
-		// 		$ClienteModel->save($newData);
-
-
-		// 		// Creamos una session para mostrar el mensaje de registro correcto
-		// 		$session = session();
-		// 		$session->setFlashdata('success', 'Actualizado correctamente');
-
-		// 		// Redireccionamos a la pagina
-		// 		return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
-		// 	}
-		// }
-
 		$data['data'] = json_decode($ClienteModel->getById($id));
 		$articulosClientesModel = new ArticuloClienteModel();
 
