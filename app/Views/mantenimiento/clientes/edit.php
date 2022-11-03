@@ -402,7 +402,7 @@ function GuardarCliente()
     var dni= $('#dni').val();
     if (!validar_dni_nif_nie(dni))
     {
-        alert('DNI no valido');
+        alert('DNI no válido');
         return;
     }
 
@@ -412,11 +412,16 @@ function GuardarCliente()
     var contacto= $('#contacto').val();
     var telefono= $('#telefono').val();
     var email= $('#email').val();
-    // var iban= $('#iban').val();
-    var iban= "ES00";
+    var iban= $('#iban').val();
     var banco= $('#banco').val();
     var agencia= $('#agencia').val();
     var cuenta= $('#cuenta').val();
+    
+    if (!fn_ValidateIBAN(iban+banco+agencia+cuenta))
+    {
+        alert('IBAN de la cuenta no válido');
+        return;
+    }
     var notas= $('#notas').val();
     console.log('idCliente: '+idCliente);
     var parametros = JSON.stringify({
@@ -596,7 +601,6 @@ function CargarTablaSeleccion(articulosDisponibles)
     $("#datatableArticulosDisponibles").DataTable().draw();
 }
 
-
 function validar_dni_nif_nie(value){
  
     var validChars = 'TRWAGMYFPDXBNJZSQVHLCKET';
@@ -617,6 +621,57 @@ function validar_dni_nif_nie(value){
     if (validChars.charAt(charIndex) === letter) return true;
 
     return false;
+}
+
+function fn_ValidateIBAN(IBAN) {
+
+    //Se pasa a Mayusculas
+    IBAN = IBAN.toUpperCase();
+    //Se quita los blancos de principio y final.
+    IBAN = IBAN.trim();
+    IBAN = IBAN.replace(/\s/g, ""); //Y se quita los espacios en blanco dentro de la cadena
+
+    var letra1,letra2,num1,num2;
+    var isbanaux;
+    var numeroSustitucion;
+    //La longitud debe ser siempre de 24 caracteres
+    if (IBAN.length != 24) {
+        return false;
+    }
+
+    // Se coge las primeras dos letras y se pasan a números
+    letra1 = IBAN.substring(0, 1);
+    letra2 = IBAN.substring(1, 2);
+    num1 = getnumIBAN(letra1);
+    num2 = getnumIBAN(letra2);
+    //Se sustituye las letras por números.
+    isbanaux = String(num1) + String(num2) + IBAN.substring(2);
+    // Se mueve los 6 primeros caracteres al final de la cadena.
+    isbanaux = isbanaux.substring(6) + isbanaux.substring(0,6);
+
+    //Se calcula el resto, llamando a la función modulo97, definida más abajo
+    resto = modulo97(isbanaux);
+    if (resto == 1){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function modulo97(iban) {
+    var parts = Math.ceil(iban.length/7);
+    var remainer = "";
+
+    for (var i = 1; i <= parts; i++) {
+        remainer = String(parseFloat(remainer+iban.substr((i-1)*7, 7))%97);
+    }
+
+    return remainer;
+}
+
+function getnumIBAN(letra) {
+    ls_letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    return ls_letras.search(letra) + 10;
 }
 
 </script>
