@@ -6,6 +6,9 @@ use App\Models\ArticuloClienteModel;
 use App\Models\ClienteModel;
 use App\Models\BancoModel;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 class Clientes extends BaseController
 {
 	protected $redireccion = "clientes";
@@ -219,5 +222,130 @@ class Clientes extends BaseController
 
 		// Redireccionamos a la pagina de login
 		return redirect()->to(base_url() . "/" .  $this->redireccion . '/show');
+	}
+	
+	public function imprimirArticuloCliente()
+	{
+		$response = json_decode($this->request->getPost('data'));
+		$id = $response->id;
+		$model = new ArticuloClienteModel();		
+		$datos = json_decode($model->getById($id));
+		// return var_dump($datos);
+		if (isset($datos[0])) {
+
+			$numero = $datos[0]->NUMERO;
+			$letra = $datos[0]->LETRA;
+			$categoria = $datos[0]->CATEGORIA;
+			$nombre = $datos[0]->NOMBRE;
+			$apellidos = $datos[0]->APELLIDOS;
+			$dni = $datos[0]->DNI;
+			$domicilio = $datos[0]->DOMICILIO;
+			$poblacion = $datos[0]->POBLACION;
+			$codPostal = $datos[0]->COD_POSTAL;
+			$telefono = $datos[0]->TELEFONO;
+			$email = $datos[0]->EMAIL;
+			$iban = $datos[0]->IBAN;
+			$codBanco = $datos[0]->COD_BANCO;
+			$nombreBanco = $datos[0]->NOMBRE_BANCO;
+			$agencia = $datos[0]->AGENCIA;
+			$cuenta = $datos[0]->CUENTA;
+			$notas = $datos[0]->NOTAS;
+			$creado = $datos[0]->CREATED_AT;
+		}		
+		//CREAMOS EL HTML PARA CONVERTIRLO EN PDF
+		$html = '<!DOCTYPE html>';
+		$html .= '<head>';
+		$html .= '<style>';
+		$html .= 'table {';
+		$html .= 'border: 1px solid black; width:100%';
+		$html .= '}';
+		$html .= 'tbody {';
+		$html .= 'width:100%';
+		$html .= '}';
+		$html .= '</style>';
+		$html .= '</head>';
+		$html .= '<body>';
+		$html .= '<table>';
+		$html .= '<tbody>';
+		$html .= '<tr>';  //FILA 1
+		$html .= '<td colspan="4">';
+		$html .= '<strong>Zkia /</strong> Nº: ' . $numero;
+		$html .= '</td>';
+		$html .= '<td colspan="4">';
+		$html .= '<strong>Karrika /</strong> Calle: ' . $letra;
+		$html .= '</td>';
+		$html .= '<td colspan="4">';
+		$html .= '<strong>Maila/</strong> Categoría: ' . $categoria;
+		$html .= '</td>';
+		$html .= '</tr>';
+		$html .= '<tr>'; //FILA 2
+		$html .= '<td colspan="9">';
+		$html .= '<strong>Izena /</strong> Nombre: ' . $nombre . ' ' . $apellidos;
+		$html .= '</td>';
+		$html .= '<td colspan="3">';
+		$html .= '<strong>NAN /</strong> DNI: ' . $dni;
+		$html .= '</td>';
+		$html .= '</tr>';			
+		$html .= '<tr>'; //FILA 3
+		$html .= '<td colspan="9">';
+		$html .= '<strong>Helbidea /</strong> Dirección: ' . $domicilio;
+		$html .= '</td>';
+		$html .= '<td colspan="3">';
+		$html .= '<strong>Tlf:</strong> ' . $telefono;
+		$html .= '</td>';
+		$html .= '</tr>';
+		$html .= '<tr>'; //FILA 4
+		$html .= '<td colspan="9">';
+		$html .= '<strong>Herria /</strong> Pueblo: ' . $poblacion;
+		$html .= '</td>';
+		$html .= '<td colspan="3">';
+		$html .= '<strong>PK /</strong> CP: ' . $codPostal;
+		$html .= '</td>';
+		$html .= '</tr>';
+		$html .= '<tr>'; //FILA 5
+		$html .= '<td colspan="12">';
+		$html .= '<strong>Kontu Zkia /</strong> Nº de cuenta: ' . $nombreBanco . ' ' . $iban.$codBanco.$agencia.$cuenta;
+		$html .= '</td>';
+		$html .= '</tr>';
+		$html .= '<tr>';  //FILA 6
+		$html .= '<td colspan="3">';
+		$html .= '<strong>Alkatea /</strong> El Alcalde';
+		$html .= '</td>';
+		$html .= '<td colspan="5">';
+		$html .= ' ';
+		$html .= '</td>';
+		$html .= '<td colspan="4">';
+		$html .= '<strong>Data/</strong> Fecha: ' . $creado;
+		$html .= '</td>';
+		$html .= '</tr>';
+		$html .= '</tbody>';
+		$html .= '</table>';
+
+		$html .= '</html>';
+
+
+        return var_dump($html);
+
+
+        $options = new Options();
+        $options->setIsRemoteEnabled(true);
+
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf($options);
+        // $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();       
+        
+        //---------------------------------------------------
+        $output = $dompdf->output();
+        header("Content-type:application/pdf");
+        header("Content-Disposition:attachment;filename=consulta.pdf");
+        echo ($output);
+        exit;
 	}
 }
