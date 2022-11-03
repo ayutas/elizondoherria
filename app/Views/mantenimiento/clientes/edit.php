@@ -400,6 +400,12 @@ function GuardarCliente()
     var nombre= $('#nombre').val();
     var apellidos= $('#apellidos').val();
     var dni= $('#dni').val();
+    if (!validar_dni_nif_nie(dni))
+    {
+        alert('DNI no valido');
+        return;
+    }
+
     var domicilio= $('#domicilio').val();
     var poblacion= $('#poblacion').val();
     var cpostal= $('#cpostal').val();
@@ -588,6 +594,29 @@ function CargarTablaSeleccion(articulosDisponibles)
     $("#datatableArticulosDisponibles").DataTable().clear();
     $("#datatableArticulosDisponibles").DataTable().rows.add(articulosDisponibles);
     $("#datatableArticulosDisponibles").DataTable().draw();
+}
+
+
+function validar_dni_nif_nie(value){
+ 
+    var validChars = 'TRWAGMYFPDXBNJZSQVHLCKET';
+    var nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
+    var nieRexp = /^[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
+    var str = value.toString().toUpperCase();
+
+    if (!nifRexp.test(str) && !nieRexp.test(str)) return false;
+
+    var nie = str
+        .replace(/^[X]/, '0')
+        .replace(/^[Y]/, '1')
+        .replace(/^[Z]/, '2');
+
+    var letter = str.substr(-1);
+    var charIndex = parseInt(nie.substr(0, 8)) % 23;
+
+    if (validChars.charAt(charIndex) === letter) return true;
+
+    return false;
 }
 
 </script>
