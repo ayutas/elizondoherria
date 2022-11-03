@@ -22,9 +22,6 @@ class Clientes extends BaseController
 		$ClienteModel = new ClienteModel();
 		$articulosClientesModel = new ArticuloClienteModel();
 
-		// $data['columnsArticulos'] = json_decode($articulosClientesModel->getAll());
-		// $data['dataArticulos'] = json_decode($articulosClientesModel->getAll());
-
 		$data['columnsclientes'] = json_decode($ClienteModel->getAll());
 		$data['dataclientes'] = json_decode($ClienteModel->getAll());
 
@@ -34,13 +31,6 @@ class Clientes extends BaseController
 			$item->btnEditar = $buttonEditCliente;
 			$item->btnEliminar = $buttonDeleteCliente;
 		}
-
-		// foreach ($data['dataArticulos'] as $itemLinea) {
-		// 	$buttonEdit = '<form method="get" action="' . base_url() . '/clientesLineas/edit/' . $itemLinea->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $itemLinea->ID . '" style="color:white;"  >Editar</button></form>';
-		// 	$buttonDelete = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $itemLinea->ID . '" style="color:white;" class="btn btn-danger" >Eliminar</button>';
-		// 	$itemLinea->btnEditar = $buttonEdit;
-		// 	$itemLinea->btnEliminar = $buttonDelete;
-		// }
 
 		// Cargamos las vistas en orden
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';
@@ -113,47 +103,7 @@ class Clientes extends BaseController
 		$uri = service('uri');
 
 		$ClienteModel = new ClienteModel();
-
-		// // Comprobamos el metodo de la petición
-		// if ($this->request->getMethod() == 'post') {
-
-		// 	$rules = [
-		// 		'descripcion' =>  'required|min_length[3]|max_length[150]|is_unique[tbl_clientes.DESCRIPCION]'
-		// 	];
-
-		// 	// Comprobación de las validaciones
-		// 	if (!$this->validate($rules)) {
-
-		// 		$newData = [
-		// 			'DESCRIPCION' => $this->request->getVar('descripcion')
-		// 		];
-
-		// 		// Guardamos el error para mostrar en la vista
-		// 		$data['validation'] = $this->validator;
-		// 		//return var_dump($data);
-
-		// 	} else {
-
-		// 		// Acutlizar delegacion
-		// 		$newData = [
-		// 			'DESCRIPCION' => $this->request->getVar('descripcion')
-		// 		];
-
-		// 		//return var_dump($newData);
-		// 		//Guardamos
-		// 		$ClienteModel->save($newData);
-
-		// 		//return var_dump($ClienteModel);
-
-
-		// 		// Creamos una session para mostrar el mensaje de registro correcto
-		// 		$session = session();
-		// 		$session->setFlashdata('success', 'Creado correctamente');
-
-		// 		// Redireccionamos a la pagina
-		// 		return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
-		// 	}
-		// }
+		
 		$BancoModel = new BancoModel();
 		$data['bancos']=json_decode($BancoModel->getAll());
 
@@ -259,7 +209,6 @@ class Clientes extends BaseController
 	// Borrar
 	public function delete($id)
 	{
-
 		$ClienteModel = new ClienteModel();
 
 		$answer = $ClienteModel->deleteById($id);
