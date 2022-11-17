@@ -19,7 +19,14 @@ class Bancos extends BaseController
 		$data = [];
 		$Model = new BancoModel();
 
-		$data['columns'] = json_decode($Model->getAll());
+		
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>'Código');
+		$column3= array ('Field'=>'Nombre');
+		$column4= array ('Field'=>'Código País');
+		
+		$columnasDatatable = array($column1,$column2,$column3,$column4);
+		$data['columns'] = $columnasDatatable;
 		$data['data'] = json_decode($Model->getAll());
 
 

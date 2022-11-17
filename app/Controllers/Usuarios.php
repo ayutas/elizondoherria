@@ -20,7 +20,17 @@ class Usuarios extends BaseController
 		$data = [];
 		$model = new UsuarioModel();
 
-		$data['columns'] = json_decode($model->getAll());
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>'Nombre');
+		$column3= array ('Field'=>'Apellido1');
+		$column4= array ('Field'=>'Apellido2');
+		$column5= array ('Field'=>'Admin');
+		$column6= array ('Field'=>'Usuario');
+		$column7= array ('Field'=>'Creado');
+		$column8= array ('Field'=>'Actualizado');
+		
+		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8);
+		$data['columns'] = $columnasDatatable;
 		$data['data'] = json_decode($model->getAll());
 
 		foreach ($data['data'] as $item) {

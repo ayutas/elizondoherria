@@ -1,6 +1,6 @@
 <?php
 //Funcion para crear un datatable autamatizado
-function dataTable($title, $columns, $data, $slug, $targets = 0, $targetClass = 'text-center', $ocultar = "", $col = 12, $color = false, $colorCol = 0, $idTable = 'dataTable')
+function dataTable($title,$columns,$data,$slug,$targets = 0,$targetClass = 'text-center',$ocultar="",$col = 12,$color = false,$colorCol = 0,$idTable='dataTable' )
 { ?>
 
 <div class="card">
@@ -10,8 +10,8 @@ function dataTable($title, $columns, $data, $slug, $targets = 0, $targetClass = 
     </div>
     <div class="card-body bg-white" style="color:black;">
         <!-- DEMO DATATABLE -->
-        <div class="dataTables_wrapper dt-bootstrap4 no-footer table-responsive">
-            <table class="table table-bordered" style="color:black;border-color:#ced4d9;" id="<?= $idTable ?>"
+        <div class="dataTables_wrapper dt-bootstrap4 no-footer table-responsive table-striped">
+            <table class="table table-bordered" style="color:black;border-color:#ced4d9;" id="<?=$idTable?>"
                 width="100%" cellspacing="0">
                 <thead>
                 </thead>
@@ -23,50 +23,51 @@ function dataTable($title, $columns, $data, $slug, $targets = 0, $targetClass = 
     <!-- FIN DEMO DATATABLE -->
 </div>
 
-<?php
-    $arrayData = [];
-    $counter = 1;
-    if ($columns != NULL) {
-        foreach ($columns[0] as $key => $value) {
-            $last = sizeof((array)$columns[0]);
-            switch ($counter) {
-                case $last:
-                    array_push($arrayData, "{data:'" . $key . "',title:'" . $key . "'},");
-                    array_push($arrayData, "{data:'btnEditar',title:''},");
-                    array_push($arrayData, "{data:'btnEliminar',title:''}");
-                    break;
-                default:
-                    array_push($arrayData, "{data:'" . $key . "',title:'" . $key . "'},");
-                    $counter++;
-            }
-        };
-    } else {
-        $arrayData = "";
-    }
-
-    //return var_dump($);
+<?php 
+        $arrayData = [];
+        $counter = 1;
+        if($columns != NULL) {
+            foreach($columns as $item){
+                $last = sizeof($columns);
+                switch($counter) {
+                    case $last :      
+                        array_push($arrayData,"{data:'".$item['Field']."',title:'".$item['Field']."'},");
+                        array_push($arrayData,"{data:'btnEditar',title:''},");   
+                        array_push($arrayData,"{data:'btnEliminar',title:''}");
+                        break;
+                    default:
+                        array_push($arrayData,"{data:'".$item['Field']."',title:'".$item['Field']."'},");
+                        $counter++;    
+                }
+    
+        
+            };
+        } else {
+            $arrayData = "";
+        }
+         
+        //return var_dump($);
     ?>
 
 <script>
 // Generación de datatable
 $(document).ready(function() {
-    var table = $('#<?= $idTable ?>').DataTable({
+    var table = $('#<?=$idTable?>').DataTable({
         data: <?php echo json_encode($data) ?>,
-        //dom: 'Bfrtip',                                
         columns: [
-            <?php
-                    if ($arrayData != "") {
-                        foreach ($arrayData as $item) {
-                            echo $item;
-                        }
-                    } else {
-                        $arrayData = "";
+            <?php 
+                if($arrayData != ""){
+                    foreach ($arrayData as $item){
+                        echo $item;
                     }
-
+                } else {
+                    $arrayData= "";
+                }
+                
                     ?>
         ],
-        <?php if (isset($color) && $color != "") {
-                ?> "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        <?php if(isset($color) && $color != "") {
+                    ?> "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (aData['Situaciones'] == 'Alta') {
                 $(nRow).find('td:eq(1)').addClass('bg-warning');
                 $(nRow).find('td:eq(2)').addClass('bg-warning');
@@ -84,20 +85,20 @@ $(document).ready(function() {
                 className: '<?= $targetClass ?>'
             },
             {
-                "targets": [<?= $ocultar ?>],
+                "targets": [<?= $ocultar?>],
                 "visible": false,
                 "searchable": true
-            }
+            },
         ],
         "language": {
             url: "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },
     });
 
-    $("#<?= $idTable ?> tbody").on('click', '#btnEliminar', function() {
-        var result = confirm("¿Desea eliminar el registro?");
-        if (result) {
-            window.location.replace('<?= base_url() ?>/<?= $slug ?>/delete/' + $(this).data('id'));
+    $("#<?=$idTable?> tbody").on('click', '#btnEliminar', function() {
+        var response = prompt("Para eliminar el registro introduzca la contraseña 1234");
+        if(response.toString() == "1234") {
+            window.location.replace('<?= base_url(); ?>/<?= $slug ?>/delete/' + $(this).data('id'));
         }
     });
 });

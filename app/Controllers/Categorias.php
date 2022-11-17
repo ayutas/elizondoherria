@@ -19,7 +19,12 @@ class Categorias extends BaseController
 		$data = [];
 		$Model = new CategoriaModel();
 
-		$data['columns'] = json_decode($Model->getAll());
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>'Nombre');
+		$column3= array ('Field'=>'Precio');
+		
+		$columnasDatatable = array($column1,$column2,$column3);
+		$data['columns'] = $columnasDatatable;						
 		$data['data'] = json_decode($Model->getAll());
 
 

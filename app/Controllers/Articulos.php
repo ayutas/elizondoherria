@@ -14,14 +14,20 @@ class Articulos extends BaseController
 	// Ver
 	public function show()
 	{
-
 		helper(['form']);
 		$uri = service('uri');
 
 		$data = [];
 		$model = new ArticuloModel();
 
-		$data['columns'] = json_decode($model->getAll());
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>'Número');
+		$column3= array ('Field'=>'Letra');
+		$column4= array ('Field'=>'Categoría');
+		$column5= array ('Field'=>'Precio');
+		
+		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5);
+		$data['columns'] = $columnasDatatable;
 		$data['data'] = json_decode($model->getAll());
 		foreach ($data['data'] as $item) {
 			$buttonEdit = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >Editar</button></form>';
@@ -29,7 +35,6 @@ class Articulos extends BaseController
 			$item->btnEditar = $buttonEdit;
 			$item->btnEliminar = $buttonDelete;
 		}
-		//return var_dump($data['columns']);
 		// Cargamos las vistas en orden
 		$data['action'] =  base_url() . '/' . $this->redireccion . '/new';
 		echo view('dashboard/header', $data);
