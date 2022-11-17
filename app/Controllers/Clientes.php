@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ArticuloClienteModel;
+use App\Models\ClienteComentarioModel;
 use App\Models\ClienteModel;
 use App\Models\BancoModel;
 
@@ -71,9 +72,7 @@ class Clientes extends BaseController
 
 		$data['data'] = json_decode($ClienteModel->getById($id));
 		$articulosClientesModel = new ArticuloClienteModel();
-
-		$data['columnsArticulos'] = json_decode($articulosClientesModel->getByCliente($id));
-		$data['dataArticulos'] = json_decode($articulosClientesModel->getByCliente($id));
+		$clientesComentariosModel=new ClienteComentarioModel();
 
 		$column1= array ('Field'=>'');
 		$column2= array ('Field'=>'ID');
@@ -83,8 +82,27 @@ class Clientes extends BaseController
         $column6= array ('Field'=>'Precio');
 
         $columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6);
+		$data['columnsArticulos'] = $columnasDatatable;
+		$data['dataArticulos'] = json_decode($articulosClientesModel->getByCliente($id));
+
 		$data['columnsArticulosDisponibles'] = $columnasDatatable;
 		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles());
+
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>'Comentario');
+        $column3= array ('Field'=>'Creado');
+        $column4= array ('Field'=>'Modificado');
+
+        $columnasDatatableComentarios = array($column1,$column2,$column3,$column4);
+		$data['columnsComentarios'] = $columnasDatatableComentarios;
+		$data['dataComentarios'] = json_decode($clientesComentariosModel->getByCliente($id));
+		
+		foreach ($data['dataComentarios'] as $item) {
+			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">Editar</button>';
+			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$item->btnEditar = $buttonEditComentario;
+			$item->btnEliminar = $buttonDeleteComentario;
+		}
 
 		$BancoModel = new BancoModel();
 		$data['bancos']=json_decode($BancoModel->getAll());
@@ -207,6 +225,53 @@ class Clientes extends BaseController
 		$artDisponibles= json_decode($model->getArticulosDisponibles());
 		$articulosCliente=json_decode($model->getByCliente($idCliente));
 		return json_encode(array($articulosCliente,$artDisponibles));
+	}
+	
+	public function guardarComentarioCliente()
+	{		
+		$response = json_decode($this->request->getPost('data'));
+		$id = $response->id;
+		$idCliente = $response->idCliente;
+		$comentario = $response->comentario;
+
+		$model = new ClienteComentarioModel();
+		$Data = [				
+			'CLIENTE_ID' => $idCliente,
+			'COMENTARIO' => $comentario
+		];
+		if ($id==0){
+			$id = $model->insert($Data);
+		} else{
+			$Data['ID']=$id;			
+			$id = $model->save($Data);
+		}
+		$comentariosCliente=json_decode($model->getByCliente($idCliente));
+		foreach ($comentariosCliente as $item) {
+			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">Editar</button>';
+			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$item->btnEditar = $buttonEditComentario;
+			$item->btnEliminar = $buttonDeleteComentario;
+		}
+		return json_encode(array($comentariosCliente));
+	}
+
+	public function eliminarComentarioCliente()
+	{		
+		$response = json_decode($this->request->getPost('data'));
+		$id = $response->id;
+		$idCliente = $response->idCliente;
+
+		$model = new ClienteComentarioModel();
+		$answer = $model->deleteById($id);
+		
+		$comentariosCliente=json_decode($model->getByCliente($idCliente));
+		foreach ($comentariosCliente as $item) {
+			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">Editar</button>';
+			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$item->btnEditar = $buttonEditComentario;
+			$item->btnEliminar = $buttonDeleteComentario;
+		}
+		return json_encode(array($comentariosCliente));
 	}
 
 	// Borrar

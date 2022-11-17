@@ -248,27 +248,50 @@
                         <div class="nav-tabs-boxed" name="tabs">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
+                                    <!-- TAB COMENTARIOS -->
+                                    <a class="nav-link active" data-toggle="tab" href="#comentarios-1"
+                                        role="tab" aria-controls="comentarios" aria-selected="true">
+                                        <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">Comentarios</font>
+                                        </font>
+                                    </a>
+                                </li>                
+                                <li class="nav-item">
                                     <!-- TAB ARTICULOS -->
-                                    <a class="nav-link" data-toggle="tab" href="#home-1" role="tab"
-                                        aria-controls="home" aria-selected="true">
+                                    <a class="nav-link" data-toggle="tab" href="#articulos-1" role="tab"
+                                        aria-controls="articulos" aria-selected="false">
                                         <font style="vertical-align: inherit;">
                                             <font style="vertical-align: inherit;">Artículos</font>
                                         </font>
                                     </a>
-                                </li>                                
+                                </li>
                                 <li class="nav-item">
                                     <!-- TAB RECIBOS -->
-                                    <a class="nav-link " data-toggle="tab" href="#profile-1"
-                                        role="tab" aria-controls="profile" aria-selected="false">
+                                    <a class="nav-link" data-toggle="tab" href="#recibos-1"
+                                        role="tab" aria-controls="recibos" aria-selected="false">
                                         <font style="vertical-align: inherit;">
                                             <font style="vertical-align: inherit;">Recibos</font>
                                         </font>
                                     </a>
                                 </li>
-
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane" id="home-1" role="tabpanel">
+                                <div class="tab-pane active" id="comentarios-1" role="tabpanel">
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <button type="Button" onclick="NuevoComentario()" id="btnNuevoComentario" class="btn btn-primary mb-2 ml-2" >Nuevo comentario</button>
+                                        </div>
+                                    </div>
+                                    <div id="tablaComentarios" name="tablaComentarios">
+                                    <!--Tabla comentarios -->
+                                    <?php if(isset($columnsComentarios))
+                                    {                                        
+                                        dataTable("", $columnsComentarios, $dataComentarios, 'Comentarios', '4', 'text-center', "0", 4, false, 0, 'datatableComentarios');
+                                    }
+                                    ?>
+                                    </div>
+                                </div>                                
+                                <div class="tab-pane" id="articulos-1" role="tabpanel">
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <button type="Button" onclick="AsignarArticulo()" id="btnAsignarArticulo" class="btn btn-primary mb-2 ml-2" >Asignar articulo</button>
@@ -307,7 +330,7 @@
                                     </div>
                                 </div>
 
-                                <div class="tab-pane active" id="profile-1" role="tabpanel">
+                                <div class="tab-pane" id="recibos-1" role="tabpanel">
                                     <!--Tabla recibos -->
                                     <?php if(isset($columnsRecibos[0]))
                                     {
@@ -342,6 +365,28 @@
                             </div>
                         </div>
                     </div>
+                    <!--Modal para los comentarios-->
+                    <div class="modal fade" id="modalComentarios" tabindex="-1" role="dialog" aria-labelledby="modalComentarios" aria-hidden="true">
+                        <div class="modal-dialog" role="document"  >
+                            <div class="modal-content">
+                                <div style="background-color:white;" class="modal-header">
+                                    <h5 class="modal-title" id="modalComentariosLabel"></h5>
+                                    <button id="btnClosemodalComentarios" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span style="background-color:black;" aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div style="background-color:white;" class="modal-body" id="divModal">
+                                    <div class="row">
+                                        <textarea name="comentario" id="comentario" rows="4" cols="50"
+                                        placeholder="Introduce comentario"></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <button type="Button" onclick="GuardarComentario()" id="btnGuardarComentario" class="btn btn-primary mb-2 ml-2" >Guardar</button>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
                     <!-- Errores de formulario -->
                     <?php if (isset($validation)){ ?>
                     <div class="col-12">
@@ -379,7 +424,8 @@ $( document ).ready(function() {
     <?php if (isset($data[0])){?> 
         var data=<?php echo json_encode($data[0]); ?>;
         idCliente=data.ID;
-    <?php }?>    
+    <?php }?>
+
 });
 
 function AsignarArticulo(input)
@@ -394,6 +440,31 @@ function AsignarArticulo(input)
             $("#modalSeleccionArticulos").modal('show');
             ShowAlGuardar=1;
         }
+    }
+}
+
+function NuevoComentario(input)
+{
+    console.log(idCliente);
+    if(idCliente!=0){
+        $('#modalComentarios').data('id', 0);
+        $("#comentario").val('');
+        $("#modalComentarios").modal('show');        
+    }
+}
+
+function EditarComentario(boton)
+{
+    // var btn = boton.parentElement.parentElement;
+    var linea = boton.parentElement.parentElement;
+    var table = $("#datatableComentarios").dataTable();
+    var row = table.find("tr").eq(linea.rowIndex);
+    var data = $("#datatableComentarios").dataTable().fnGetData(row);       
+   
+    if(idCliente!=0){
+        $("#comentario").val(data.Comentario);        
+        $('#modalComentarios').data('id', data.ID);        
+        $("#modalComentarios").modal('show');        
     }
 }
 
@@ -495,54 +566,86 @@ function GuardarCliente()
     //     }, 5000)
     // }
 
-};
+}
 
-    function AñadirArticulo(boton)
-    {
-        console.log('llego');
-        var linea = boton.parentElement.parentElement;
-        console.log('linea '+linea);
-        var table = $("#datatableArticulosDisponibles").dataTable();
-        var row = table.find("tr").eq(linea.rowIndex);
-        var data = $("#datatableArticulosDisponibles").dataTable().fnGetData(row);
-        console.log('data '+data);
-        var idArticulo=data.ID;
-        console.log('articulo '+idArticulo);
-        var numero=data.Número;
-        var letra=data.Letra;
-        var categoria=data.Categoría;
-        var precio=data.Precio;
-        console.log('articulo '+idArticulo, 'num'+numero, 'letra'+letra, 'cat'+categoria,'precio'+precio);
+function AñadirArticulo(boton)
+{
+    console.log('llego');
+    var linea = boton.parentElement.parentElement;
+    console.log('linea '+linea);
+    var table = $("#datatableArticulosDisponibles").dataTable();
+    var row = table.find("tr").eq(linea.rowIndex);
+    var data = $("#datatableArticulosDisponibles").dataTable().fnGetData(row);
+    console.log('data '+data);
+    var idArticulo=data.ID;
+    console.log('articulo '+idArticulo);
+    var numero=data.Número;
+    var letra=data.Letra;
+    var categoria=data.Categoría;
+    var precio=data.Precio;
+    console.log('articulo '+idArticulo, 'num'+numero, 'letra'+letra, 'cat'+categoria,'precio'+precio);
 
-        var parametros = JSON.stringify({
-            idCliente:idCliente,
-            idArticulo:idArticulo
-        });
-        $.ajax({
-            data: {
-                'data': parametros
-            },
-            dataType: "json",
-            //data: formData,
-            url: '<?= base_url() ?>/clientes/guardarArticuloCliente',
-            type: 'post',
-            beforeSend: function() {
-                $("#resultado").html("Procesando, espere por favor...");
-            },
-            success: function(response) {
-                    //Cargamos los articulos en la tabla
-                    console.log(response);
-                    var ArticulosCliente = response[0];
-                    var ArticulosDisponibles = response[1];
-                    CargarTablaArticulosCliente(ArticulosCliente);
-                    CargarTablaSeleccion(ArticulosDisponibles);
-                }
-            
-        });
-        $("#modalSeleccionArticulos").modal('hide');
-    }  
+    var parametros = JSON.stringify({
+        idCliente:idCliente,
+        idArticulo:idArticulo
+    });
+    $.ajax({
+        data: {
+            'data': parametros
+        },
+        dataType: "json",
+        //data: formData,
+        url: '<?= base_url() ?>/clientes/guardarArticuloCliente',
+        type: 'post',
+        beforeSend: function() {
+            $("#resultado").html("Procesando, espere por favor...");
+        },
+        success: function(response) {
+                //Cargamos los articulos en la tabla
+                console.log(response);
+                var ArticulosCliente = response[0];
+                var ArticulosDisponibles = response[1];
+                CargarTablaArticulosCliente(ArticulosCliente);
+                CargarTablaSeleccion(ArticulosDisponibles);
+            }
+        
+    });
+    $("#modalSeleccionArticulos").modal('hide');
+}
 
-function QuitarArticulo(id)
+function GuardarComentario()
+{    
+    var id=$("#modalComentarios").data('id');    
+    var comentario=$("#comentario").val();
+    var parametros = JSON.stringify({
+        id:id,
+        idCliente:idCliente,
+        comentario:comentario
+    });
+    console.log(parametros);
+    $.ajax({
+        data: {
+            'data': parametros
+        },
+        dataType: "json",
+        //data: formData,
+        url: '<?= base_url() ?>/clientes/guardarComentarioCliente',
+        type: 'post',
+        beforeSend: function() {
+            $("#resultado").html("Procesando, espere por favor...");
+        },
+        success: function(response) {
+                //Cargamos los articulos en la tabla
+                console.log(response);
+                var ComentariosCliente = response[0];
+                CargarTablaComentarios(ComentariosCliente);
+            }
+        
+    });
+    $("#modalComentarios").modal('hide');
+}
+
+function QuitarArticulo(boton)
 {
     console.log(id);
     var parametros = JSON.stringify({
@@ -566,28 +669,52 @@ function QuitarArticulo(id)
                 CargarTablaSeleccion(ArticulosDisponibles);        
             }    
         });
-}    
+}
+
+function EliminarComentario(id)
+{    
+    if (confirm('¿Eliminar comentario?') == true) {
+    
+        var parametros = JSON.stringify({
+            id:id,
+            idCliente:idCliente,
+        });
+        console.log(parametros);
+        $.ajax({
+            data: {
+                'data': parametros
+            },
+            dataType: "json",
+            //data: formData,
+            url: '<?= base_url() ?>/clientes/eliminarComentarioCliente',
+            type: 'post',
+            beforeSend: function() {
+                $("#resultado").html("Procesando, espere por favor...");
+            },
+            success: function(response) {
+                    //Cargamos los articulos en la tabla
+                    console.log(response);
+                    var ComentariosCliente = response[0];
+                    CargarTablaComentarios(ComentariosCliente);
+                    // if (ComentariosCliente.length>0){
+                    //     $("#tablaComentarios").show;
+                    // } else{
+                    //     $("#tablaComentarios").hide;
+                    // }
+                }
+            
+        });
+        $("#modalComentarios").modal('hide');
+    }
+}
 
 function ImprimirArticulo(id)
 {
     console.log(id);
-    // var parametros = JSON.stringify({
-    //     id:id,
-    // });
-    // $.ajax({
-    //     data: {
-    //         'data': parametros
-    //     },
-    //     dataType: "json",
-    //     //data: formData,
-    //     url: '<?= base_url() ?>/clientes/ImprimirArticuloCliente',
-    //     type: 'post',
-    //     success: function(response) {      
-    //     }    
-    // });
+
     //con Window.open abrimos el pdf en una nueva pestaña
     window.open("<?= base_url() ?>/clientes/imprimirArticuloCliente/"+id,'_blank');    
-}   
+}
 
 function CargarTablaArticulosCliente(dataArticulos)
 {
@@ -618,10 +745,18 @@ function CargarTablaArticulosCliente(dataArticulos)
 
 function CargarTablaSeleccion(articulosDisponibles)
 {
-    // var table = $("#datatableArticulosDisponibles").dataTable();
     $("#datatableArticulosDisponibles").DataTable().clear();
     $("#datatableArticulosDisponibles").DataTable().rows.add(articulosDisponibles);
     $("#datatableArticulosDisponibles").DataTable().draw();
+}
+
+function CargarTablaComentarios(comentariosCliente)
+{
+    console.log($("#datatableComentarios").DataTable());
+    console.log($("#datatableComentarios"));
+    $("#datatableComentarios").DataTable().clear();
+    $("#datatableComentarios").DataTable().rows.add(comentariosCliente);
+    $("#datatableComentarios").DataTable().draw();
 }
 
 function validar_dni_nif_nie(value){
