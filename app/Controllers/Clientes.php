@@ -26,7 +26,13 @@ class Clientes extends BaseController
 		$ClienteModel = new ClienteModel();
 		$articulosClientesModel = new ArticuloClienteModel();
 
-		$data['columnsclientes'] = json_decode($ClienteModel->getAll());
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>'Nombre');
+        $column3= array ('Field'=>'Apellidos');
+        $column4= array ('Field'=>'DNI');
+
+        $columnasDatatable = array($column1,$column2,$column3,$column4);
+		$data['columnsclientes'] = $columnasDatatable;
 		$data['dataclientes'] = json_decode($ClienteModel->getAll());
 
 		foreach ($data['dataclientes'] as $item) {
