@@ -66,17 +66,17 @@
 
 
             ?>
-            <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/chequeo">
+            <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/recibos">
                 <svg class="c-sidebar-nav-icon">
                     <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-clipboard"></use>
-                </svg> Chequeo</a>
+                </svg> Recibos</a>
             </li>
             <?php if(session()->get('admin')==1){?>
-                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/consultas">
+                <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/consultas">
                     <svg class="c-sidebar-nav-icon">
                         <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-search"></use>
                     </svg> Consultas</a>
-                </li>            
+                </li>             -->
                 <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">                
                     <svg class="c-sidebar-nav-icon">                        
                         <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-trello"></use>
@@ -87,9 +87,6 @@
                         </li>
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/articulos">
                         Articulos</a>
-                        </li> 
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/recibos">
-                        Recibos</a>
                         </li> 
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/bancos">
                         Bancos</a>

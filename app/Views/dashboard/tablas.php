@@ -10,13 +10,12 @@
                 <div class="row col-12">
                     <div class="col-4"><a class="btn btn-primary tablasbtn" href="<?= base_url()?>/clientes">Clientes</a></div>                    
                     <div class="col-4"><a href="<?= base_url()?>/articulos" class="btn btn-primary tablasbtn">Articulos</a></div>
-                    <div class="col-4"><a href="<?= base_url()?>/formularios" class="btn btn-primary tablasbtn">Recibos</a></div>
-                    
+                    <div class="col-4"><a href="<?= base_url()?>/categorias" class="btn btn-primary tablasbtn">Categorias</a></div>
                 </div>
                 <div class="row col-12 mt-4">
-                    <div class="col-4"><a href="<?= base_url()?>/bancos" class="btn btn-primary tablasbtn">Bancos</a></div>
-                    <div class="col-4"><a href="<?= base_url()?>/categorias" class="btn btn-primary tablasbtn">Categorias</a></div>
+                    <div class="col-4"><a href="<?= base_url()?>/bancos" class="btn btn-primary tablasbtn">Bancos</a></div>                    
                     <div class="col-4"><a class="btn btn-primary tablasbtn" href="<?= base_url()?>/usuarios">Usuarios</a></div>
+                    <!-- <div class="col-4"><a href="<?= base_url()?>/formularios" class="btn btn-primary tablasbtn">Recibos</a></div> -->
                 </div>
             </div>
         </div>
