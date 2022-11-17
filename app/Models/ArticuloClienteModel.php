@@ -49,7 +49,7 @@ class ArticuloClienteModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TAC.ID,
-                        TA.NUMERO As 'Numero',
+                        TA.NUMERO As 'Número',
                         TA.LETRA AS 'Letra',
                         TC.NOMBRE AS 'Categoría',
                         TC.PRECIO AS 'Precio'

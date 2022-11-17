@@ -315,7 +315,7 @@
                                                 <?php if (isset($dataArticulos) && $dataArticulos != null) {
                                                     foreach ($dataArticulos as $articulo) { ?>
                                                 <tr>
-                                                    <td><?= $articulo->Numero ?></td>
+                                                    <td><?= $articulo->Número ?></td>
                                                     <td><?= $articulo->Letra ?></td>
                                                     <td><?= $articulo->Categoría ?></td>
                                                     <td><?= $articulo->Precio ?></td>
@@ -731,7 +731,7 @@ function CargarTablaArticulosCliente(dataArticulos)
     html += '<tbody id="articulosCliente">';
     dataArticulos.forEach(function(articulo) {
         html += '<tr>';
-        html += '<td>'+ articulo.Numero +'</td>';
+        html += '<td>'+ articulo.Número+'</td>';
         html += '<td>'+ articulo.Letra +'</td>';
         html += '<td>'+ articulo.Categoría +'</td>';
         html += '<td>'+ articulo.Precio +'</td>';
@@ -791,7 +791,6 @@ function fn_ValidateIBAN(IBAN) {
 
     var letra1,letra2,num1,num2;
     var isbanaux;
-    var numeroSustitucion;
     //La longitud debe ser siempre de 24 caracteres
     if (IBAN.length != 24) {
         return false;
