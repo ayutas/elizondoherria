@@ -23,7 +23,7 @@ class Bancos extends BaseController
 		$column1= array ('Field'=>'ID');
 		$column2= array ('Field'=>'Código');
 		$column3= array ('Field'=>'Nombre');
-		$column4= array ('Field'=>'Código País');
+		$column4= array ('Field'=>'País');
 		
 		$columnasDatatable = array($column1,$column2,$column3,$column4);
 		$data['columns'] = $columnasDatatable;
@@ -78,6 +78,7 @@ class Bancos extends BaseController
 
 				'codigo' =>  'required|min_length[3]|max_length[6]',
 				'nombre' =>  'required|min_length[3]|max_length[250]',
+				'pais' =>  'required|min_length[2]|max_length[4]',
 			];
 
 			// Comprobación de las validaciones
@@ -85,7 +86,8 @@ class Bancos extends BaseController
 
 				$newData = [
 					'CODIGO' =>  $this->request->getVar('codigo'),
-					'NOMBRE' => $this->request->getVar('nombre')					
+					'NOMBRE' => $this->request->getVar('nombre'),
+					'COD_PAIS' => $this->request->getVar('pais')
 				];
 
 				// Guardamos el error para mostrar en la vista
@@ -97,7 +99,8 @@ class Bancos extends BaseController
 				$newData = [
 					'ID' => $id,
 					'CODIGO' => $this->request->getVar('codigo'),
-					'NOMBRE' => $this->request->getVar('nombre')
+					'NOMBRE' => $this->request->getVar('nombre'),
+					'COD_PAIS' => $this->request->getVar('pais')
 				];
 
 				//Guardamos
@@ -140,7 +143,8 @@ class Bancos extends BaseController
 
 			$rules = [
 				'codigo' =>  'required|min_length[3]|max_length[6]|is_unique[tbl_bancos.CODIGO]',
-				'nombre' =>  'required|min_length[3]|max_length[250]'
+				'nombre' =>  'required|min_length[3]|max_length[250]',
+				'pais' =>  'required|min_length[2]|max_length[4]',
 			];
 
 			// Comprobación de las validaciones
@@ -149,6 +153,7 @@ class Bancos extends BaseController
 				$newData = [
 					'CODIGO' => $this->request->getVar('codigo'),
 					'NOMBRE' => $this->request->getVar('nombre'),
+					'COD_PAIS' => $this->request->getVar('pais')
 				];
 
 				// Guardamos el error para mostrar en la vista
@@ -161,6 +166,7 @@ class Bancos extends BaseController
 				$newData = [
 					'CODIGO' => $this->request->getVar('codigo'),
 					'NOMBRE' => $this->request->getVar('nombre'),
+					'COD_PAIS' => $this->request->getVar('pais')
 				];
 
 				//Guardamos

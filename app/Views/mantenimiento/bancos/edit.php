@@ -26,7 +26,7 @@
                                     <input class="form-control py-2" id="codigo" name="codigo" type="text"
                                         placeholder="Introduce codigo" value="<?php if(isset($data[0]))
                                         {
-                                            echo $data[0]->Codigo;
+                                            echo $data[0]->Código;
                                         }  
                                         else{
                                             echo set_value('codigo');
@@ -50,6 +50,21 @@
                                     <input class="form-control py-2" id="id" name="id" type="hidden"
                                         placeholder="Introduce nombre" value="" />
                                 </div>
+                                <!-- Campo codigo pais -->
+                                <div class="form-group">
+                                    <label class="medium mb-1" for="pais">Código pais</label>
+                                    <input class="form-control py-2" id="pais" name="pais" type="text"
+                                        placeholder="Introduce Código País" value="<?php if(isset($data[0]))
+                                        {
+                                            echo $data[0]->País;
+                                        }  
+                                        else{
+                                            echo set_value('pais');
+                                        }
+                                        ?>" />
+                                    <input class="form-control py-2" id="id" name="id" type="hidden"
+                                        placeholder="Introduce  Código País" value="" />
+                                </div>                                
                             </div>        
 
                             <!-- Errores de formulario -->

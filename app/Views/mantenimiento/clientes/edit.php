@@ -187,7 +187,7 @@
                                         <?php if (isset($bancos)) {
                                             foreach ($bancos as $banco) { ?>
                                                 <option class="" value="<?php echo $banco->ID; ?>">
-                                                <?php echo $banco->Codigo .' - '.$banco->Nombre; ?></option><?php
+                                                <?php echo $banco->Código .' - '.$banco->Nombre; ?></option><?php
                                                 }
                                             }
                                         ?>
@@ -831,5 +831,22 @@ function getnumIBAN(letra) {
     ls_letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     return ls_letras.search(letra) + 10;
 }
+
+$("#banco").on('change', function() {
+    if ($("#iban").val()==''){
+        if ($('#banco').val() == 0) {
+            $("#iban").val('');
+        } else {
+            
+            var banco = $('#banco').val();
+            var arrayBancos = <?php echo json_encode($bancos); ?>;
+            var arrayBanco = $.grep(arrayBancos, function(x) {
+                return x.ID == banco;
+            });
+            console.log(arrayBanco,banco,arrayBancos);
+            $("#iban").val(arrayBanco[0].País);
+        }
+    }
+});
 
 </script>

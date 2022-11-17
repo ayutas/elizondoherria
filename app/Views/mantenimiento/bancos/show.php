@@ -25,7 +25,7 @@
                         </form>
 
                         <?php // Miga de pan
-                        dataTable("Bancos",$columns,$data,'bancos','3,4','text-center',"0",5);     
+                        dataTable("Bancos",$columns,$data,'bancos','4,5','text-center',"0",6);     
                         ?>
 
                     </div>

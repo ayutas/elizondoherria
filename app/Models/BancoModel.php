@@ -9,6 +9,7 @@ class BancoModel extends Model
     protected $allowedFields = [
         'CODIGO',
         'NOMBRE',
+        'COD_PAIS'
     ];
     
 
@@ -16,8 +17,9 @@ class BancoModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TD.ID As 'ID',
-                        TD.CODIGO As 'Codigo',
-                        TD.NOMBRE As 'Nombre'                        
+                        TD.CODIGO As 'Código',
+                        TD.NOMBRE As 'Nombre',
+                        TD.COD_PAIS As 'País'
                 FROM tbl_bancos TD";
 
         if($id)
