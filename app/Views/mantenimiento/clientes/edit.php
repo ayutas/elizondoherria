@@ -571,20 +571,22 @@ function QuitarArticulo(id)
 function ImprimirArticulo(id)
 {
     console.log(id);
-    var parametros = JSON.stringify({
-        id:id,
-    });
-    $.ajax({
-        data: {
-            'data': parametros
-        },
-        dataType: "json",
-        //data: formData,
-        url: '<?= base_url() ?>/clientes/ImprimirArticuloCliente',
-        type: 'post',
-        success: function(response) {      
-        }    
-    });
+    // var parametros = JSON.stringify({
+    //     id:id,
+    // });
+    // $.ajax({
+    //     data: {
+    //         'data': parametros
+    //     },
+    //     dataType: "json",
+    //     //data: formData,
+    //     url: '<?= base_url() ?>/clientes/ImprimirArticuloCliente',
+    //     type: 'post',
+    //     success: function(response) {      
+    //     }    
+    // });
+    //con Window.open abrimos el pdf en una nueva pestaña
+    window.open("<?= base_url() ?>/clientes/imprimirArticuloCliente/"+id,'_blank');    
 }   
 
 function CargarTablaArticulosCliente(dataArticulos)

@@ -224,10 +224,9 @@ class Clientes extends BaseController
 		return redirect()->to(base_url() . "/" .  $this->redireccion . '/show');
 	}
 	
-	public function imprimirArticuloCliente()
+	public function imprimirArticuloCliente($id)
 	{
 		$response = json_decode($this->request->getPost('data'));
-		$id = $response->id;
 		$model = new ArticuloClienteModel();		
 		$datos = json_decode($model->getById($id));
 		// return var_dump($datos);
@@ -320,11 +319,12 @@ class Clientes extends BaseController
 		$html .= '</tr>';
 		$html .= '</tbody>';
 		$html .= '</table>';
+		$html .= '</body>';
 
 		$html .= '</html>';
 
 
-        return var_dump($html);
+        // return var_dump($html);
 
 
         $options = new Options();
@@ -341,10 +341,10 @@ class Clientes extends BaseController
         // Render the HTML as PDF
         $dompdf->render();       
         
-        //---------------------------------------------------
-        $output = $dompdf->output();
+        //---------------------------------------------------        
         header("Content-type:application/pdf");
-        header("Content-Disposition:attachment;filename=consulta.pdf");
+        header("Content-Disposition:inline;filename=consulta.pdf");
+		$output = $dompdf->output();
         echo ($output);
         exit;
 	}
