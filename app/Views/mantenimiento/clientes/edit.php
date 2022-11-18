@@ -645,7 +645,7 @@ function GuardarComentario()
     $("#modalComentarios").modal('hide');
 }
 
-function QuitarArticulo(boton)
+function QuitarArticulo(id)
 {
     console.log(id);
     var parametros = JSON.stringify({
