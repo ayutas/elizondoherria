@@ -116,5 +116,33 @@ class ArticuloClienteModel extends Model
 		return $query->getResult();
     }    
    
+    public function getAll(){
+        $db = \Config\Database::connect();
+        
+        $sql = "SELECT  '' AS '',
+                        TAC.ID,
+                        CONCAT(IFNULL(TC.NOMBRE,''),IFNULL(TC.APELLIDOS,'')) AS 'Nombre',
+                        TC.DNI AS 'DNI',
+                        CONCAT(TA.NUMERO,TA.LETRA) AS 'Número',
+                        TCA.NOMBRE AS 'Categoría',
+                        TCA.PRECIO AS 'Importe',
+                        CONCAT(TC.IBAN,TB.CODIGO,TC.AGENCIA,TC.CUENTA) AS 'Cuenta'                        
+                FROM $this->table  as TAC
+                INNER JOIN tbl_clientes AS TC
+                ON TAC.CLIENTE_ID=TC.ID
+                INNER JOIN tbl_bancos AS TB
+                ON TC.BANCO_ID=TB.ID
+                INNER JOIN tbl_articulos AS TA
+                ON TAC.ARTICULO_ID=TA.ID
+                INNER JOIN tbl_categorias AS TCA
+                ON TA.CATEGORIA_ID=TCA.ID
+                WHERE ISNULL(TAC.DELETED_AT)";
+
+        $query = $db->query($sql);
+		
+		$results = $query->getResult();
+		
+        return json_encode($results);
+    }
 }
 

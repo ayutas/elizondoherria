@@ -133,22 +133,25 @@ function dataTableConsultas($title, $columns, $data, $slug, $targets = 0, $targe
 <?php
     $arrayData = [];
     $counter = 1;
-    if ($columns != NULL) {
-        foreach ($columns[0] as $key => $value) {
-            $last = sizeof((array)$columns[0]);
-            switch ($counter) {
-                case $last:
-                    array_unshift($arrayData, "{data:'btnEditar',title:'',class:'noImprimir'},");
+    if($columns != NULL) {
+        foreach($columns as $item){
+            $last = sizeof($columns);
+            switch($counter) {
+                case $last :      
+                    array_push($arrayData,"{data:'".$item['Field']."',title:'".$item['Field']."'},");
+                    // array_push($arrayData,"{data:'btnEditar',title:''},");   
+                    // array_push($arrayData,"{data:'btnEliminar',title:''}");
                     break;
                 default:
-                    array_push($arrayData, "{data:'" . $key . "',title:'" . $key . "'},");
-                    $counter++;
+                    array_push($arrayData,"{data:'".$item['Field']."',title:'".$item['Field']."'},");
+                    $counter++;    
             }
+
+    
         };
     } else {
         $arrayData = "";
     }
-
     //return var_dump($);
     ?>
 
@@ -157,54 +160,55 @@ function dataTableConsultas($title, $columns, $data, $slug, $targets = 0, $targe
 $(document).ready(function() {
     var table = $('#<?= $idTable ?>').DataTable({
         data: <?php echo json_encode($data) ?>,
-        dom: 'Bfrtip',
+        // dom: 'Bfrtip',
         select: {
             style: 'multi',
-            selector: 'td:nth-child(2)'
+            selector: 'td:nth-child(1)'
         },
         order: [
             [1, 'asc']
         ],
-        buttons: [{
-                text: "Revisado",
-                action: function(e, dt, node, config) {
-                    var count = table.rows({
-                        selected: true
-                    }).count();
-                    var rows;
-                    if (count == 0) {
-                        //si no hay ninguna fila seleccionada, cojo todas
-                        rows = table.rows().data();
-                    } else {
-                        rows = table.rows({
-                            selected: true
-                        }).data();
-                    }
+        buttons: [
+            // {
+            //     text: "Revisado",
+            //     action: function(e, dt, node, config) {
+            //         var count = table.rows({
+            //             selected: true
+            //         }).count();
+            //         var rows;
+            //         if (count == 0) {
+            //             //si no hay ninguna fila seleccionada, cojo todas
+            //             rows = table.rows().data();
+            //         } else {
+            //             rows = table.rows({
+            //                 selected: true
+            //             }).data();
+            //         }
 
-                    var arrayIds = [];
-                    $.each(rows, function(key, value) {
-                        arrayIds.push(value.ID);
-                    });
-                    console.log(arrayIds);
-                    $.ajax({
-                        data: {
-                            'data': arrayIds
-                        },
-                        dataType: "json",
-                        //data: formData,
-                        url: '<?= base_url() ?>/Consultas/MarcarRevisados',
-                        type: 'post',
-                        beforeSend: function() {
+            //         var arrayIds = [];
+            //         $.each(rows, function(key, value) {
+            //             arrayIds.push(value.ID);
+            //         });
+            //         console.log(arrayIds);
+            //         $.ajax({
+            //             data: {
+            //                 'data': arrayIds
+            //             },
+            //             dataType: "json",
+            //             //data: formData,
+            //             url: '<?= base_url() ?>/Consultas/MarcarRevisados',
+            //             type: 'post',
+            //             beforeSend: function() {
 
-                        },
-                        success: function(response) {
-                            window.location.replace(
-                                "<?= base_url() ?>/Consultas/show");
-                        }
+            //             },
+            //             success: function(response) {
+            //                 window.location.replace(
+            //                     "<?= base_url() ?>/Consultas/show");
+            //             }
 
-                    });
-                }
-            },
+            //         });
+            //     }
+            // },
             {
                 extend: 'excelHtml5',
                 text: "Excel",
@@ -461,6 +465,152 @@ $(document).ready(function() {
     
     table.button(0).nodes().css('background', 'white');
     $("div.toolbarSeleccion").html('<h1 style="float:left; margin-top:-5px;" class="titleGruposFormularios"><?= $totalRegistros?></h1>');
+
+}
+
+
+
+);
+</script>
+<?php
+}
+
+function dataTablePersonalizadaConCheck($columns,$data,$slug,$targets = 0,$targetClass = 'text-center',$ocultar="", $totalRegistros=0,  $col = 12,$color = false,$colorCol = 0,$idTable='dataTable',$incluirBotonSeleccionar = false, $idColumnaPonerColor = 0 )
+{ ?>
+
+<div class="card">
+    <div class="card-body bg-white">
+        <!-- DEMO DATATABLE -->
+        <div class="dataTables_wrapper dt-bootstrap4 no-footer table-responsive table-striped datatableSeleccion">
+            <table class="table table" style="color:black;border-color:#ced4d9;" id="<?=$idTable?>"
+                width="100%" cellspacing="0">
+                <thead>
+                </thead>
+                <tfoot>
+                </tfoot>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- FIN DEMO DATATABLE -->
+</div>
+
+<?php 
+    $arrayData = [];
+    $counter = 1;
+    if($columns != NULL) {
+        foreach($columns as $item){
+            $last = sizeof($columns);
+            switch($counter) {
+                case $last :      
+                    array_push($arrayData,"{data:'".$item['Field']."',title:'".$item['Field']."'},");
+                    // array_push($arrayData,"{data:'btnEditar',title:''},");   
+                    // array_push($arrayData,"{data:'btnEliminar',title:''}");
+                    break;
+                default:
+                    array_push($arrayData,"{data:'".$item['Field']."',title:'".$item['Field']."'},");
+                    $counter++;    
+            }
+
+    
+        };
+    } else {
+        $arrayData = "";
+    }
+         
+        //return var_dump($);
+    ?>
+
+<script>
+// Generación de datatable
+$(document).ready(function() {
+    var table = $('#<?=$idTable?>').DataTable({
+        "order": [[1, 'asc']],
+        "pagingType": "simple",
+        "dom": '<"toolbar"><"#input-Botones-Datatable"B><"#input-filter-Datatable"f>t<"#input-length-Datatable"l><"#input-pagination-Datatable"p><"#input-information-Datatable"i>',
+        buttons: 
+        [{
+            extend: 'collection',
+            className: "exportar",
+            text: 'Exportar tabla',
+            buttons:
+            [{
+            extend: "pdf", className: "exportar"
+            }],
+        }],
+
+        
+        data: <?php echo json_encode($data) ?>,
+        columns: [
+            <?php 
+                if($arrayData != ""){
+                    foreach ($arrayData as $item){
+                        echo $item;
+                    }
+                } else {
+                    $arrayData= "";
+                }
+                
+                    ?>
+        ],
+        <?php if(isset($color) && $color != "") {
+                    ?> "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $(nRow).find('td:eq(<?=$idColumnaPonerColor?>)').css({"color":"#0f5198"});
+        },
+        <?php
+                } ?> "columnDefs": [{
+                targets: [<?= $targets ?>],
+                className: '<?= $targetClass ?>'
+            },
+            
+            {
+                'targets': 0,
+                'searchable': false,
+                'orderable': false,
+                'className': 'dt-body-center',
+                'render': function (data, type, full, meta){
+                    alert
+                return '<input type="checkbox" onclick="ClickEnCheckIndividual(this)">';
+            }
+            },
+
+            {
+                "targets": [<?= $ocultar?>],
+                "visible": false,
+                "searchable": false
+            },
+        ],
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Líneas por página _MENU_",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "_START_-_END_ de _TOTAL_ items",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "<span class'lupa'><i class='fa fa-search'></i></span>",
+            "searchPlaceholder": "Buscar",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "<span class='datatableSeleccion arrow'>></span>",
+                "sPrevious": "<span class='datatableSeleccion arrow'><</span>"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        
+    });
+
+    
+    table.button(0).nodes().css('background', 'white');
+    $("div.toolbar").html('<h1 style="float:left; margin-top:-5px;" class="titleGruposFormularios"><?= $totalRegistros?></h1>');
 
 }
 

@@ -33,8 +33,6 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Login::index',['filter' => 'noauth']);
 $routes->get('/logout', 'Login::logout',['filter' => 'auth']);
 $routes->get('/dashboard', 'Dashboard::index',['filter' => 'auth']);
-$routes->get('/chequeo', 'Dashboard::chequeo',['filter' => 'auth']);
-$routes->get('/chequeoRecepcion', 'ChequeoRecepcion::nuevoRegistro',['filter' => 'auth']);
 $routes->get('/consultas', 'Consultas::show',['filter' => 'auth']);
 $routes->get('/tablas', 'Dashboard::tablas',['filter' => 'auth']);
 
@@ -53,11 +51,10 @@ $routes->get('/clientes/edit', 'Clientes::edit',['filter' => 'auth']);
 $routes->get('/clientes/new', 'Clientes::new',['filter' => 'auth']);
 
 //Recibos
-$routes->get('/formularios', 'Formularios::show',['filter' => 'auth']);
-$routes->get('/formularios/show', 'Formularios::show',['filter' => 'auth']);
-$routes->get('/formularios/edit', 'Formularios::edit',['filter' => 'auth']);
-$routes->get('/formularios/new', 'Formularios::edit',['filter' => 'auth']);
-$routes->get('formularios/agregaritems', 'Formularios::agregarItems',['filter' => 'auth']);
+$routes->get('/recibos', 'Recibos::show',['filter' => 'auth']);
+$routes->get('/recibos/show', 'Recibos::show',['filter' => 'auth']);
+$routes->get('/recibos/edit', 'Recibos::edit',['filter' => 'auth']);
+$routes->get('/recibos/new', 'Recibos::new',['filter' => 'auth']);
 
 //Mto Bancos
 $routes->get('/bancos', 'Bancos::show',['filter' => 'auth']);
