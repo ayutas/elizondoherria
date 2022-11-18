@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\UsuarioModel;
-use App\Models\DelegacionModel;
 
 class Usuarios extends BaseController
 {
