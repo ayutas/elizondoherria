@@ -65,6 +65,7 @@ function CrearXmlRecibos()
     var parametros = JSON.stringify({
         ref:referencia,
     });
+    console.log('llamo');
 
     $.ajax({
         data: {
@@ -73,12 +74,16 @@ function CrearXmlRecibos()
         dataType: "json",
         //data: formData,
         url: '<?= base_url() ?>/Recibos/crearRecibosXML',
+        async:false,
         type: 'post',
         beforeSend: function() {
 
         },
         success: function(response) {
-
+            console.log('descargo');
+            console.log(response);
+            window.open('<?= base_url() ?>/Recibos/DescargarXML',
+                            "_blank");
         }
 
     });

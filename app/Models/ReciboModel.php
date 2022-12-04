@@ -105,8 +105,7 @@ class ReciboModel extends Model
 		$results = $query->getResult();
         $numero =$results[0]->NUMERO;
         
-        $sql = "SET @row_number = $numero;   
-                INSERT INTO $this->table (FECHA, NUMERO, REF, CONCEPTO, ARTICULO_CLIENTE_ID, CLIENTE, DNI, ARTICULO, CATEGORIA, IMPORTE, CUENTA)
+        $sql = "INSERT INTO $this->table (FECHA, NUMERO, REF, CONCEPTO, ARTICULO_CLIENTE_ID, CLIENTE, DNI, ARTICULO, CATEGORIA, IMPORTE, CUENTA)
                 SELECT  '$fecha',(@row_number:=@row_number + 1) ,'$ref', '$concepto', TAC.ID,
                         CONCAT(IFNULL(TC.NOMBRE,''),IFNULL(TC.APELLIDOS,'')) AS 'Nombre',
                         TC.DNI AS 'DNI',
@@ -123,8 +122,9 @@ class ReciboModel extends Model
                 ON TAC.ARTICULO_ID=TA.ID
                 INNER JOIN tbl_categorias AS TCA
                 ON TA.CATEGORIA_ID=TCA.ID
+                CROSS JOIN (SELECT @row_number:=$numero) AS temp
                 WHERE TAC.ID IN ($ids)";
-        
+            
         $query = $db->query($sql);
 		
 		$results = $query->getResult();

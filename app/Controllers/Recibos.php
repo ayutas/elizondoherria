@@ -240,15 +240,14 @@ class Recibos extends BaseController
 		$ids = implode(',',$response->arrayIds);
 		// return var_dump($fecha,$ref,$ids);
 		$model = new ReciboModel();
-		return $model->insertar($fecha,$ref,$concepto,$ids);
-		return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
+		$model->insertar($fecha,$ref,$concepto,$ids);
+		$this->crearRecibosXML($ref);
+		return json_encode(array(true));
+		// return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
 	}
 
-	Public function crearRecibosXML()
-    {
-		$response = json_decode($this->request->getPost('data'));
-		$ref = $response->ref;
-		$ref="PUBLI BESTAK 2022";
+	Public function crearRecibosXML($ref)
+    {		
 		$numRecibos=0;
 
 		$model = new ReciboModel();
@@ -278,13 +277,13 @@ class Recibos extends BaseController
 		{
 			$session = session();
 			$session->setFlashdata('error', 'No se ha encontrado ningún recibo con la referencia introducida');
-			exit;
+			return false;
 		}
 
 		$datosLineas=json_decode($model->ObtenerDatosLineasRemesa($ref));
 		// return var_dump($datosLineas);
 		$file=basename('recibos.xml');
-
+		
 		$xw = new XMLWriter();
 		$xw->openURI($file);
 		// $xw->openURI('php://output');
@@ -427,37 +426,39 @@ class Recibos extends BaseController
 			$xw->endElement();
 		$xw->endDocument();
 		$xw->flush();
+
 		// echo $xw->outputMemory();
 		unset($xw); //important!
-		$this->DescargarXML();
-        // echo ($output);
-		// $fileName = basename('fichero.txt');
-		// $filePath = 'files/'.$fileName;
+		return json_encode(array(true));
+		// $this->DescargarXML();
+        // // echo ($output);
+		// // $fileName = basename('fichero.txt');
+		// // $filePath = 'files/'.$fileName;
 
 		
-		if(file_exists($file)){
-			header('Content-Description: File Transfer');
-			header('Content-Type: text/xml');
-			header('Content-Disposition: attachment; filename="'.$file.'"');
-			header('Expires: 0');
-			header('Cache-Control: must-revalidate');
-			header('Pragma: public');
-			header('Content-Length: ' . filesize($file));
-			readfile($file);
-			exit;
+		// if(file_exists($file)){
+		// 	header('Content-Description: File Transfer');
+		// 	header('Content-Type: text/xml');
+		// 	header('Content-Disposition: attachment; filename="'.$file.'"');
+		// 	header('Expires: 0');
+		// 	header('Cache-Control: must-revalidate');
+		// 	header('Pragma: public');
+		// 	header('Content-Length: ' . filesize($file));
+		// 	readfile($file);
+		// 	exit;
 			
-		// 	// // Define headers
-		// 	// header("Cache-Control: public");
-		// 	// header("Content-Description: File Transfer");
-		// 	// header("Content-Disposition: attachment; filename=test.xml");
-		// 	// header("Content-Type: xml");
+		// // 	// // Define headers
+		// // 	// header("Cache-Control: public");
+		// // 	// header("Content-Description: File Transfer");
+		// // 	// header("Content-Disposition: attachment; filename=test.xml");
+		// // 	// header("Content-Type: xml");
 		
-		// 	// // Read the file
-		// 	// readfile('test.xml');
-		// }else{
-		// 	echo 'The file does not exist.';
-		}
-        exit;
+		// // 	// // Read the file
+		// // 	// readfile('test.xml');
+		// // }else{
+		// // 	echo 'The file does not exist.';
+		// }
+        // exit;
 		// // echo $xw->outputMemory();
 
 

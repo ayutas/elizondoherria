@@ -119,7 +119,8 @@ function CrearRecibos()
 
         },
         success: function(response) {
-
+            window.open('<?= base_url() ?>/Recibos/DescargarXML',
+                            "_blank");            
         }
 
     });
@@ -172,12 +173,16 @@ function CrearXmlRecibos()
         dataType: "json",
         //data: formData,
         url: '<?= base_url() ?>/Recibos/crearRecibosXML',
+        async:false,
         type: 'post',
         beforeSend: function() {
 
         },
         success: function(response) {
-
+            console.log(response);
+            window.open('<?= base_url() ?>/Recibos/DescargarXML',
+                            "_blank");
+                            
         }
 
     });
