@@ -25,7 +25,7 @@
                         </form>
 
                         <?php // Miga de pan    
-                            dataTable("Recibos",$columns,$data,'recibos','11,12','text-center','',13);
+                            dataTable("Recibos",$columns,$data,'recibos','12,13','text-center','0',14);
                         ?>
                     </div>
                 </div>

@@ -30,8 +30,13 @@
                                 </div>
                                 <!-- Campo Referencia -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="referencia">Feferencia</label>
+                                    <label class="medium mb-1" for="referencia">Referencia</label>
                                     <input class="form-control body-form-light" id="referencia" name="referencia" type="text" placeholder="Referencia" />
+                                </div>                                
+                                <!-- Campo Concepto -->
+                                <div class="form-group">
+                                    <label class="medium mb-1" for="concepto">Concepto</label>
+                                    <input class="form-control body-form-light" id="concepto" name="concepto" type="text" placeholder="Concepto" />
                                 </div>
                             </div>
                         </div>
@@ -51,6 +56,9 @@
                         <div class="col-12 form-group mt-4 mb-0">
                             <button class="btn btn-primary btn-block" type="button" onclick="CrearRecibos()">
                                 Crear                            
+                            </button>
+                            <button class="btn btn-primary btn-block" type="button" onclick="CrearXmlRecibos()">
+                                Crear   XML                         
                             </button>
                         </div>
                     </form>
@@ -87,12 +95,15 @@ function CrearRecibos()
 
     var fecha=$("#fecha").val();
     console.log(fecha);
-    var referencia=$("#referencia").val();
+    var referencia=$("#referencia").val();    
     console.log(referencia);
+    var concepto=$("#concepto").val();
+    console.log(concepto);    
 
     var parametros = JSON.stringify({
         fecha:fecha,
         ref:referencia,
+        concepto:concepto,
         arrayIds:arrayIds,
     });
 
@@ -103,6 +114,64 @@ function CrearRecibos()
         dataType: "json",
         //data: formData,
         url: '<?= base_url() ?>/Recibos/CrearRecibos',
+        type: 'post',
+        beforeSend: function() {
+
+        },
+        success: function(response) {
+
+        }
+
+    });
+}
+
+function CrearXmlRecibos()
+{
+
+
+    var table = $('#datatableRecibos').DataTable();
+    var count = table.rows({
+        selected: true
+    }).count();
+    var rows;
+    if (count == 0) {
+        //si no hay ninguna fila seleccionada, cojo todas
+        rows = table.rows().data();
+    } else {
+        rows = table.rows({
+            selected: true
+        }).data();
+    }
+
+    var arrayIds = [];
+    $.each(rows, function(key, value) {
+        arrayIds.push(value.ID);
+    });
+    console.log(arrayIds);
+
+    var fecha=$("#fecha").val();
+    console.log(fecha);
+    var referencia=$("#referencia").val();    
+    console.log(referencia);
+    var concepto=$("#concepto").val();
+    console.log(concepto);    
+
+
+
+    var parametros = JSON.stringify({
+        fecha:fecha,
+        ref:referencia,
+        concepto:concepto,
+        arrayIds:arrayIds,
+    });
+
+    $.ajax({
+        data: {
+            'data': parametros
+        },
+        dataType: "json",
+        //data: formData,
+        url: '<?= base_url() ?>/Recibos/crearRecibosXML',
         type: 'post',
         beforeSend: function() {
 

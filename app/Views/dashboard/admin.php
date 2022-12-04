@@ -8,7 +8,7 @@
                 <!-- titulo -->
                 <h1>Panel principal</h1>
                 <div class="row col-12 mt-4">
-                    <div class="col-6"><a href="<?= base_url()?>/chequeo" class="btn btn-primary tablasbtn">RECIBOS</a></div>
+                    <div class="col-6"><a href="<?= base_url()?>/recibos" class="btn btn-primary tablasbtn">RECIBOS</a></div>
                     <!-- <div class="col-4"><a href="<?= base_url()?>/consultas" class="btn btn-primary tablasbtn">CONSULTAS</a></div> -->
                     <div class="col-6"><a href="<?= base_url()?>/tablas" class="btn btn-primary tablasbtn">TABLAS</a>
                     </div>
