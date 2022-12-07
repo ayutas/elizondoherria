@@ -156,194 +156,75 @@ class Articulos extends BaseController
 		return redirect()->to(base_url() . '/' . $this->redireccion . '/show');
 	}
 
-	public function insertar($referencia, $descripcion, $marca)
-	{
-		$model = new ArticuloModel();
-		$newData = [
-			'REFERENCIA' => $referencia,
-			'DESCRIPCION' => $descripcion,
-			'MARCA' => $marca
-		];
-		$id = $model->insert($newData);
-	}
+	
 
-	public function quitarArticuloGrupo()
-	{
-		$response = json_decode($this->request->getPost('data'));
-		$idGrupo = $response->idGrupo;
-		$id = $response->idArticulo;
-		if ($id != 0 && $idGrupo != 0) //SU NO VIENEN IDs, NO SE PUEDE ELIMINAR
-		{
-			$modelArticuloGrupo = new ArticuloGrupoModel();
-			$modelArticuloGrupo->where('ID_ARTICULO', $id)->where('ID_GRUPO', $idGrupo)->delete();
-			return $modelArticuloGrupo->getGruposArt($id);
-		} else {
-			return 'false';
-		}
-	}
+	// function upload()
+	// {
+	// 	if (0 < $_FILES['archivo']['error']) {
+	// 		echo 'Error: ' . $_FILES['archivo']['error'] . '<br>';
+	// 	} else {
 
-	public function grabarArticuloGrupo()
-	{
-		$response = json_decode($this->request->getPost('data'));
-		//return var_dump($_FILES);
-		$imagen = $response->imagen;
-		$idGrupo = $response->idGrupo;
-		$id = $response->idArticulo;
-		$nombreArticulo = $response->nombreArt;
-		$referenciaArticulo = $response->referenciaArt;
-		$marcaArticulo = $response->marcaArt;
+	// 		$rotacion = $this->request->getPost('rotacion');
 
-		$altaArt = 0;
+	// 		// Accept upload if there was no origin, or if it is an accepted origin
+	// 		$tmp = $_FILES['archivo'];
 
+	// 		//EN ANASINF PARA QUE FUNCIONE TIENE QUE IR EN LA RUTA LA CARPETA gesioncalidad PERO EN ELABORADOS COMO SOLO HAY UNA UNICA APLICACION, ENTONCES VA SIN LA CARPETA gestioncalidad
+	// 		if (session()->get('multiApp')) {
+	// 			$serverFolder = $_SERVER['DOCUMENT_ROOT'] . '/gestioncalidad/uploads/referencias/';
+	// 		} else {
+	// 			$serverFolder = $_SERVER['DOCUMENT_ROOT'] . '/uploads/referencias/';
+	// 		}
 
-		if ($id == 0) //SU NO VIENE ID, HAY QUE DAR DE ALTA EL ARTICULO
-		{
-			$id = $this->insertar($referenciaArticulo, $nombreArticulo, $marcaArticulo);
-			$altaArt = 1;
-		}
+	// 		$elementos = array_diff(scandir($serverFolder), array('..', '.'));
+	// 		$tmp = $_FILES['archivo'];
+	// 		// $nombre  = $_FILES['archivo']['name'];			
+	// 		$archivo = explode('.', $tmp['name']);
+	// 		//CAMBIO LOS ESPACIOS POR _ AL NOMBRE DE ARCHIVO QUE PARECE QUE ME DA PROBLEMAS EN EL CHEQUEO AL COPIAR LA IMAGEN DE EJEMPLO EN LA CARPETA DE CHEQUEO CORRESPONDIENTE
+	// 		//ADEMAS EL mb_url_title ME REEMPLAZA LOS CARACTERES RAROS O ESPECIALES
+	// 		$archivo[0] = mb_url_title($archivo[0], '_');
 
-		if ($idGrupo == 0) {
-			return "0";
-		} else {
-			$modelArticuloGrupo = new ArticuloGrupoModel();
-			$modelArticuloGrupo->where('ID_ARTICULO', $id)->where('ID_GRUPO', $idGrupo)->delete();
+	// 		foreach ($elementos as $item) {
+	// 			while ($item == ($archivo[0] . ".jpg")) {
 
+	// 				$archivo[0] = substr(md5(time()), 0, 16);
+	// 			}
+	// 		}
+	// 		$nombre = $archivo[0] . '.jpg';
 
-			//ARTICULOS GRUPO			
-			$newData = [
-				'ID_ARTICULO' => $id,
-				'ID_GRUPO' => $idGrupo,
-				'IMAGEN_ETIQUETA' =>  $imagen
-			];
-			//			return var_dump($newData);		
-			$modelArticuloGrupo->insert($newData);
+	// 		switch ($rotacion) {
+	// 			case 'rotar-90':
+	// 				$rotar = '-rotate "-90>"';
+	// 				break;
+	// 			case 'rotar90':
+	// 				$rotar = '-rotate "90>"';
+	// 				break;
+	// 			case 'rotar180':
+	// 				$rotar = '-rotate "180>"';
+	// 				break;
+	// 			default:
+	// 				$rotar = '';
+	// 				break;
+	// 		}
 
-			if ($altaArt == 0) {
-				return $modelArticuloGrupo->getGruposArt($id);
-			} else {
-				return json_encode(['redirect' => true, 'id' => $id]);
-			}
-		}
-	}
+	// 		//CONVERTIMOS EL PDF EN PNG CON IMAGICK INSTALANDO EN WINDOWS
+	// 		$rutaImagick = session()->get('rutaImagick');
+	// 		if ($rutaImagick != "") {
+	// 			$comando = '"' . $rutaImagick . '" convert -verbose ' . $rotar . ' -density 300  -trim "' . $_FILES['archivo']['tmp_name'] . '" -quality 100 -resample 150 -flatten -sharpen 0x1.0 "' . $serverFolder . $nombre . '"';
+	// 			// exec('"'.$rutaImagick .'" convert -verbose -density 200  -trim "'.$_FILES['archivo']['tmp_name'].'" -quality 100 -flatten -sharpen 0x1.0 "'.$serverFolder.$nombre.'"');
+	// 		} else {
+	// 			$comando = '"C:\Program Files\ImageMagick-7.0.11-Q16-HDRI\magick.exe" convert -verbose ' . $rotar . ' -density 300  -trim "' . $_FILES['archivo']['tmp_name'] . '"  -quality 100 -resample 150 -flatten -sharpen 0x1.0 "' . $serverFolder . $nombre . '"';
+	// 		}
+	// 		// return var_dump($comando);
+	// 		exec($comando);
 
-	public function grabarArticuloItemsFormulario()
-	{
-
-		$response = json_decode($this->request->getPost('data'));
-
-		$id = $response->idArticulo;
-		$nombreArticulo = $response->nombreArt;
-		$referenciaArticulo = $response->referenciaArt;
-		$marcaArticulo = $response->marcaArt;
-		$idFormulario = $response->idFormulario;
-		$items = json_decode($response->items);
-
-		$altaArt = 0;
-
-
-		if ($id == 0) //SU NO VIENE ID, HAY QUE DAR DE ALTA EL ARTICULO
-		{
-			$id = $this->insertar($referenciaArticulo, $nombreArticulo, $marcaArticulo);
-			$altaArt = 1;
-		}
-
-		if ($id == 0) {
-			return "0";
-		} else {
-			$articuloGrupoModel = new ArticuloGrupoModel();
-			$modelArticuloFormularioGrupoItemModel = new ArticuloFormularioGrupoItemModel();
-			$modelArticuloFormularioGrupoItemModel->deleteByArticuloFormulario($id, $idFormulario);
-
-			foreach ($items as $item) {
-				$idItem = $item->ID;
-
-				//ARTICULOS FORMULARIOS_GRUPO_ITEM			
-				$newData = [
-					'ID_ARTICULO' => $id,
-					'ID_FORMULARIO_GRUPO_ITEM' => $idItem,
-
-				];
-				//return var_dump($newData);
-				$modelArticuloFormularioGrupoItemModel->insert($newData);
-			}
-
-			if ($altaArt == 0) {
-				$arrayGruposArt = $arrayGruposArt = json_decode($articuloGrupoModel->getGruposArt($id));
-				$arrayItemsArt = $modelArticuloFormularioGrupoItemModel->getByArticulo($id);
-				return json_encode(array($arrayGruposArt, $arrayItemsArt));
-			} else {
-				return json_encode(['redirect' => true, 'id' => $id]);
-			}
-		}
-	}
-
-	function upload()
-	{
-		if (0 < $_FILES['archivo']['error']) {
-			echo 'Error: ' . $_FILES['archivo']['error'] . '<br>';
-		} else {
-
-			$rotacion = $this->request->getPost('rotacion');
-
-			// Accept upload if there was no origin, or if it is an accepted origin
-			$tmp = $_FILES['archivo'];
-
-			//EN ANASINF PARA QUE FUNCIONE TIENE QUE IR EN LA RUTA LA CARPETA gesioncalidad PERO EN ELABORADOS COMO SOLO HAY UNA UNICA APLICACION, ENTONCES VA SIN LA CARPETA gestioncalidad
-			if (session()->get('multiApp')) {
-				$serverFolder = $_SERVER['DOCUMENT_ROOT'] . '/gestioncalidad/uploads/referencias/';
-			} else {
-				$serverFolder = $_SERVER['DOCUMENT_ROOT'] . '/uploads/referencias/';
-			}
-
-			$elementos = array_diff(scandir($serverFolder), array('..', '.'));
-			$tmp = $_FILES['archivo'];
-			// $nombre  = $_FILES['archivo']['name'];			
-			$archivo = explode('.', $tmp['name']);
-			//CAMBIO LOS ESPACIOS POR _ AL NOMBRE DE ARCHIVO QUE PARECE QUE ME DA PROBLEMAS EN EL CHEQUEO AL COPIAR LA IMAGEN DE EJEMPLO EN LA CARPETA DE CHEQUEO CORRESPONDIENTE
-			//ADEMAS EL mb_url_title ME REEMPLAZA LOS CARACTERES RAROS O ESPECIALES
-			$archivo[0] = mb_url_title($archivo[0], '_');
-
-			foreach ($elementos as $item) {
-				while ($item == ($archivo[0] . ".jpg")) {
-
-					$archivo[0] = substr(md5(time()), 0, 16);
-				}
-			}
-			$nombre = $archivo[0] . '.jpg';
-
-			switch ($rotacion) {
-				case 'rotar-90':
-					$rotar = '-rotate "-90>"';
-					break;
-				case 'rotar90':
-					$rotar = '-rotate "90>"';
-					break;
-				case 'rotar180':
-					$rotar = '-rotate "180>"';
-					break;
-				default:
-					$rotar = '';
-					break;
-			}
-
-			//CONVERTIMOS EL PDF EN PNG CON IMAGICK INSTALANDO EN WINDOWS
-			$rutaImagick = session()->get('rutaImagick');
-			if ($rutaImagick != "") {
-				$comando = '"' . $rutaImagick . '" convert -verbose ' . $rotar . ' -density 300  -trim "' . $_FILES['archivo']['tmp_name'] . '" -quality 100 -resample 150 -flatten -sharpen 0x1.0 "' . $serverFolder . $nombre . '"';
-				// exec('"'.$rutaImagick .'" convert -verbose -density 200  -trim "'.$_FILES['archivo']['tmp_name'].'" -quality 100 -flatten -sharpen 0x1.0 "'.$serverFolder.$nombre.'"');
-			} else {
-				$comando = '"C:\Program Files\ImageMagick-7.0.11-Q16-HDRI\magick.exe" convert -verbose ' . $rotar . ' -density 300  -trim "' . $_FILES['archivo']['tmp_name'] . '"  -quality 100 -resample 150 -flatten -sharpen 0x1.0 "' . $serverFolder . $nombre . '"';
-			}
-			// return var_dump($comando);
-			exec($comando);
-
-			$elementos = array_diff(scandir($serverFolder), array('..', '.'));
-			foreach ($elementos as $item) {
-				while ($item == $nombre) {
-					return 'uploads/referencias/' . $nombre;
-				}
-			}
-		}
-		return 'false';
-	}
+	// 		$elementos = array_diff(scandir($serverFolder), array('..', '.'));
+	// 		foreach ($elementos as $item) {
+	// 			while ($item == $nombre) {
+	// 				return 'uploads/referencias/' . $nombre;
+	// 			}
+	// 		}
+	// 	}
+	// 	return 'false';
+	// }
 }
