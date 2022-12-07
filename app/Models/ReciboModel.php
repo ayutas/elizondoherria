@@ -59,7 +59,7 @@ class ReciboModel extends Model
         return json_encode($results);
     }
 
-    public function getById($id=null){
+    public function getById($id){
         $db = \Config\Database::connect();
         
         // TC.ID As 'ID',
@@ -78,11 +78,22 @@ class ReciboModel extends Model
         // TC.CUENTA AS 'Cuenta',
         // TC.NOTAS AS 'Notas'
 
-        $sql = "SELECT  TR.*
-                FROM $this->table TR";
-        if($id){   
-            $sql.=   " WHERE TR.ID=$id";
-        }
+        $sql = "SELECT  TR.ID,
+                        DATE_FORMAT(TR.FECHA,'%d/%m/%Y') AS 'Fecha',
+                        TR.NUMERO AS 'Numero',
+                        TR.REF AS 'Referencia',
+                        TR.CONCEPTO AS 'Concepto',
+                        TR.NOMBRE AS 'Cliente',
+                        TR.DNI AS 'DNI',
+                        TR.CONTACTO AS 'Contacto',
+                        TR.TELEFONO AS 'Telefono',
+                        TR.EMAIL AS 'Email',
+                        TR.CUENTA AS 'Cuenta',
+                        TR.IMPORTE AS 'Importe',
+                        CASE WHEN ISNULL(TR.COBRADO) THEN false ELSE true END AS 'Cobrado'
+                FROM $this->table TR
+                WHERE TR.ID=$id";
+        
 		$query = $db->query($sql);
 		
 		$results = $query->getResult();
@@ -148,6 +159,32 @@ class ReciboModel extends Model
                 WHERE TAC.ID IN ($ids)
                 GROUP BY TC.ID";
             
+        $query = $db->query($sql);
+		
+		$results = $query->getResult();
+		
+        return json_encode($results);
+    }
+
+    public function modificarCobrado($id,$cobrado)
+    {
+        $db = \Config\Database::connect();
+
+        if($cobrado){
+            $sql = "UPDATE COBRADO=$cobrado,UPDATED_AT=NOW()
+                    FROM $this->table 
+                    WHERE ID = $id";
+        } else{
+            $sql = "UPDATE 
+            FROM $this->table 
+            WHERE ID = $id";
+        }
+        $query = $db->query($sql);
+		
+		$results = $query->getResult();
+        
+        $sql = "DELETE FROM tbl_recibos WHERE ID= $id";
+                
         $query = $db->query($sql);
 		
 		$results = $query->getResult();

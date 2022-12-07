@@ -120,12 +120,15 @@ class Clientes extends BaseController
         $columnasDatatableRecibos = array($column1,$column2,$column3,$column4);
 		$data['columnsRecibos'] = $columnasDatatableRecibos;
 		$data['dataRecibos'] = json_decode($recibosModel->getByIdCliente($id));
+		// return var_dump($data['dataComentarios'] );
+		
 		foreach ($data['dataRecibos'] as $item) {
-			$buttonEditComentario = '<button type="Button" onclick="EditarRecibo(this)" id="btnEditarRecibo" class="btn btn-primary btnEditar data-id="' . $item->ID . '" style="color:white;">Editar</button>';
-			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$buttonEditComentario = '<button type="Button" onclick="EditarRecibo(this)" id="btnEditarRecibo" class="btn btn-info btnEditar data-id="' . $item->ID . '" style="color:white;">Ver</button>';
+			// $buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
 			$item->btnEditar = $buttonEditComentario;
-			$item->btnEliminar = $buttonDeleteComentario;
+			$item->btnEliminar =''; //$buttonDeleteComentario;
 		}
+		// return var_dump($data['dataRecibos'] );
 
 		$BancoModel = new BancoModel();
 		$data['bancos']=json_decode($BancoModel->getAll());

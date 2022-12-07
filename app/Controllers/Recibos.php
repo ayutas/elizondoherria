@@ -68,7 +68,7 @@ class Recibos extends BaseController
 		helper(['form']);
 		$uri = service('uri');
 
-		$model = new UsuarioModel();
+		$model = new ReciboModel();
 
 		$data['id'] = $id;
 
@@ -84,77 +84,9 @@ class Recibos extends BaseController
 				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
 			}
 		}
-
-		// Comprobamos el metodo de la petición
-		if ($this->request->getMethod() == 'post') {
-
-			// reglas de validación
-			$rules = [
-
-				'nombre' =>  'required|min_length[3]|max_length[100]',
-				'usuario' =>  'required|min_length[3]|max_length[100]',
-				// 'contrasena' =>  'required|min_length[3]|max_length[100]',
-			];
-
-			// Comprobación de las validaciones
-			if (!$this->validate($rules)) {
-
-				$newData = [
-					'NOMBRE' => $this->request->getVar('nombre'),
-					'AP1' => $this->request->getVar('apellido1'),
-					'AP2' => $this->request->getVar('apellido2'),
-					'ID_DELEGACION' => $this->request->getVar('id_delegacion'),
-					'ADMINISTRADOR' => $this->request->getVar('admin'),
-					'USUARIO' => $this->request->getVar('usuario'),
-					'CONTRASENA' => $this->request->getVar('contrasena')
-				];
-
-				// Guardamos el error para mostrar en la vista
-				$data['validation'] = $this->validator;
-
-			} else {
-
-				if ($this->request->getVar('admin') == null) {
-					$admin = 0;
-				} else {
-					$admin = 1;
-				}
-				if ($this->request->getVar('contrasena') != "") {
-					// Acutlizar usuario
-					$newData = [
-						'ID' => $id,
-						'NOMBRE' => $this->request->getVar('nombre'),
-						'AP1' => $this->request->getVar('apellido1'),
-						'AP2' => $this->request->getVar('apellido2'),
-						'ADMINISTRADOR' => $admin,
-						'USUARIO' => $this->request->getVar('usuario'),
-						'CONTRASENA' => $this->request->getVar('contrasena')
-
-					];
-				} else {
-					$newData = [
-						'ID' => $id,
-						'NOMBRE' => $this->request->getVar('nombre'),
-						'AP1' => $this->request->getVar('apellido1'),
-						'AP2' => $this->request->getVar('apellido2'),
-						'ADMINISTRADOR' => $admin,
-						'USUARIO' => $this->request->getVar('usuario'),
-					];
-				}
-
-				//Guardamos
-				$model->save($newData);
-
-				// Creamos una session para mostrar el mensaje de registro correcto
-				$session = session();
-				$session->setFlashdata('success', 'Actualizado correctamente');
-
-				// Redireccionamos a la pagina
-				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
-			}
-		}
-
-		$data['data'] = json_decode($model->getData($id));
+		
+		$data['data'] = json_decode($model->getById($id));
+		// return var_dump($data['data']);
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		$data['slug'] =  $this->redireccion;
@@ -216,6 +148,32 @@ class Recibos extends BaseController
 		echo view('dashboard/footer');
 	}
 
+	public function guardarRecibo()
+	{
+		
+		$response = json_decode($this->request->getPost('data'));
+		$id = $response->id;
+		$cobrado = $response->cobrado;
+		
+		if ($cobrado){
+			$cobrado=date("Y-m-d H:i:s");
+		} else{
+			$cobrado=null;
+		}
+
+		$model = new ReciboModel();
+		$newData = [
+			'ID' => $id,
+			'COBRADO' => $cobrado
+		];
+		$model->save($newData);
+		// Creamos una session para mostrar el mensaje de registro correcto
+		$session = session();
+		$session->setFlashdata('success', 'Modificado correctamente');
+
+		// Redireccionamos a la pagina de login
+		return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
+	}
 
 	// Borrar
 	public function delete($id)
