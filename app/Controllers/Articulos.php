@@ -127,10 +127,18 @@ class Articulos extends BaseController
 
 		if ($id != "") {
 			$articuloClienteModel=new ArticuloClienteModel();
+			// $clienteAsignado=json_decode($articuloClienteModel->getClienteAsignado($id));
+			// return var_dump($clienteAsignado);
+
 			$data['clienteAsignado']=json_decode($articuloClienteModel->getClienteAsignado($id));
-			if (isset($data['clienteAsignado'])){
-				$data['clienteAsignado']['link']=base_url() . "/clientes/edit/".$data['clienteAsignado']['ID'];
-			}
+			// $data['clienteAsignado'][0]=array_push(json_encode($data['clienteAsignado'][0]), ['link'=>'prueba']);
+
+			// return var_dump($data['clienteAsignado'][0]);
+			// if (isset($data['clienteAsignado'][0])){
+			// 	$data['clienteAsignado']=['link'=>base_url() . "/clientes/edit/".$data['clienteAsignado'][0]->ID];
+				// return var_dump($data['clienteAsignado'][0]);
+			// }
+			// return var_dump($data);
 			$data['data'] = json_decode($model->getAll($id));
 			$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		} else {

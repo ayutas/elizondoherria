@@ -91,10 +91,12 @@ class ArticuloClienteModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TC.ID As 'ID',
-                        TC.NOMBRE AS 'Cliente'                        
+                        CONCAT(IFNULL(TC.NOMBRE,''),' ',IFNULL(TC.APELLIDOS,'')) AS 'Cliente',
+                        CONCAT('".base_url() . "/clientes/edit/',TC.ID) AS 'Link'
                 FROM $this->table as TAC
                 INNER JOIN tbl_clientes as TC ON TAC.CLIENTE_ID=TC.ID
-                WHERE TAC.ARTICULO_ID=$idArticulo";
+                WHERE TAC.ARTICULO_ID=$idArticulo
+                AND ISNULL(TAC.DELETED_AT)";
 
         $query = $db->query($sql);
 		
