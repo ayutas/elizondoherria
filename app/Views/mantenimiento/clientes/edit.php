@@ -468,6 +468,20 @@ function EditarComentario(boton)
     }
 }
 
+function EditarRecibo(boton)
+{
+    var linea = boton.parentElement.parentElement;
+    var table = $("#datatableComentarios").dataTable();
+    var row = table.find("tr").eq(linea.rowIndex);
+    var data = $("#datatableComentarios").dataTable().fnGetData(row);       
+   
+    var idRecibo=data.ID;
+    
+    if(idRecibo!=0){
+        window.location.replace("<?= base_url() ?>/recibos/edit/"+idRecibo);        
+    }
+}
+
 function GuardarCliente()
 {       
     var nombre= $('#nombre').val();

@@ -120,7 +120,10 @@ class ReciboModel extends Model
         // TC.CUENTA AS 'Cuenta',
         // TC.NOTAS AS 'Notas'
 
-        $sql = "SELECT  TR.*
+        $sql = "SELECT  TR.ID,
+                        DATE_FORMAT(TR.FECHA,'%d/%m/%Y') AS 'Fecha',
+                        TR.CONCEPTO AS 'Concepto',
+                        TR.IMPORTE AS 'Importe'
                 FROM $this->table TR
                 WHERE TR.CLIENTE_ID=$idCliente";
 		$query = $db->query($sql);
