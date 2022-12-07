@@ -241,6 +241,8 @@ class Recibos extends BaseController
 		// return var_dump($fecha,$ref,$ids);
 		$model = new ReciboModel();
 		$model->insertar($fecha,$ref,$concepto,$ids);
+		$modelLineas = new ReciboLineaModel();
+		$modelLineas->insertar($ref,$ids);
 		$this->crearRecibosXML($ref);
 		return json_encode(array(true));
 		// return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
