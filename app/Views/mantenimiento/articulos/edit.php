@@ -20,6 +20,18 @@
                         <form class="" action="<?= $action ?>" method="post" enctype="multipart/form-data">
                             <div class="form-row">
                                 <div class="col-md-12">
+                                    <!-- Campo descripcion -->
+                                    <div class="form-group">
+                                        <label class="medium mb-1" for="descripcion">Descripción</label>
+                                        <input class="form-control py-2" id="descripcion" name="descripcion" type="text"
+                                            placeholder="Introduce descripción"
+                                            value="<?php if (isset($data[0])) {
+                                                        echo $data[0]->Descripción;
+                                                    } else {
+                                                        echo set_value('descripcion');
+                                                    }
+                                                    ?>" />
+                                    </div>
                                     <!-- Campo Numero -->
                                     <div class="form-group">
                                         <label class="medium mb-1" for="numero">Número</label>
@@ -77,7 +89,7 @@
                             <div class="form-group">
                             <?php if (isset($clienteAsignado[0])) {?>
                                 <label class="medium mb-1" for="cliente">Asignado a cliente: </label>
-                                <a href="<?php echo $clienteAsignado[0]->link;?> "><?php echo $clienteAsignado[0]->Nombre;?></a>                                
+                                <a href="<?php echo $clienteAsignado[0]->Link;?> "><?php echo $clienteAsignado[0]->Cliente;?></a>                                
                             </div>
                             <?php }?>
                             <div class="form-row">

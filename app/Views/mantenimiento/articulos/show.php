@@ -28,7 +28,7 @@
 
                         <?php // Miga de pan
                         
-                        dataTable("Articulos",$columns,$data,'articulos','5,6','text-center',"0"); 
+                        dataTable("Articulos",$columns,$data,'articulos','6,7','text-center',"0"); 
                         
                         ?>          
                     </div>

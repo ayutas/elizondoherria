@@ -7,7 +7,8 @@ class ArticuloModel extends Model
     protected $table = 'tbl_articulos';
     protected $primaryKey = 'ID';
     protected $allowedFields = [
-        'NUMERO',         
+        'DESCRIPCION',
+        'NUMERO',
         'LETRA',
         'CATEGORIA_ID',
         'DELETED_AT',
@@ -28,6 +29,7 @@ class ArticuloModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TA.ID as 'ID',
+                        TA.DESCRIPCION as 'Descripción',
                         TA.NUMERO as 'Número',
                         TA.LETRA as 'Letra',
                         TC.NOMBRE as 'Categoría',

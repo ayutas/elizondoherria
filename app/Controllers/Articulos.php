@@ -21,12 +21,13 @@ class Articulos extends BaseController
 		$model = new ArticuloModel();
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Número');
-		$column3= array ('Field'=>'Letra');
-		$column4= array ('Field'=>'Categoría');
-		$column5= array ('Field'=>'Precio');
+		$column2= array ('Field'=>'Descripción');
+		$column3= array ('Field'=>'Número');
+		$column4= array ('Field'=>'Letra');
+		$column5= array ('Field'=>'Categoría');
+		$column6= array ('Field'=>'Precio');
 		
-		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5);
+		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6);
 		$data['columns'] = $columnasDatatable;
 		$data['data'] = json_decode($model->getAll());
 		foreach ($data['data'] as $item) {
@@ -66,12 +67,14 @@ class Articulos extends BaseController
 			if ($id != "") {
 				// reglas de validación
 				$rules = [
+					'descripcion' =>  'required',
 					'numero' =>  'required',
 					'categoria' => 'required|numeric|greater_than[0]'
 				];
 			} else {
 				// reglas de validación
 				$rules = [
+					'descripcion' =>  'required|is_unique[tbl_articulos.DESCRIPCION]',
 					'numero' =>  'required|is_unique[tbl_articulos.NUMERO]',
 					'categoria' => 'required|numeric|greater_than[0]'
 				];
@@ -81,6 +84,7 @@ class Articulos extends BaseController
 			if (!$this->validate($rules)) {
 
 				$newData = [
+					'DESCRIPCION' => $this->request->getVar('descripcion'),
 					'NUMERO' => $this->request->getVar('numero'),
 					'LETRA' => $this->request->getVar('letra'),
 					'CATEGORIA_ID' => $this->request->getVar('categoria')
@@ -96,6 +100,7 @@ class Articulos extends BaseController
 					$newData = [
 						'ID' => $id,
 						'NUMERO' => $this->request->getVar('numero'),
+						'DESCRIPCION' => $this->request->getVar('descripcion'),
 						'LETRA' => $this->request->getVar('letra'),
 						'CATEGORIA_ID' => $this->request->getVar('categoria')
 					];
@@ -104,7 +109,8 @@ class Articulos extends BaseController
 					$model->save($newData);
 					$mensaje='Actualizado correctamente';
 				} else {
-					$newData = [
+					$newData = [						
+						'DESCRIPCION' => $this->request->getVar('descripcion'),
 						'NUMERO' => $this->request->getVar('numero'),
 						'LETRA' => $this->request->getVar('letra'),
 						'CATEGORIA_ID' => $this->request->getVar('categoria')
