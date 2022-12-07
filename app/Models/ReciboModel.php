@@ -95,6 +95,35 @@ class ReciboModel extends Model
         return json_encode($results);
     }
 
+    public function getByIdCliente($idCliente){
+        $db = \Config\Database::connect();
+        
+        // TC.ID As 'ID',
+        // TC.NOMBRE As 'Nombre',
+        // TC.APELLIDOS As 'Apellidos',
+        // TC.DNI,
+        // TC.DOMICILIO AS 'Domicilio',
+        // TC.POBLACION AS 'Poblacion',
+        // TC.COD_POSTAL AS 'CPostal',
+        // TC.CONTACTO AS 'Contacto',
+        // TC.TELEFONO AS 'Telefono',
+        // TC.EMAIL AS 'Email',
+        // TC.IBAN AS 'Iban',
+        // TC.BANCO_ID AS 'Banco',
+        // TC.AGENCIA AS 'Agencia',
+        // TC.CUENTA AS 'Cuenta',
+        // TC.NOTAS AS 'Notas'
+
+        $sql = "SELECT  TR.*
+                FROM $this->table TR
+                WHERE TR.CLIENTE_ID=$idCliente";
+		$query = $db->query($sql);
+		
+		$results = $query->getResult();
+		
+        return json_encode($results);
+    }
+
     public function insertar($fecha,$ref,$concepto,$ids){
         $db = \Config\Database::connect();
 

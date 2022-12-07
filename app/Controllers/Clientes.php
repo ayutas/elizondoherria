@@ -6,6 +6,7 @@ use App\Models\ArticuloClienteModel;
 use App\Models\ClienteComentarioModel;
 use App\Models\ClienteModel;
 use App\Models\BancoModel;
+use App\Models\ReciboModel;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -79,6 +80,7 @@ class Clientes extends BaseController
 		$data['data'] = json_decode($ClienteModel->getById($id));
 		$articulosClientesModel = new ArticuloClienteModel();
 		$clientesComentariosModel=new ClienteComentarioModel();
+		$recibosModel=new ReciboModel();
 
 		$column1= array ('Field'=>'');
 		$column2= array ('Field'=>'ID');
@@ -105,6 +107,21 @@ class Clientes extends BaseController
 		
 		foreach ($data['dataComentarios'] as $item) {
 			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">Editar</button>';
+			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$item->btnEditar = $buttonEditComentario;
+			$item->btnEliminar = $buttonDeleteComentario;
+		}
+
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>'Fecha');
+		$column3= array ('Field'=>'Concepto');
+        $column4= array ('Field'=>'Importe');
+
+        $columnasDatatableRecibos = array($column1,$column2,$column3,$column4);
+		$data['columnsRecibos'] = $columnasDatatableRecibos;
+		$data['dataRecibos'] = json_decode($recibosModel->getByIdCliente($id));
+		foreach ($data['dataRecibos'] as $item) {
+			$buttonEditComentario = '<button type="Button" onclick="EditarRecibo(this)" id="btnEditarRecibo" class="btn btn-primary btnEditar data-id="' . $item->ID . '" style="color:white;">Editar</button>';
 			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
 			$item->btnEditar = $buttonEditComentario;
 			$item->btnEliminar = $buttonDeleteComentario;

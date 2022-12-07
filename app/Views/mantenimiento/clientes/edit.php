@@ -334,7 +334,7 @@
                                     <!--Tabla recibos -->
                                     <?php if(isset($columnsRecibos[0]))
                                     {
-                                    dataTable("Recibos cliente", $columnsRecibos, $dataRecibos, 'Recibos', '2,3', 'text-center', "0", 4, false, 0, 'tablaRecibos');
+                                    dataTable("Recibos cliente", $columnsRecibos, $dataRecibos, 'Recibos', '4', 'text-center', "0",  4, false, 0, 'tablaRecibos');
                                     }
                                 ?>
                                 </div>
