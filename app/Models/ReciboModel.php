@@ -121,6 +121,7 @@ class ReciboModel extends Model
         // TC.NOTAS AS 'Notas'
 
         $sql = "SELECT  TR.ID,
+                        TR.NUMERO AS 'Número', 
                         DATE_FORMAT(TR.FECHA,'%d/%m/%Y') AS 'Fecha',
                         TR.CONCEPTO AS 'Concepto',
                         TR.IMPORTE AS 'Importe'

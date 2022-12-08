@@ -113,11 +113,12 @@ class Clientes extends BaseController
 		}
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Fecha');
-		$column3= array ('Field'=>'Concepto');
-        $column4= array ('Field'=>'Importe');
+		$column2= array ('Field'=>'Número');
+		$column3= array ('Field'=>'Fecha');
+		$column4= array ('Field'=>'Concepto');
+        $column5= array ('Field'=>'Importe');
 
-        $columnasDatatableRecibos = array($column1,$column2,$column3,$column4);
+        $columnasDatatableRecibos = array($column1,$column2,$column3,$column4,$column5);
 		$data['columnsRecibos'] = $columnasDatatableRecibos;
 		$data['dataRecibos'] = json_decode($recibosModel->getByIdCliente($id));
 		// return var_dump($data['dataComentarios'] );
