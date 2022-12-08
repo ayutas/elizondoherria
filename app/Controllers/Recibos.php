@@ -450,7 +450,9 @@ class Recibos extends BaseController
 		
 			// Read the file
 			readfile($file);
-			// return var_dump('hola');
+			
+			//delete file
+			unlink($file);
 
 		}else{
 			
