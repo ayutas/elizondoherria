@@ -57,9 +57,6 @@
                             <button class="btn btn-primary btn-block" type="button" onclick="CrearRecibos()">
                                 Crear                            
                             </button>
-                            <button class="btn btn-primary btn-block" type="button" onclick="CrearXmlRecibos()">
-                                Crear   XML                         
-                            </button>
                         </div>
                     </form>
                 </div>
@@ -120,69 +117,8 @@ function CrearRecibos()
         },
         success: function(response) {
             window.open('<?= base_url() ?>/Recibos/DescargarXML',
-                            "_blank");            
-        }
-
-    });
-}
-
-function CrearXmlRecibos()
-{
-
-
-    var table = $('#datatableRecibos').DataTable();
-    var count = table.rows({
-        selected: true
-    }).count();
-    var rows;
-    if (count == 0) {
-        //si no hay ninguna fila seleccionada, cojo todas
-        rows = table.rows().data();
-    } else {
-        rows = table.rows({
-            selected: true
-        }).data();
-    }
-
-    var arrayIds = [];
-    $.each(rows, function(key, value) {
-        arrayIds.push(value.ID);
-    });
-    console.log(arrayIds);
-
-    var fecha=$("#fecha").val();
-    console.log(fecha);
-    var referencia=$("#referencia").val();    
-    console.log(referencia);
-    var concepto=$("#concepto").val();
-    console.log(concepto);    
-
-
-
-    var parametros = JSON.stringify({
-        fecha:fecha,
-        ref:referencia,
-        concepto:concepto,
-        arrayIds:arrayIds,
-    });
-
-    $.ajax({
-        data: {
-            'data': parametros
-        },
-        dataType: "json",
-        //data: formData,
-        url: '<?= base_url() ?>/Recibos/crearRecibosXML',
-        async:false,
-        type: 'post',
-        beforeSend: function() {
-
-        },
-        success: function(response) {
-            console.log(response);
-            window.open('<?= base_url() ?>/Recibos/DescargarXML',
                             "_blank");
-                            
+            window.location.replace("<?= base_url() ?>/hilerria/recibos/");
         }
 
     });
