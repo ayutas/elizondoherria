@@ -94,11 +94,16 @@ class ReciboLineaModel extends Model
     public function insertar($ref,$ids){
         $db = \Config\Database::connect();
 
-        $sql = "INSERT INTO $this->table (RECIBO_ID, LINEA, ARTICULO_CLIENTE_ID, DESCRIPCION, CATEGORIA, CANTIDAD, PRECIO, IMPORTE)
-                SELECT  TR.ID,(@row_number:=@row_number + 1) , TAC.ID,
-                        CONCAT(IFNULL(TA.DESCRIPCION,''), ' ',IFNULL(TA.NUMERO,''), ' ', ISNULL(TA.LETRA,'')) AS 'Articulo',
-                        TCA.NOMBRE AS 'Categoría',
-                        TCA.PRECIO,1,TCA.PRECIO AS 'Importe'
+        $sql = "INSERT INTO $this->table (ARTICULO_CLIENTE_ID, DESCRIPCION, CATEGORIA, CANTIDAD, PRECIO, IMPORTE, LINEA, RECIBO_ID)
+                SELECT TAC.ID AS ARTICULO_CLIENTE_ID,
+                    CONCAT(IFNULL(TA.DESCRIPCION,''), ' ',IFNULL(TA.NUMERO,''), ' ', IFNULL(TA.LETRA,'')) AS DESCRIPCION,
+                    TCA.NOMBRE AS CATEGORIA,
+                    TCA.PRECIO,1,TCA.PRECIO AS IMPORTE,
+                    CASE TR.ID WHEN @curReciboId THEN                                
+                        @row_number := @row_number + 1                                     
+                    ELSE @row_number :=1
+                    END AS LINEA,
+                    @curReciboId := TR.ID AS RECIBO_ID
                 FROM  tbl_articulos_clientes  as TAC
                 INNER JOIN tbl_recibos as TR
                 ON TAC.CLIENTE_ID=TR.CLIENTE_ID
@@ -106,8 +111,8 @@ class ReciboLineaModel extends Model
                 ON TAC.ARTICULO_ID=TA.ID
                 INNER JOIN tbl_categorias AS TCA
                 ON TA.CATEGORIA_ID=TCA.ID
-                CROSS JOIN (SELECT @row_number:=0) AS temp
-                WHERE TAC.ID IN ($ids) AND TR.REF=$ref";
+                CROSS JOIN (SELECT @row_number:=0,@curReciboId:=0) AS temp
+                WHERE TAC.ID IN ($ids) AND TR.REF='$ref'";
             
         $query = $db->query($sql);
 		

@@ -143,12 +143,12 @@ class ReciboModel extends Model
 		$results = $query->getResult();
         $numero =$results[0]->NUMERO;
         
-        $sql = "INSERT INTO $this->table (FECHA, NUMERO, REF, CONCEPTO, CLIENTE_ID, NOMBRE, DNI, DOMICILIO, POBLACION, COD_POSTAL, CONTACTO, TELEFONO, EMAIL, IMPORTE, CUENTA)
-                SELECT  '$fecha',(@row_number:=@row_number + 1) ,'$ref', '$concepto',
-                        TC.ID,CONCAT(IFNULL(TC.NOMBRE,''),IFNULL(TC.APELLIDOS,'')) AS 'Nombre',
+        $sql = "INSERT INTO $this->table (FECHA, NUMERO, REF, CONCEPTO, CLIENTE_ID, NOMBRE, DNI, DOMICILIO, POBLACION, COD_POSTAL, CONTACTO, TELEFONO, EMAIL, IMPORTE, CUENTA, COBRADO)
+                SELECT  '$fecha' AS FECHA,(@row_number:=@row_number + 1) AS NUMERO,'$ref' AS REF, '$concepto' AS CONCEPTO,
+                        TC.ID,CONCAT(IFNULL(TC.NOMBRE,''),' ', IFNULL(TC.APELLIDOS,'')) AS NOMBRE,
                         TC.DNI, TC.DOMICILIO, TC.POBLACION, TC.COD_POSTAL, TC.CONTACTO, TC.TELEFONO, TC.EMAIL,
-                        SUM(TAC.IMPORTE) AS IMPORTE,
-                        CONCAT(TC.IBAN,TB.CODIGO,TC.AGENCIA,TC.CUENTA) AS 'Cuenta'                        
+                        SUM(TCA.PRECIO) AS IMPORTE,
+                        CONCAT(TC.IBAN,TB.CODIGO,TC.AGENCIA,TC.CUENTA) AS CUENTA, NOW()
                 FROM tbl_articulos_clientes  as TAC
                 INNER JOIN tbl_clientes AS TC
                 ON TAC.CLIENTE_ID=TC.ID

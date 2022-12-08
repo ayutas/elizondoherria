@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ReciboModel;
+use App\Models\ReciboLineaModel;
 use App\Models\ArticuloClienteModel;
 use XMLWriter;
 
@@ -199,6 +200,7 @@ class Recibos extends BaseController
 		// return var_dump($fecha,$ref,$ids);
 		$model = new ReciboModel();
 		$model->insertar($fecha,$ref,$concepto,$ids);
+
 		$modelLineas = new ReciboLineaModel();
 		$modelLineas->insertar($ref,$ids);
 		$this->crearRecibosXML($ref);
