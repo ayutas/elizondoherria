@@ -18,17 +18,6 @@ class ReciboLineaModel extends Model
         'CREATED_AT'
     ];
 
-    // protected $beforeUpdate = ['beforeUpdate'];
-
-    // protected $createdField  = 'CREATED_AT';
-    // protected $updatedField  = 'UPDATED_AT';
-
-    // protected function beforeUpdate(array $data){
-    //     $data['data']['UPDATED_AT']=date("Y-m-d H:i:s");
-
-    //     return $data;
-    // }
-
     public function getAll(){
         $db = \Config\Database::connect();
         
@@ -61,30 +50,18 @@ class ReciboLineaModel extends Model
         return json_encode($results);
     }
 
-    public function getById($id=null){
+    public function getByIdRecibo($id){
         $db = \Config\Database::connect();
         
-        $sql = "SELECT  TC.ID As 'ID',
-                        TC.NOMBRE As 'Nombre',
-                        TC.APELLIDOS As 'Apellidos',
-                        TC.DNI,
-                        TC.DOMICILIO AS 'Domicilio',
-                        TC.POBLACION AS 'Poblacion',
-                        TC.COD_POSTAL AS 'CPostal',
-                        TC.CONTACTO AS 'Contacto',
-                        TC.TELEFONO AS 'Telefono',
-                        TC.EMAIL AS 'Email',
-                        TC.IBAN AS 'Iban',
-                        TC.BANCO_ID AS 'Banco',
-                        TC.AGENCIA AS 'Agencia',
-                        TC.CUENTA AS 'Cuenta',
-                        TC.NOTAS AS 'Notas'
-                FROM $this->table TC";   
+        $sql = "SELECT  ID,
+                        LINEA AS 'Linea',
+                        DESCRIPCION AS 'Descripcion',
+                        CATEGORIA AS 'Categoria',
+                        PRECIO AS 'Precio'
+                FROM $this->table TRL
+                WHERE TRL.RECIBO_ID=$id";
 
-        if($id)
-        {   $sql.=   " WHERE TC.ID=$id";
-        }
-		$query = $db->query($sql);
+        $query = $db->query($sql);
 		
 		$results = $query->getResult();
 		
@@ -114,27 +91,6 @@ class ReciboLineaModel extends Model
                 CROSS JOIN (SELECT @row_number:=0,@curReciboId:=0) AS temp
                 WHERE TAC.ID IN ($ids) AND TR.REF='$ref'";
             
-        $query = $db->query($sql);
-		
-		$results = $query->getResult();
-		
-        return json_encode($results);
-    }
-
-    public function deleteById($id,$usuarioId)
-    {
-        $db = \Config\Database::connect();
-
-        $sql = "INSERT INTO tbl_recibos_eliminados (FECHA, NUMERO, REF, CONCEPTO, ARTICULO_CLIENTE_ID, CLIENTE, DNI, ARTICULO, CATEGORIA, IMPORTE, CUENTA, COBRADO,USUARIO_ID)
-                SELECT FECHA, NUMERO, REF, CONCEPTO, ARTICULO_CLIENTE_ID, CLIENTE, DNI, ARTICULO, CATEGORIA, IMPORTE, CUENTA, COBRADO,$usuarioId
-                FROM $this->table WHERE ID = $id";
-        
-        $query = $db->query($sql);
-		
-		$results = $query->getResult();
-        
-        $sql = "DELETE FROM tbl_recibos WHERE ID= $id";
-                
         $query = $db->query($sql);
 		
 		$results = $query->getResult();

@@ -70,6 +70,7 @@ class Recibos extends BaseController
 		$uri = service('uri');
 
 		$model = new ReciboModel();
+		$modelLineas = new ReciboLineaModel();
 
 		$data['id'] = $id;
 
@@ -87,6 +88,8 @@ class Recibos extends BaseController
 		}
 		
 		$data['data'] = json_decode($model->getById($id));
+
+		$data['lineasRecibo'] = json_decode($modelLineas->getByIdRecibo($id));
 		// return var_dump($data['data']);
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
