@@ -318,11 +318,12 @@ class Recibos extends BaseController
 						//bucle por cada recibo
 						foreach($datosLineas as $linea){
 							$numRecibo = $linea->NUMRECIBO;
+							$concepto = $linea->CONCEPTO;
 							$importeRecibo = $linea->IMPORTE;
 							$cifRecibo = $linea->DNI;
 							$fechaRecibo = $linea->FECHA;
 							// $bicRecibo = $linea->BICRECIBO;
-							$nombreClienteRecibo = $linea->CLIENTE;
+							$nombreClienteRecibo = $linea->NOMBRE;
 							$domicilioRecibo = $linea->DOMICILIO;
 							$cpRecibo = $linea->COD_POSTAL;
 							$poblacionRecibo = $linea->POBLACION;
