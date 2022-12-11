@@ -331,6 +331,12 @@
                                 </div>
 
                                 <div class="tab-pane" id="recibos-1" role="tabpanel">
+                                    <!-- <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="checkDetalleRecibos" onclick="CargarDetalleRecibos()">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Cargar Detalle Recibos
+                                        </label>
+                                    </div> -->
                                     <!--Tabla recibos -->
                                     <?php if(isset($columnsRecibos[0]))
                                     {
@@ -771,6 +777,19 @@ function CargarTablaComentarios(comentariosCliente)
     $("#datatableComentarios").DataTable().clear();
     $("#datatableComentarios").DataTable().rows.add(comentariosCliente);
     $("#datatableComentarios").DataTable().draw();
+}
+
+function CargarDetalleRecibos()
+{
+    
+    var detalle=$('#checkDetalleRecibos').prop('checked');
+    if (detalle)
+    {
+        console.log('Cargo detalle');
+    } else{
+        console.log('Cargo sin detalle');
+    }
+
 }
 
 function validar_dni_nif_nie(value){
