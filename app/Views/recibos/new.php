@@ -70,6 +70,19 @@
 
 function CrearRecibos()
 {
+    var referencia=$("#referencia").val();
+    if(referencia=="")
+    {
+        alert('Introduzca referencia');
+        return;
+    }
+    var concepto=$("#concepto").val();
+    if(concepto=="")
+    {
+        alert('Introduzca concepto');
+        return;
+    }
+
     var table = $('#datatableRecibos').DataTable();
     var count = table.rows({
         selected: true
@@ -91,11 +104,7 @@ function CrearRecibos()
     console.log(arrayIds);
 
     var fecha=$("#fecha").val();
-    console.log(fecha);
-    var referencia=$("#referencia").val();    
-    console.log(referencia);
     var concepto=$("#concepto").val();
-    console.log(concepto);    
 
     var parametros = JSON.stringify({
         fecha:fecha,
