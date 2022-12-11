@@ -359,22 +359,22 @@ class Clientes extends BaseController
 
 		$html .= '<table style="border:none">';
 		$html .= '<tbody>';
-		$html .= '<tr>';  //CABECERA
-		$html .= '<td colspan="5">';
-		$html .= '<p style="font-size:22px;"><strong>ELIZONDOko HILERRIA</p> <p style="font-size:16px;text-align:center">Denboraldi bateko erabilpen txartela</strong></p>';
+		$html .= '<tr style="text-align:center;">';  //CABECERA
+		$html .= '<td colspan="5"';
+		$html .= '<label style="font-size:22px;"><strong>ELIZONDOko HILERRIA</label><br><label style="font-size:16px;text-align:center">Denboraldi bateko erabilpen txartela</strong></label>';
 		$html .= '</td>';
 		$html .= '<td colspan="2">';
-		$html .= '<img src="' . base_url() . '/assets/images/Logo.png">';
+		$html .= '<img src="' . base_url() . '/assets/images/Logo.png" width="65" height="70">';
 		$html .= '</td>';
 		$html .= '<td colspan="5">';
-		$html .= '<p style="font-size:22px;">CEMENTERIO de ELIZONDO</p> <p style="font-size:16px;text-align:center">Tarjeta de uso temporal</p>';
+		$html .= '<label style="font-size:22px;">CEMENTERIO de ELIZONDO</label><br><label style="font-size:16px;text-align:center">Tarjeta de uso temporal</label>';
 		$html .= '</td>';
 		$html .= '</tr>';
-		$html .= '<br>';
+		// $html .= '<br>';
 		$html .= '</tbody>';
 		$html .= '</table>';
 		
-		$html .= '<br>';
+		// $html .= '<br>';
 		$html .= '<table style="border:none">';
 		$html .= '<tbody>';		
 		
@@ -483,17 +483,48 @@ class Clientes extends BaseController
 		$html .= '<tbody>';
 		$html .= '<tr>';
 		$html .= '<td>';
-		$html .= '<p>';
-		$html .= '<strong>ELIZONDOKO HILERRIAREN ZENBAIT ARAU:</strong><br><br>';
-		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Elizondoko Hilerria leku publikoa da,<br>';
-		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Lursail, panteoi eta horma-hobien jabeen betebeharra da garbiketa eta behar diren segurtasun baldintzak kontserbatzea.<br>';
-		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Jabeek<br>';
-		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; epea pasa ondotik<br>';
-		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Panteoien erosketa eta salmenta<br>';
-		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Urriak 15 eta azaroak 1<br>';
-		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Kuota hau ordaindu behar duten erabiltzaile<br>';
-		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Kuota ez bada ordaintzen, erreklamazio bat bidaliko da posta ziurtatuaz;<br>';
-		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Elizondoko hilerriaren erabilera eta funztionamendua arautzen duen ordenantzak herriko etxean daude eskuragarri.<br>';
+		// $html .= '<br>';
+		$html .= '<p style="font-size:14px;">';
+		$html .= '<strong>ELIZONDOKO HILERRIAREN ZENBAIT ARAU:</strong><br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Elizondoko Hilerria leku publikoa da, Elizondo herriaren jabetzakoa eta honen araugintza orokorraren menpean dagoena.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Lursail, panteoi eta horma-hobien jabeen betebeharra da garbiketa eta behar den segurtasun baldintzak kontserbatzea.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Jabeek beren beharrak betezen ez badituzte eta narriadura bistakoa bada, batzordeak interesatuei behar diren lanetan
+											hasteko eskatuko die, 30 eguneko epean, utzikeriagatik sortutako narriadura konpontzeko asmoz.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Epea pasa ondotik hilerriko batzordeak konponketa lan hauek bere kargu har ditzake ordezkoak bilatuz. Ondoriozko kargua
+											interesatuen eskuetan geldituko da, eta lanak bukatu eta 60 eguneko epean, ordainketarik egin ezean, emakidaren baliogabetzea
+											gertatuko da.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Panteoien erosketa eta salmenta Elizondo herriari dagokio soilik, eta espekulazioa ekiditeko trasnferentzien grabaketa eginen du.
+											Hilerriko batzordeak erosketa-salmenta egiteko eskubidea izanen du, betiere batzarraren oniritziarekin.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Urriak 15 eta azaroak 1 artean lehen eta bigarren graduko obrarik ezingo da egin.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Kuota hau ordaindu behar duten erabiltzaile guztiek kontu korronte bat eman behar diote herriari kuota kobratu ahal izateko,
+											eta ez da bertzelako ordaintze modurik onartuko. Kuota azaroaren erdialdera pasatuko da normalki.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Kuota ez bada ordaintzen, erreklamazio bat bidaliko da posta ziurtatuaz; eta hurrengo urtean ere ez bada ordaintzen,
+											bertze erreklamazio ziurtatu bat bidaliko da. Bi kuotak ez badira ordaintzen 30 egunetan, sistematikoki galduko du titulartasuna 
+											eta Elizondoko herriaren esku geldituko da.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Elizondoko hilerriaren erabilera eta funtzionamendua arautzen duen ordenantzak herriko etxean daude eskuragarri.<br>';
+		$html .= '</p>';
+		$html .= '</br>';
+		$html .= '<p style="font-size:14px;">';
+		$html .= '<strong>APUNTES DE LA NORMATIVA DEL CEMENTERIO DE ELIZONDO:</strong><br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; El cementerio de Elizondo, es un lugar público, perteneciente al Pueblo de Elizondo y sometido a la legislación general
+											aplicable a estos.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Es obligación de los titulares la limpieza y conservación en debidas condiciones de seguridad e higiene de las parcelas
+											de tierra, panteones o nichos.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; En caso de que los titulares no cumplan con este deber y se aprecie estado de deterioro, la comisión requerirá a los interesados
+											para que en el término de 30 días desde su comunicación, se comiencen los trabajos necesarios a fin de subsanar el deterioro
+											ocasionado por su negligencia.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Transcurrido dicho plazo, la comisión del cementerio podrá realizarlos de forma subsidiaria, pasando el cargo resultante
+											a los interesados y la falta de pago en un periodo de tiempo de 60 días desde la finalización de los trabajos producirá
+											la anulación de la concesión.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Compra y venta de panteones. Pertenece en exclusividad al Pueblo de Elizondo, que será quien grave los traspasos para impedir
+											la especulación. Tendrá potestad de realizar la compra-venta la comisión del cementerio, con la aprobación del batzarre.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; No se podrán realizar obras de primer y segundo grado entre el 15 de octubre y el 1 de noviembre.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Todos los usuarios que deban abonar esta cuota, deberán facilitarnos una cuenta bancaria donde poder cobrarla, pues no se 
+											admitirá otra forma de pago. La cuota se pasará normalmente a mediados de noviembre<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; La falta de pago de dicha cuota, dará paso a una reclamación por correo certificado. Si al año siguiente tampoco paga
+											se enviará otra reclamación por correo certificado y si no paga en los 30 dias siguientes las dos cuotas, pierde sistemáticamente 
+											su titularidad, pasando al pueblo de Elizondo.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Las ordenanzas que regulan el uso del cementerio se encuentran a disposición del titular en la Herriko Etxea.<br>';
 		$html .= '</p>';
 		$html .= '</td>';
 		$html .= '</tr>';
