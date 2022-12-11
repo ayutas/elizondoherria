@@ -356,19 +356,49 @@ class Clientes extends BaseController
 		$html .= '</style>';
 		$html .= '</head>';
 		$html .= '<body>';
-		$html .= '<table>';
+
+		$html .= '<table style="border:none">';
 		$html .= '<tbody>';
-		$html .= '<tr>';  //FILA 1
-		$html .= '<td colspan="4">';
-		$html .= '<strong>Zkia /</strong> Nº: ' . $numero;
+		$html .= '<tr>';  //CABECERA
+		$html .= '<td colspan="5">';
+		$html .= '<p style="font-size:22px;"><strong>ELIZONDOko HILERRIA</p> <p style="font-size:16px;text-align:center">Denboraldi bateko erabilpen txartela</strong></p>';
 		$html .= '</td>';
-		$html .= '<td colspan="4">';
-		$html .= '<strong>Karrika /</strong> Calle: ' . $letra;
+		$html .= '<td colspan="2">';
+		$html .= '<img src="' . base_url() . '/assets/images/Logo.png">';
 		$html .= '</td>';
-		$html .= '<td colspan="4">';
-		$html .= '<strong>Maila/</strong> Categoría: ' . $categoria;
+		$html .= '<td colspan="5">';
+		$html .= '<p style="font-size:22px;">CEMENTERIO de ELIZONDO</p> <p style="font-size:16px;text-align:center">Tarjeta de uso temporal</p>';
 		$html .= '</td>';
 		$html .= '</tr>';
+		$html .= '<br>';
+		$html .= '</tbody>';
+		$html .= '</table>';
+		
+		$html .= '<br>';
+		$html .= '<table style="border:none">';
+		$html .= '<tbody>';		
+		
+		$html .= '<tr>';  //CUADRO 1
+			$html .= '<td colspan="12">'; 
+			$html .= '<table>';
+			$html .= '<tbody>';
+			$html .= '<tr>';  //FILA 1
+			$html .= '<td colspan="4">';
+			$html .= '<strong>Zkia /</strong> Nº: ' . $numero;
+			$html .= '</td>';
+			$html .= '<td colspan="4">';
+			$html .= '<strong>Karrika /</strong> Calle: ' . $letra;
+			$html .= '</td>';
+			$html .= '<td colspan="4">';
+			$html .= '<strong>Maila/</strong> Categoría: ' . $categoria;
+			$html .= '</td>';
+			$html .= '</tr>';
+			$html .= '</tbody>';
+			$html .= '</table>';
+			$html .= '</td>';
+		$html .= '</tr>';
+
+		
 		$html .= '<tr>'; //FILA 2
 		$html .= '<td colspan="9">';
 		$html .= '<strong>Izena /</strong> Nombre: ' . $nombre . ' ' . $apellidos;
@@ -398,19 +428,78 @@ class Clientes extends BaseController
 		$html .= '<strong>Kontu Zkia /</strong> Nº de cuenta: ' . $nombreBanco . ' ' . $iban.$codBanco.$agencia.$cuenta;
 		$html .= '</td>';
 		$html .= '</tr>';
+		$html .= '<br>';
 		$html .= '<tr>';  //FILA 6
+		$html .= '<td colspan="2">';
+		$html .= '</td>';
 		$html .= '<td colspan="3">';
 		$html .= '<strong>Alkatea /</strong> El Alcalde';
 		$html .= '</td>';
-		$html .= '<td colspan="5">';
+		$html .= '<td colspan="2">';
 		$html .= ' ';
 		$html .= '</td>';
-		$html .= '<td colspan="4">';
+		$html .= '<td colspan="3">';
 		$html .= '<strong>Data/</strong> Fecha: ' . $creado;
+		$html .= '</td>';
+		$html .= '<td colspan="2">';
+		$html .= '</td>';
+		$html .= '</tr>';
+		$html .= '<tr>';
+		$html .= '<td>';
+		$html .= '<br>';
+		$html .= '<br>';
+		$html .= '</td>';
+		$html .= '</tr>';
+		$html .= '<tr>';  //FILA 7
+		$html .= '<td colspan="5">';
+		$html .= '</td>';
+		$html .= '<td colspan="2">';
+		$html .= '<strong>Herriko telefonoa 948581450</strong>';
+		$html .= '</td>';
+		$html .= '<td colspan="5">';
+		$html .= '</td>';		
+		$html .= '</tr>';
+		$html .= '<br>';
+
+		$html .= '<tr>';  //CUADRO 2		
+			$html .= '<table style="border-left:none;border-right:none">';
+			$html .= '<tbody>';
+			$html .= '<tr>';  //FILA 1
+			$html .= '<td colspan="1">';
+			$html .= '</td>';
+			$html .= '<td colspan="12">';
+			$html .= '<label><center><strong>Txartel honek aurrekoak baliogabetzen ditu / </strong> Esta tarjeta anula a las anteriores</center></label>';
+			$html .= '</td>';
+			$html .= '<td colspan="1">';
+			$html .= '</td>';
+			$html .= '</tr>';
+			$html .= '</tbody>';
+			$html .= '</table>';
+		$html .= '</tr>';
+		$html .= '</tbody>';
+		$html .= '</table>';
+
+		$html .= '<table style="border:none">';
+		$html .= '<tbody>';
+		$html .= '<tr>';
+		$html .= '<td>';
+		$html .= '<p>';
+		$html .= '<strong>ELIZONDOKO HILERRIAREN ZENBAIT ARAU:</strong><br><br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Elizondoko Hilerria leku publikoa da,<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Lursail, panteoi eta horma-hobien jabeen betebeharra da garbiketa eta behar diren segurtasun baldintzak kontserbatzea.<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Jabeek<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; epea pasa ondotik<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Panteoien erosketa eta salmenta<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Urriak 15 eta azaroak 1<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Kuota hau ordaindu behar duten erabiltzaile<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Kuota ez bada ordaintzen, erreklamazio bat bidaliko da posta ziurtatuaz;<br>';
+		$html .= '&nbsp;&nbsp;&nbsp;&nbsp; Elizondoko hilerriaren erabilera eta funztionamendua arautzen duen ordenantzak herriko etxean daude eskuragarri.<br>';
+		$html .= '</p>';
 		$html .= '</td>';
 		$html .= '</tr>';
 		$html .= '</tbody>';
 		$html .= '</table>';
+
 		$html .= '</body>';
 
 		$html .= '</html>';
