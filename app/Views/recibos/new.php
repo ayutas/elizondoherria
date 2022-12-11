@@ -125,9 +125,13 @@ function CrearRecibos()
 
         },
         success: function(response) {
-            window.open('<?= base_url() ?>/Recibos/DescargarXML',
-                            "_blank");
-            window.location.replace("<?= base_url() ?>/hilerria/recibos/");
+            if (response[0]==true){
+                window.open('<?= base_url() ?>/Recibos/DescargarXML/'+referencia,
+                                "_blank");
+                window.location.replace("<?= base_url() ?>/hilerria/recibos/");
+            } else{
+                alert(response[0]);
+            }
         }
 
     });

@@ -170,6 +170,21 @@ class ReciboModel extends Model
         return json_encode($results);
     }
 
+    public function existeRef($ref)
+    {
+        $db = \Config\Database::connect();
+
+        $sql = "SELECT COUNT(ID) AS CUANTOS
+                FROM  $this->table as TR
+                WHERE TR.REF='$ref'";
+            
+        $query = $db->query($sql);
+		
+		$results = $query->getResult();
+		
+        return json_encode($results);
+    }
+
     public function modificarCobrado($id,$cobrado)
     {
         $db = \Config\Database::connect();

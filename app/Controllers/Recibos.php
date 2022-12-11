@@ -202,6 +202,11 @@ class Recibos extends BaseController
 		$ids = implode(',',$response->arrayIds);
 		// return var_dump($fecha,$ref,$ids);
 		$model = new ReciboModel();
+		$result=json_decode($model->existeRef($ref));		
+		if($result[0]->CUANTOS>0){			
+			return json_encode(array('Referencia utilizada en anteriores recibos, introduzca una nueva'));
+		}
+
 		$model->insertar($fecha,$ref,$concepto,$ids);
 
 		$modelLineas = new ReciboLineaModel();
@@ -238,16 +243,10 @@ class Recibos extends BaseController
 			$identificadorEmpresa="ES71000P3105008A";//Identificador calculo segun CIF -- PAIS+DIGITOS_CONTROL97_10(CIF+ES+00+000+CIF)+CIF
 		}
 
-		if($numRecibos==0)
-		{
-			$session = session();
-			$session->setFlashdata('error', 'No se ha encontrado ningún recibo con la referencia introducida');
-			return false;
-		}
 
 		$datosLineas=json_decode($model->ObtenerDatosLineasRemesa($ref));
 		// return var_dump($datosLineas);
-		$file=basename('recibos.xml');
+		$file=basename('recibos_' . $ref . '.xml');
 		
 		$xw = new XMLWriter();
 		$xw->openURI($file);
@@ -430,9 +429,9 @@ class Recibos extends BaseController
 
     }
 
-	public function DescargarXML()
+	public function DescargarXML($ref)
 	{
-		$file=basename('recibos.xml');
+		$file=basename('recibos_' . $ref . '.xml');
 		if(file_exists($file)){
 			// header('Content-Description: File Transfer');
 			// header('Content-Type: text/xml');
