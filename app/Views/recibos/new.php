@@ -128,7 +128,7 @@ function CrearRecibos()
             if (response[0]==true){
                 window.open('<?= base_url() ?>/Recibos/DescargarXML/'+referencia,
                                 "_blank");
-                window.location.replace("<?= base_url() ?>/hilerria/recibos/");
+                window.location.replace("<?= base_url() ?>/recibos/");
             } else{
                 alert(response[0]);
             }
