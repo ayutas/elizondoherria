@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\ReciboModel;
 use App\Models\ReciboLineaModel;
 use App\Models\ArticuloClienteModel;
+use App\Models\ParametrosModel;
 use XMLWriter;
 
 class Recibos extends BaseController
@@ -208,11 +209,19 @@ class Recibos extends BaseController
 		}
 
 		$model->insertar($fecha,$ref,$concepto,$ids);
-
+		
 		$modelLineas = new ReciboLineaModel();
 		$modelLineas->insertar($ref,$ids);
 		$this->crearRecibosXML($ref);
-		return json_encode(array(true));
+
+		$modelParametros=new ParametrosModel();
+		$carpetaApp=json_decode($modelParametros->getAll());
+		$ruta= base_url();
+		if(isset($carpetaApp)){
+			$ruta .= '/'.$carpetaApp[0]->CARPETA_APP;
+		}
+		$ruta .= '/recibos/';
+		return json_encode(array(true,$ruta));
 		// return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
 	}
 

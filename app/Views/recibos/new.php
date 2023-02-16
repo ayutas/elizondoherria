@@ -128,7 +128,7 @@ function CrearRecibos()
             if (response[0]==true){
                 window.open('<?= base_url() ?>/Recibos/DescargarXML/'+referencia,
                                 "_blank");
-                window.location.replace("<?= base_url() ?>/recibos/");
+                window.location.replace(response[1]);
             } else{
                 alert(response[0]);
             }
