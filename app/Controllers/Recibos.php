@@ -217,7 +217,7 @@ class Recibos extends BaseController
 		$modelParametros=new ParametrosModel();
 		$carpetaApp=json_decode($modelParametros->getAll());
 		$ruta= base_url();
-		if(isset($carpetaApp)){
+		if(isset($carpetaApp[0])){
 			$ruta .= '/'.$carpetaApp[0]->CARPETA_APP;
 		}
 		$ruta .= '/recibos/';
