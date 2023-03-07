@@ -136,23 +136,6 @@ class Recibos extends BaseController
 		echo view('dashboard/footer', $data);
 	}
 
-	public function crearxml()
-	{
-		//Variable con todos los datos a pasar a las vistas
-		$data = [];
-
-		// Cargamos los helpers de formularios
-		helper(['form']);
-		$uri = service('uri');
-
-		
-		$data['slug'] = $this->redireccion;
-
-		echo view('dashboard/header');
-		echo view($this->redireccionView . '/newxml');
-		echo view('dashboard/footer');
-	}
-
 	public function guardarRecibo()
 	{
 		
