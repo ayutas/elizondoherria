@@ -8,7 +8,8 @@ class CategoriaModel extends Model
     protected $primaryKey = 'ID';
     protected $allowedFields = [
         'NOMBRE', 
-        'PRECIO',               
+        'PRECIO',
+        'SECCION_ID',
         'DELETED_AT'
     ];
 
@@ -23,18 +24,14 @@ class CategoriaModel extends Model
         return $data;
     }
 
-    public function getAll($id=null){
+    public function getAll($seccion){
         $db = \Config\Database::connect();
         
-        $sql = "SELECT  TI.ID As 'ID',
-                        TI.NOMBRE As 'Nombre',
-                        TI.PRECIO As 'Precio'
-                FROM tbl_categorias TI
-                WHERE ISNULL(TI.DELETED_AT)";   
-
-        if($id)
-        {   $sql.=   " AND TI.ID=$id";
-        }       
+        $sql = "SELECT  TC.ID As 'ID',
+                        TC.NOMBRE As 'Nombre',
+                        TC.PRECIO As 'Precio'
+                FROM tbl_categorias TC
+                WHERE ISNULL(TC.DELETED_AT) AND TC.SECCION_ID=$seccion";
            
 		$query = $db->query($sql);
 		
@@ -42,6 +39,22 @@ class CategoriaModel extends Model
 		
         return json_encode($results);
     }
+
+    public function getById($id){
+        $db = \Config\Database::connect();
+        
+        $sql = "SELECT  TC.ID As 'ID',
+                        TC.NOMBRE As 'Nombre',
+                        TC.PRECIO As 'Precio'
+                FROM tbl_categorias TC
+                WHERE ISNULL(TC.DELETED_AT) AND TC.ID=$id";
+           
+		$query = $db->query($sql);
+		
+		$results = $query->getResult();
+		
+        return json_encode($results);
+    }    
        
     public function deleteById($id)
     {

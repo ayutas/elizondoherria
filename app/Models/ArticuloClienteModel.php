@@ -66,7 +66,7 @@ class ArticuloClienteModel extends Model
         return json_encode($results);
     }
 
-    public function getArticulosDisponibles(){
+    public function getArticulosDisponibles($seccion){
         $db = \Config\Database::connect();
         
         $sql = "SELECT  '' as 'btnSeleccionar',
@@ -78,7 +78,7 @@ class ArticuloClienteModel extends Model
                 FROM tbl_articulos AS TA
                 INNER JOIN tbl_categorias as TC ON TA.CATEGORIA_ID=TC.ID
                 LEFT JOIN $this->table as TAC ON TA.ID=TAC.ARTICULO_ID AND ISNULL(TAC.DELETED_AT)
-                WHERE ISNULL(TAC.ID)";
+                WHERE TA.SECCION_ID=$seccion AND ISNULL(TAC.ID)";
 
         $query = $db->query($sql);
 		
@@ -118,7 +118,7 @@ class ArticuloClienteModel extends Model
 		return $query->getResult();
     }    
    
-    public function getAll(){
+    public function getAll($seccion){
         $db = \Config\Database::connect();
         
         $sql = "SELECT  '' AS '',
@@ -138,7 +138,7 @@ class ArticuloClienteModel extends Model
                 ON TAC.ARTICULO_ID=TA.ID
                 INNER JOIN tbl_categorias AS TCA
                 ON TA.CATEGORIA_ID=TCA.ID
-                WHERE ISNULL(TAC.DELETED_AT)";
+                WHERE ISNULL(TAC.DELETED_AT) AND TC.SECCION_ID=$seccion";
 
         $query = $db->query($sql);
 		

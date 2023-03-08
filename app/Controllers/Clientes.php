@@ -34,7 +34,8 @@ class Clientes extends BaseController
 
         $columnasDatatable = array($column1,$column2,$column3,$column4);
 		$data['columnsclientes'] = $columnasDatatable;
-		$data['dataclientes'] = json_decode($ClienteModel->getAll());
+		$seccion=session()->get('seccion');
+		$data['dataclientes'] = json_decode($ClienteModel->getAll($seccion));
 
 		foreach ($data['dataclientes'] as $item) {
 			$buttonEditCliente = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >Editar</button></form>';
@@ -94,7 +95,8 @@ class Clientes extends BaseController
 		$data['dataArticulos'] = json_decode($articulosClientesModel->getByCliente($id));
 
 		$data['columnsArticulosDisponibles'] = $columnasDatatable;
-		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles($seccion));
 
 		$column1= array ('Field'=>'ID');
 		$column2= array ('Field'=>'Comentario');
@@ -115,10 +117,11 @@ class Clientes extends BaseController
 		$column1= array ('Field'=>'ID');
 		$column2= array ('Field'=>'Número');
 		$column3= array ('Field'=>'Fecha');
-		$column4= array ('Field'=>'Concepto');
-        $column5= array ('Field'=>'Importe');
+		$column4= array ('Field'=>'Referencia');
+		$column5= array ('Field'=>'Concepto');
+        $column6= array ('Field'=>'Importe');
 
-        $columnasDatatableRecibos = array($column1,$column2,$column3,$column4,$column5);
+        $columnasDatatableRecibos = array($column1,$column2,$column3,$column4,$column5,$column6);
 		$data['columnsRecibos'] = $columnasDatatableRecibos;
 		$data['dataRecibos'] = json_decode($recibosModel->getByIdCliente($id));
 		// return var_dump($data['dataComentarios'] );
@@ -165,7 +168,8 @@ class Clientes extends BaseController
         $columnasDatatable = array($column1,$column2,$column3,$column4,$column5);
 		$data['columnsArticulosDisponibles'] = $columnasDatatable;
 		$articulosClientesModel = new ArticuloClienteModel();
-		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles($seccion));
 
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';		
@@ -194,7 +198,8 @@ class Clientes extends BaseController
 		$agencia = $response->agencia;
 		$cuenta = $response->cuenta;
 		$notas = $response->notas;
-
+		$seccion =session()->get('seccion');
+		
 		$model = new ClienteModel();
 		$newData = [
 			'NOMBRE' => $nombre,
@@ -210,7 +215,8 @@ class Clientes extends BaseController
 			'BANCO_ID' => $banco,
 			'AGENCIA' => $agencia,
 			'CUENTA' => $cuenta,
-			'NOTAS' => $notas
+			'NOTAS' => $notas,
+			'SECCION_ID' => $seccion
 
 		];
 		if($id!=0){
@@ -236,7 +242,8 @@ class Clientes extends BaseController
 			'CLIENTE_ID' => $idCliente
 		];
 		$id = $model->insert($newData);
-		$artDisponibles= json_decode($model->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$artDisponibles= json_decode($model->getArticulosDisponibles($seccion));
 		$articulosCliente=json_decode($model->getByCliente($idCliente));
 		return json_encode(array($articulosCliente,$artDisponibles));
 	}
@@ -249,7 +256,8 @@ class Clientes extends BaseController
 
 		$model = new ArticuloClienteModel();		
 		$id = $model->deleteById($id);
-		$artDisponibles= json_decode($model->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$artDisponibles= json_decode($model->getArticulosDisponibles($seccion));
 		$articulosCliente=json_decode($model->getByCliente($idCliente));
 		return json_encode(array($articulosCliente,$artDisponibles));
 	}

@@ -53,7 +53,6 @@ $routes->get('/clientes/new', 'Clientes::new',['filter' => 'auth']);
 //Recibos
 $routes->get('/recibos', 'Recibos::show',['filter' => 'auth']);
 $routes->get('/consultas', 'Recibos::consultas',['filter' => 'auth']);
-$routes->get('/crearxml', 'Recibos::crearxml',['filter' => 'auth']);
 $routes->get('/newrecibos', 'Recibos::newrecibos',['filter' => 'auth']);
 
 //Mto Bancos

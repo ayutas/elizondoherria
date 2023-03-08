@@ -22,7 +22,8 @@ class ReciboModel extends Model
         'EMAIL',
         'IMPORTE',
         'CUENTA',
-        'COBRADO',        
+        'COBRADO',
+        'SECCION_ID',
         'CREATED_AT'
     ];
 
@@ -37,7 +38,7 @@ class ReciboModel extends Model
         return $data;
     }
 
-    public function getAll(){
+    public function getAll($idSeccion){
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TR.ID,
@@ -50,7 +51,8 @@ class ReciboModel extends Model
                         TR.IMPORTE AS 'Importe',
                         TR.CUENTA AS 'Cuenta',
                         TR.CREATED_AT AS 'Creado'
-                FROM $this->table TR";
+                FROM $this->table TR
+                WHERE TR.SECCION_ID=$idSeccion";
 
         $query = $db->query($sql);
 		
@@ -123,6 +125,7 @@ class ReciboModel extends Model
         $sql = "SELECT  TR.ID,
                         TR.NUMERO AS 'Número', 
                         DATE_FORMAT(TR.FECHA,'%d/%m/%Y') AS 'Fecha',
+                        TR.REF AS 'Referencia',
                         TR.CONCEPTO AS 'Concepto',
                         TR.IMPORTE AS 'Importe'
                 FROM $this->table TR
@@ -144,12 +147,12 @@ class ReciboModel extends Model
 		$results = $query->getResult();
         $numero =$results[0]->NUMERO;
         
-        $sql = "INSERT INTO $this->table (FECHA, NUMERO, REF, CONCEPTO, CLIENTE_ID, NOMBRE, DNI, DOMICILIO, POBLACION, COD_POSTAL, CONTACTO, TELEFONO, EMAIL, IMPORTE, CUENTA, COBRADO)
+        $sql = "INSERT INTO $this->table (FECHA, NUMERO, REF, CONCEPTO, CLIENTE_ID, NOMBRE, DNI, DOMICILIO, POBLACION, COD_POSTAL, CONTACTO, TELEFONO, EMAIL, IMPORTE, CUENTA, COBRADO, SECCION_ID)
                 SELECT  '$fecha' AS FECHA,(@row_number:=@row_number + 1) AS NUMERO,'$ref' AS REF, '$concepto' AS CONCEPTO,
                         TC.ID,CONCAT(IFNULL(TC.NOMBRE,''),' ', IFNULL(TC.APELLIDOS,'')) AS NOMBRE,
                         TC.DNI, TC.DOMICILIO, TC.POBLACION, TC.COD_POSTAL, TC.CONTACTO, TC.TELEFONO, TC.EMAIL,
                         SUM(TCA.PRECIO) AS IMPORTE,
-                        CONCAT(TC.IBAN,TB.CODIGO,TC.AGENCIA,TC.CUENTA) AS CUENTA, NOW()
+                        CONCAT(TC.IBAN,TB.CODIGO,TC.AGENCIA,TC.CUENTA) AS CUENTA, NOW(),TC.SECCION_ID
                 FROM tbl_articulos_clientes  as TAC
                 INNER JOIN tbl_clientes AS TC
                 ON TAC.CLIENTE_ID=TC.ID
@@ -216,9 +219,9 @@ class ReciboModel extends Model
         $db = \Config\Database::connect();
 
         $sql = "INSERT INTO tbl_recibos_eliminados (FECHA, NUMERO, REF, CONCEPTO, CLIENTE, DNI, DOMICILIO, POBLACION, COD_POSTAL, CONTACTO,
-                TELEFONO, EMAIL, IMPORTE, CUENTA, COBRADO, USUARIO_ID)
+                TELEFONO, EMAIL, IMPORTE, CUENTA, COBRADO, SECCION_ID, USUARIO_ID)
                 SELECT FECHA, NUMERO, REF, CONCEPTO, CLIENTE, DNI, DOMICILIO, POBLACION, COD_POSTAL, CONTACTO,
-                TELEFONO, EMAIL, IMPORTE, CUENTA, COBRADO,$usuarioId
+                TELEFONO, EMAIL, IMPORTE, CUENTA, COBRADO, SECCION_ID, $usuarioId
                 FROM $this->table WHERE ID = $id";
         
         $query = $db->query($sql);

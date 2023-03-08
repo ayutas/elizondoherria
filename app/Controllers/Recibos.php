@@ -6,6 +6,7 @@ use App\Models\ReciboModel;
 use App\Models\ReciboLineaModel;
 use App\Models\ArticuloClienteModel;
 use App\Models\ParametrosModel;
+use App\Models\SeccionModel;
 use XMLWriter;
 
 class Recibos extends BaseController
@@ -45,7 +46,8 @@ class Recibos extends BaseController
 		
 		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8,$column9,$column10,$column11,$column12);
 		$data['columns'] = $columnasDatatable;
-		$data['data'] = json_decode($model->getAll());
+		$seccion=session()->get('seccion');
+		$data['data'] = json_decode($model->getAll($seccion));
 
 		foreach ($data['data'] as $item) {
 			$buttonEdit = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >Editar</button></form>';
@@ -124,7 +126,8 @@ class Recibos extends BaseController
 		
 		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8,$column9);
 		$data['columns'] = $columnasDatatable;
-		$data['data'] = json_decode($model->getAll());
+		$seccion=session()->get('seccion');
+		$data['data'] = json_decode($model->getAll($seccion));
 
 
 
@@ -134,23 +137,6 @@ class Recibos extends BaseController
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/new', $data);
 		echo view('dashboard/footer', $data);
-	}
-
-	public function crearxml()
-	{
-		//Variable con todos los datos a pasar a las vistas
-		$data = [];
-
-		// Cargamos los helpers de formularios
-		helper(['form']);
-		$uri = service('uri');
-
-		
-		$data['slug'] = $this->redireccion;
-
-		echo view('dashboard/header');
-		echo view($this->redireccionView . '/newxml');
-		echo view('dashboard/footer');
 	}
 
 	public function guardarRecibo()
@@ -228,10 +214,11 @@ class Recibos extends BaseController
 	Public function crearRecibosXML($ref)
     {		
 		$numRecibos=0;
+		$seccion=session()->get('seccion');
 
+		$modelSeccion=new SeccionModel();
 		$model = new ReciboModel();
 		$datosCabecera=json_decode($model->ObtenerDatosCabeceraRemesa($ref));
-		
 		
 		if (isset($datosCabecera[0])) {
 
@@ -240,16 +227,19 @@ class Recibos extends BaseController
 			$fechaVencimiento = date_format(date_create($datosCabecera[0]->FECHA),'Y-m-d');
 			$numremesa=$ref;
 			$fechaCreacion=date('Ymd');
-			$nombreEmpresa="LUGAR DE ELIZONDO";
-			$domicilioEmpresa="Jaime Urrutia 4";
-			$cpEmpresa="31700";
-			$poblacionEmpresa="Elizondo";
-			//hilerri
-			$numCuentaEmpresa="ES0630080043142303410910";
-			//herria
-			$numCuentaEmpresa="ES2330080043171214211813";
-			$bicEmpresa="BCOEESMM";//CODIGO SWIFT DEL BANCO empresa
-			$identificadorEmpresa="ES71000P3105008A";//Identificador calculo segun CIF -- PAIS+DIGITOS_CONTROL97_10(CIF+ES+00+000+CIF)+CIF
+			$datosEmpresa=$modelSeccion->where('ID', $seccion)->first();
+			if (isset($datosEmpresa)) {
+				$nombreEmpresa=$datosEmpresa['NOMBRE']; //"LUGAR DE ELIZONDO";
+				$domicilioEmpresa=$datosEmpresa['DOMICILIO']; //"Jaime Urrutia 4";
+				$cpEmpresa=$datosEmpresa['CPOSTAL']; //"31700";
+				$poblacionEmpresa=$datosEmpresa['POBLACION']; //"Elizondo";
+				//hilerri
+				$numCuentaEmpresa=$datosEmpresa['NUMCUENTA']; //"ES0630080043142303410910";
+				//herria
+				//$numCuentaEmpresa="ES2330080043171214211813";
+				$bicEmpresa=$datosEmpresa['BIC']; //"BCOEESMM";//CODIGO SWIFT DEL BANCO empresa
+				$identificadorEmpresa=$datosEmpresa['IDENTIFICADOR']; //"ES71000P3105008A";//Identificador calculo segun CIF -- PAIS+DIGITOS_CONTROL97_10(CIF+ES+00+000+CIF)+CIF
+			}
 		}
 
 

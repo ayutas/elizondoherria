@@ -24,8 +24,9 @@ class Categorias extends BaseController
 		$column3= array ('Field'=>'Precio');
 		
 		$columnasDatatable = array($column1,$column2,$column3);
-		$data['columns'] = $columnasDatatable;						
-		$data['data'] = json_decode($Model->getAll());
+		$data['columns'] = $columnasDatatable;
+		$seccion=session()->get('seccion');		
+		$data['data'] = json_decode($Model->getAll($seccion));
 
 
 		foreach ($data['data'] as $item) {
@@ -113,7 +114,7 @@ class Categorias extends BaseController
 			}
 		}
 
-		$data['data'] = json_decode($Model->getAll($id));
+		$data['data'] = json_decode($Model->getById($id));
 
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
@@ -156,10 +157,12 @@ class Categorias extends BaseController
 
 			} else {
 
+				$seccion=session()->get('seccion');
 				// Insertar categoria
 				$newData = [
 					'NOMBRE' => $this->request->getVar('nombre'),
-					'PRECIO' => $this->request->getVar('precio')
+					'PRECIO' => $this->request->getVar('precio'),
+					'SECCION_ID' => $seccion
 				];
 
 				//Guardamos

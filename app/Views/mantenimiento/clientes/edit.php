@@ -340,7 +340,7 @@
                                     <!--Tabla recibos -->
                                     <?php if(isset($columnsRecibos[0]))
                                     {
-                                    dataTable("Recibos cliente", $columnsRecibos, $dataRecibos, 'Recibos', '5', 'text-center', "0,6",  4, false, 0, 'tablaRecibos');
+                                    dataTable("Recibos cliente", $columnsRecibos, $dataRecibos, 'Recibos', '6', 'text-center', "0,7",  7, false, 0, 'tablaRecibos');
                                     }
                                 ?>
                                 </div>
@@ -489,7 +489,7 @@ function EditarRecibo(boton)
 }
 
 function GuardarCliente()
-{       
+{   
     var nombre= $('#nombre').val();
     var apellidos= $('#apellidos').val();
     var dni= $('#dni').val();
