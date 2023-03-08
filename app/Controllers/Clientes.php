@@ -381,7 +381,7 @@ class Clientes extends BaseController
 		$html .= '<label style="font-size:22px;"><strong>ELIZONDOko HILERRIA</label><br><label style="font-size:16px;text-align:center">Denboraldi bateko erabilpen txartela</strong></label>';
 		$html .= '</td>';
 		$html .= '<td colspan="2">';
-		$html .= '<img src="' . base_url() . '/assets/images/Logo.png" width="65" height="70">';
+		$html .= '<img src="' . base_url() . '/assets/images/Logo.jpg" width="65" height="70">';
 		$html .= '</td>';
 		$html .= '<td colspan="5">';
 		$html .= '<label style="font-size:22px;">CEMENTERIO de ELIZONDO</label><br><label style="font-size:16px;text-align:center">Tarjeta de uso temporal</label>';
