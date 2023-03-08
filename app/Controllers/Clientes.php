@@ -94,7 +94,8 @@ class Clientes extends BaseController
 		$data['dataArticulos'] = json_decode($articulosClientesModel->getByCliente($id));
 
 		$data['columnsArticulosDisponibles'] = $columnasDatatable;
-		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles($seccion));
 
 		$column1= array ('Field'=>'ID');
 		$column2= array ('Field'=>'Comentario');
@@ -165,7 +166,8 @@ class Clientes extends BaseController
         $columnasDatatable = array($column1,$column2,$column3,$column4,$column5);
 		$data['columnsArticulosDisponibles'] = $columnasDatatable;
 		$articulosClientesModel = new ArticuloClienteModel();
-		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles($seccion));
 
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';		

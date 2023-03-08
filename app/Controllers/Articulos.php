@@ -29,7 +29,8 @@ class Articulos extends BaseController
 		
 		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6);
 		$data['columns'] = $columnasDatatable;
-		$data['data'] = json_decode($model->getAll());
+		$seccion=session()->get('seccion');
+		$data['data'] = json_decode($model->getAll($seccion));
 		foreach ($data['data'] as $item) {
 			$buttonEdit = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >Editar</button></form>';
 			$buttonDelete = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $item->ID . '" style="color:white;" class="btn btn-danger" >Eliminar</button>';
@@ -95,14 +96,17 @@ class Articulos extends BaseController
 
 			} else {
 
+				$seccion=session()->get('seccion');
 				if ($id != "") {
+					
 					// Acutlizar rol
 					$newData = [
 						'ID' => $id,
 						'NUMERO' => $this->request->getVar('numero'),
 						'DESCRIPCION' => $this->request->getVar('descripcion'),
 						'LETRA' => $this->request->getVar('letra'),
-						'CATEGORIA_ID' => $this->request->getVar('categoria')
+						'CATEGORIA_ID' => $this->request->getVar('categoria'),
+						'SECCION_ID' => $seccion
 					];
 					
 					//Guardamos
@@ -113,7 +117,8 @@ class Articulos extends BaseController
 						'DESCRIPCION' => $this->request->getVar('descripcion'),
 						'NUMERO' => $this->request->getVar('numero'),
 						'LETRA' => $this->request->getVar('letra'),
-						'CATEGORIA_ID' => $this->request->getVar('categoria')
+						'CATEGORIA_ID' => $this->request->getVar('categoria'),
+						'SECCION_ID' => $seccion
 					];
 					$id = $model->insert($newData);
 					$mensaje='Creado correctamente';
@@ -129,7 +134,8 @@ class Articulos extends BaseController
 		}
 
 		$categoriaModel = new CategoriaModel();
-		$data['categorias'] = json_decode($categoriaModel->getAll());
+		$seccion=session()->get('seccion');
+		$data['categorias'] = json_decode($categoriaModel->getAll($seccion));
 
 		if ($id != "") {
 			$articuloClienteModel=new ArticuloClienteModel();
@@ -145,7 +151,7 @@ class Articulos extends BaseController
 				// return var_dump($data['clienteAsignado'][0]);
 			// }
 			// return var_dump($data);
-			$data['data'] = json_decode($model->getAll($id));
+			$data['data'] = json_decode($model->getById($id));
 			$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		} else {
 			$data['action'] = base_url() . '/' . $this->redireccion . '/edit';
