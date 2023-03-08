@@ -30,13 +30,12 @@ class ArticuloClienteModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TA.NUMERO,TA.LETRA,TG.NOMBRE AS 'CATEGORIA', TAC.CANTIDAD*100 AS PORCENTAJE,TC.NOMBRE,TC.APELLIDOS,TC.DNI,
-                TC.DOMICILIO,TC.POBLACION,TC.COD_POSTAL,TC.TELEFONO,TC.EMAIL,TC.IBAN,
-                TB.CODIGO AS 'COD_BANCO',TB.NOMBRE AS 'NOMBRE_BANCO',TC.AGENCIA,TC.CUENTA,TC.NOTAS,DATE_FORMAT(TAC.CREATED_AT,'%d/%m/%Y') AS CREATED_AT
+                TC.DOMICILIO,TC.POBLACION,TC.COD_POSTAL,TC.TELEFONO,TC.EMAIL,TC.CUENTA,TC.NOTAS,DATE_FORMAT(TAC.CREATED_AT,'%d/%m/%Y') AS CREATED_AT
                 FROM $this->table as TAC
                 INNER JOIN tbl_articulos AS TA ON TAC.ARTICULO_ID=TA.ID
                 INNER JOIN tbl_categorias AS TG ON TA.CATEGORIA_ID=TG.ID
                 INNER JOIN tbl_clientes TC ON TAC.CLIENTE_ID=TC.ID
-                INNER JOIN tbl_bancos TB ON TC.BANCO_ID=TB.ID
+                
                 WHERE TAC.ID=$id";
 
         $query = $db->query($sql);
@@ -134,13 +133,11 @@ class ArticuloClienteModel extends Model
                         TC.DNI AS 'DNI',
                         CONCAT(TA.NUMERO,TA.LETRA) AS 'Número',
                         TCA.NOMBRE AS 'Categoría',
-                        TCA.CANTIDAD*TCA.PRECIO AS 'Importe',
-                        CONCAT(TC.IBAN,TB.CODIGO,TC.AGENCIA,TC.CUENTA) AS 'Cuenta'                        
+                        TAC.CANTIDAD*TCA.PRECIO AS 'Importe',
+                        TC.CUENTA AS 'Cuenta'                        
                 FROM $this->table  as TAC
                 INNER JOIN tbl_clientes AS TC
                 ON TAC.CLIENTE_ID=TC.ID
-                INNER JOIN tbl_bancos AS TB
-                ON TC.BANCO_ID=TB.ID
                 INNER JOIN tbl_articulos AS TA
                 ON TAC.ARTICULO_ID=TA.ID
                 INNER JOIN tbl_categorias AS TCA

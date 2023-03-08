@@ -16,9 +16,6 @@ class ClienteModel extends Model
         'CONTACTO',
         'TELEFONO',
         'EMAIL',
-        'IBAN',
-        'BANDO_ID',
-        'AGENCIA',
         'CUENTA',
         'NOTAS',
         'SECCION_ID',
@@ -66,9 +63,6 @@ class ClienteModel extends Model
                         TC.CONTACTO AS 'Contacto',
                         TC.TELEFONO AS 'Telefono',
                         TC.EMAIL AS 'Email',
-                        TC.IBAN AS 'Iban',
-                        TC.BANCO_ID AS 'Banco',
-                        TC.AGENCIA AS 'Agencia',
                         TC.CUENTA AS 'Cuenta',
                         TC.NOTAS AS 'Notas'
                 FROM $this->table TC

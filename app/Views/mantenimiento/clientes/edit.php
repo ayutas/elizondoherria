@@ -162,59 +162,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-3">
-                                <!-- Campo Iban -->
-                                <div class="form-group">
-                                    <label class="medium mb-1" for="iban">IBAN</label>
-                                    <input class="form-control py-2" id="iban" name="iban" type="text"
-                                        placeholder="Introduce iban" value="<?php if(isset($data[0]))
-                                        {
-                                            echo $data[0]->Iban;
-                                        }  
-                                        else{
-                                            echo set_value('iban');
-                                        }
-                                        ?>" />
-                                </div>
-                            </div>                           
-                            <div class="col-md-3">
-                                <!-- Campo Banco -->
-                                <div id="comboBancos" class="form-group">
-                                    <label class="medium mb-1" for="banco">Banco</label>
-                                    <select class="form-control py-2" id="banco" name="banco">
-                                        <option value="0">-</option>
-                                        <?php if (isset($bancos)) {
-                                            foreach ($bancos as $banco) { ?>
-                                                <option class="" value="<?php echo $banco->ID; ?>">
-                                                <?php echo $banco->Código .' - '.$banco->Nombre; ?></option><?php
-                                                }
-                                            }
-                                        ?>
-                                    </select>    
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <!-- Campo Agencia -->
-                                <div class="form-group">
-                                    <label class="medium mb-1" for="agencia">Agencia</label>
-                                    <input class="form-control py-2" id="agencia" name="agencia" type="text"
-                                        placeholder="Introduce agencia" value="<?php if(isset($data[0]))
-                                        {
-                                            echo $data[0]->Agencia;
-                                        }  
-                                        else{
-                                            echo set_value('agencia');
-                                        }
-                                        ?>" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+                        <div class="form-row">                            
+                            <div class="col-md-12">
                                 <!-- Campo Cuenta -->
                                 <div class="form-group">
                                     <label class="medium mb-1" for="cuenta">Cuenta</label>
                                     <input class="form-control py-2" id="cuenta" name="cuenta" type="text"
-                                        placeholder="Introduce resto de la cuenta" value="<?php if(isset($data[0]))
+                                        placeholder="ES0011112222333344445555" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Cuenta;
                                         }  
@@ -534,7 +488,7 @@ function GuardarCliente()
     var dni= $('#dni').val();
     if (!validar_dni_nif_nie(dni))
     {
-        alert('DNI no válido');
+        alert('DNI/CIF no válido');
         return;
     }
 
@@ -544,12 +498,14 @@ function GuardarCliente()
     var contacto= $('#contacto').val();
     var telefono= $('#telefono').val();
     var email= $('#email').val();
-    var iban= $('#iban').val();
-    var banco= $('#banco').val();
-    var agencia= $('#agencia').val();
     var cuenta= $('#cuenta').val();
+
+    if (cuenta.length!=24){
+        alert('Cuenta no válida, debe tener 24 dígitos/carácteres');
+        return;
+    }
     
-    if (!fn_ValidateIBAN(iban+banco+agencia+cuenta))
+    if (!fn_ValidateIBAN(cuenta))
     {
         alert('IBAN de la cuenta no válido');
         return;
@@ -567,9 +523,6 @@ function GuardarCliente()
         contacto:contacto,
         telefono:telefono,
         email:email,
-        iban:iban,
-        banco:banco,
-        agencia:agencia,
         cuenta:cuenta,
         notas:notas
     });
@@ -609,22 +562,6 @@ function GuardarCliente()
         }
     });
 
-    // } else {
-    //     $(".alert").html("Debe elegir un chekclist para poder guardar sus items!");
-    //     if ($('.alert').hasClass('alert-success')) {
-    //         $('.alert').removeClass('alert-success');
-    //         $('.alert').addClass('alert-danger');
-    //     };
-    //     if ($('.alert').hasClass('alert-warning')) {
-    //         $('.alert').removeClass('alert-warning');
-    //         $('.alert').addClass('alert-danger');
-    //     };
-    //     $('.alert').show();
-    //     setInterval(function() {
-    //         $('.alert').hide();
-    //     }, 5000)
-    // }
-
 }
 
 function AñadirCantidad(boton)
@@ -642,21 +579,7 @@ function AñadirCantidad(boton)
 }
 
 function AñadirArticulo(boton)
-{
-    // console.log('llego');
-    // var linea = boton.parentElement.parentElement;
-    // console.log('linea '+linea);
-    // var table = $("#datatableArticulosDisponibles").dataTable();
-    // var row = table.find("tr").eq(linea.rowIndex);
-    // var data = $("#datatableArticulosDisponibles").dataTable().fnGetData(row);
-    // console.log('data '+data);
-    // var idArticulo=data.ID;
-    // console.log('articulo '+idArticulo);
-    // var numero=data.Número;
-    // var letra=data.Letra;
-    // var categoria=data.Categoría;
-    // var precio=data.Precio;
-    // console.log('articulo '+idArticulo, 'num'+numero, 'letra'+letra, 'cat'+categoria,'precio'+precio);
+{    
     var idArticulo = $("#modalInsertarCantidad").data('articulo');
     var disponible = $("#modalInsertarCantidad").data('disponible');
     var cantidad = $("#cantidad") .val();
@@ -798,8 +721,6 @@ function EliminarComentario(id)
 
 function ImprimirArticulo(id)
 {
-    console.log(id);
-
     //con Window.open abrimos el pdf en una nueva pestaña
     window.open("<?= base_url() ?>/clientes/imprimirArticuloCliente/"+id,'_blank');    
 }
@@ -939,23 +860,6 @@ function getnumIBAN(letra) {
     ls_letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     return ls_letras.search(letra) + 10;
 }
-
-$("#banco").on('change', function() {
-    if ($("#iban").val()==''){
-        if ($('#banco').val() == 0) {
-            $("#iban").val('');
-        } else {
-            
-            var banco = $('#banco').val();
-            var arrayBancos = <?php echo json_encode($bancos); ?>;
-            var arrayBanco = $.grep(arrayBancos, function(x) {
-                return x.ID == banco;
-            });
-            console.log(arrayBanco,banco,arrayBancos);
-            $("#iban").val(arrayBanco[0].País);
-        }
-    }
-});
 
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);

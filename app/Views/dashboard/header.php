@@ -86,13 +86,10 @@
                         Clientes</a>
                         </li>
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/articulos">
-                        Articulos</a>
-                        </li> 
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/bancos">
-                        Bancos</a>
+                        Artículos</a>
                         </li> 
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/categorias">
-                        Categorias</a>
+                        Categorías</a>
                         </li>
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/usuarios">
                         Usuarios</a>

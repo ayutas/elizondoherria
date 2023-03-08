@@ -136,8 +136,8 @@ class Clientes extends BaseController
 		}
 		// return var_dump($data['dataRecibos'] );
 
-		$BancoModel = new BancoModel();
-		$data['bancos']=json_decode($BancoModel->getAll());
+		// $BancoModel = new BancoModel();
+		// $data['bancos']=json_decode($BancoModel->getAll());
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		$data['slug'] = $this->redireccion;
@@ -157,8 +157,8 @@ class Clientes extends BaseController
 
 		$ClienteModel = new ClienteModel();
 		
-		$BancoModel = new BancoModel();
-		$data['bancos']=json_decode($BancoModel->getAll());
+		// $BancoModel = new BancoModel();
+		// $data['bancos']=json_decode($BancoModel->getAll());
 
 		
 		$column1= array ('Field'=>'');
@@ -198,10 +198,7 @@ class Clientes extends BaseController
 		$cpostal = $response->cpostal;
 		$contacto = $response->contacto;
 		$telefono = $response->telefono;
-		$email = $response->email;
-		$iban = $response->iban;
-		$banco = $response->banco;
-		$agencia = $response->agencia;
+		$email = $response->email;		
 		$cuenta = $response->cuenta;
 		$notas = $response->notas;
 		$seccion =session()->get('seccion');
@@ -217,9 +214,6 @@ class Clientes extends BaseController
 			'CONTACTO' => $contacto,
 			'TELEFONO' => $telefono,
 			'EMAIL' => $email,
-			'IBAN' => $iban,
-			'BANCO_ID' => $banco,
-			'AGENCIA' => $agencia,
 			'CUENTA' => $cuenta,
 			'NOTAS' => $notas,
 			'SECCION_ID' => $seccion
@@ -352,10 +346,6 @@ class Clientes extends BaseController
 			$codPostal = $datos[0]->COD_POSTAL;
 			$telefono = $datos[0]->TELEFONO;
 			$email = $datos[0]->EMAIL;
-			$iban = $datos[0]->IBAN;
-			$codBanco = $datos[0]->COD_BANCO;
-			$nombreBanco = $datos[0]->NOMBRE_BANCO;
-			$agencia = $datos[0]->AGENCIA;
 			$cuenta = $datos[0]->CUENTA;
 			$notas = $datos[0]->NOTAS;
 			$creado = $datos[0]->CREATED_AT;
@@ -445,7 +435,7 @@ class Clientes extends BaseController
 		$html .= '</tr>';
 		$html .= '<tr>'; //FILA 5
 		$html .= '<td colspan="12">';
-		$html .= '<strong>Kontu Zkia /</strong> Nº de cuenta: ' . $nombreBanco . ' ' . $iban.$codBanco.$agencia.$cuenta;
+		$html .= '<strong>Kontu Zkia /</strong> Nº de cuenta: ' . $cuenta;
 		$html .= '</td>';
 		$html .= '</tr>';
 		$html .= '<br>';
