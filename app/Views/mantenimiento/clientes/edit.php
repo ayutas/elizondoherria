@@ -489,7 +489,7 @@ function EditarRecibo(boton)
 }
 
 function GuardarCliente()
-{       
+{   
     var nombre= $('#nombre').val();
     var apellidos= $('#apellidos').val();
     var dni= $('#dni').val();
