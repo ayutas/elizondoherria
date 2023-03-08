@@ -76,7 +76,7 @@ class Articulos extends BaseController
 				// reglas de validación
 				$rules = [
 					'descripcion' =>  'required|is_unique[tbl_articulos.DESCRIPCION]',
-					'numero' =>  'required|is_unique[tbl_articulos.NUMERO]',
+					'numero' =>  'required|',
 					'categoria' => 'required|numeric|greater_than[0]'
 				];
 			}
