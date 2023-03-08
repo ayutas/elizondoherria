@@ -3,8 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UsuarioModel;
-use App\Models\DelegacionModel;
-use App\Models\ParametrosModel;
+use App\Models\SeccionUsuarioModel;
 
 class Login extends BaseController
 {
@@ -45,13 +44,16 @@ class Login extends BaseController
 				//Pedimos los datos de ese usuario
 				$user = $model->where('USUARIO', $this->request->getVar('email'))
 					->first();
-
-
+				
+				$modelSeccionUsuario = new SeccionUsuarioModel();
+				$userSeccion = $modelSeccionUsuario->where('USUARIO_ID', $user['ID'])->first();
+								
 				//Asignamos el usuario a la sesión
-				$this->setUserSession($user);
+				$this->setUserSession($user, $userSeccion['SECCION_ID']);
 
 				// Redireccionamos a la pagina de login
 				return redirect()->to(base_url() . '/dashboard');
+				
 			}
 		}
 
@@ -62,22 +64,32 @@ class Login extends BaseController
 	}
 
 	//Guardar datos de usuario en la sesión
-	private function setUserSession($user)
-	{
-		
-
+	private function setUserSession($user,$seccionId)
+	{		
 		$data = [
 			'id' => $user['ID'],
 			'admin' => $user['ADMINISTRADOR'],
-			'email' => $user['USUARIO'],
+			'usuario' => $user['USUARIO'],
 			'nombre' => $user['NOMBRE'],
 			'ap1' => $user['AP1'],
 			'ap2' => $user['AP2'],
 			'isLoggedIn' => true,
+			'seccion' =>$seccionId,
 		];
 
 		session()->set($data);
 	}
+
+	//Guardar datos de usuario en la sesión
+	public function setSeccion()
+	{		
+		$response = json_decode($this->request->getPost('data'));
+		
+		$seccionId = $response->seccion;
+		$data=session()->get();
+		$data['seccion']=$seccionId;
+		session()->set($data);
+	}	
 
 	// Función para registrarse
 	public function register()

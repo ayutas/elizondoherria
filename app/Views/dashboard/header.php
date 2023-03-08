@@ -153,6 +153,21 @@
             </li>
         </ul>
         <ul class="c-header-nav">
+            <div id="divSeccion" class="c-sidebar-nav-item" style="display:none;"> 
+                <!-- Campo Seccion -->
+                <div id="comboSeccion" class="form-group" >
+                    <!-- <label class="medium mb-1" for="seccion">seccion</label> -->
+                    <select class="form-control py-2" id="seccion" name="seccion">
+                        <?php if (isset($seccionesUsuario)) {
+                            foreach ($seccionesUsuario as $seccion) { ?>
+                                <option class="" value="<?php echo $seccion->SECCION_ID; ?>">
+                                <?php echo $seccion->DESCRIPCION; ?></option><?php
+                                }
+                            }
+                        ?>
+                    </select>    
+                </div>
+            </div>
             <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" 
                     role="button" aria-haspopup="true" aria-expanded="false">
                     <div class="c-avatar"><img class="c-avatar-img" src="<?=base_url()?>/assets/img/avatars/6.jpg" alt="user@email.com">
@@ -186,3 +201,37 @@
 
     </header>
     <!-- Menu Superior + Breadcum - Fin -->
+<script>
+
+    $(document).ready(function() { 
+        $("#seccion").attr('disabled', 'disabled');
+        var secciones=<?php if (isset($seccionesUsuario)) echo json_encode($seccionesUsuario);  ?>;
+
+        if(secciones.length>1){
+            $("#divSeccion").show();
+            $("#seccion").attr('disabled', false);
+        }
+    });
+
+    $("#seccion").on('click', async function() {
+        var seccion=$("#seccion").val();
+        console.log(seccion);
+        var parametros = JSON.stringify({
+            seccion: seccion,
+         });
+         $.ajax({
+            data: {
+               'data': parametros
+            },
+            dataType: "json",
+            //data: formData,
+            url: '<?= base_url() ?>/Login/setSeccion',
+            type: 'post',
+
+            success: function(response) {
+            }
+         });
+    
+    });
+
+</script>
