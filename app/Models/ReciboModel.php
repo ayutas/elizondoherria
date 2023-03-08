@@ -125,6 +125,7 @@ class ReciboModel extends Model
         $sql = "SELECT  TR.ID,
                         TR.NUMERO AS 'Número', 
                         DATE_FORMAT(TR.FECHA,'%d/%m/%Y') AS 'Fecha',
+                        TR.REF AS 'Referencia',
                         TR.CONCEPTO AS 'Concepto',
                         TR.IMPORTE AS 'Importe'
                 FROM $this->table TR
