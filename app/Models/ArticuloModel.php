@@ -12,6 +12,7 @@ class ArticuloModel extends Model
         'LETRA',
         'CATEGORIA_ID',
         'SECCION_ID',
+        'DISPONIBLE',
         'DELETED_AT',
     ];
 
@@ -55,7 +56,8 @@ class ArticuloModel extends Model
                         TA.NUMERO as 'Número',
                         TA.LETRA as 'Letra',
                         TC.NOMBRE as 'Categoría',
-                        TC.PRECIO as 'Precio'
+                        TC.PRECIO as 'Precio',
+                        TA.DISPONIBLE as 'Disponible'
                 FROM $this->table TA
                 INNER JOIN tbl_categorias AS TC ON TA.CATEGORIA_ID=TC.ID
                 WHERE TA.ID=$id";

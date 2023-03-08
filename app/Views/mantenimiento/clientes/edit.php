@@ -303,10 +303,13 @@
                                             style="color:black;">
                                             <thead>
                                                 <tr>
+                                                    <th>Descripción</th>
                                                     <th>Número</th>
                                                     <th>Letra</th>
                                                     <th>Categoría</th>
+                                                    <th>Cantidad</th>
                                                     <th>Precio</th>
+                                                    <th>Importe</th>
                                                     <th></th>
                                                     <th></th>
                                                 </tr>
@@ -315,10 +318,13 @@
                                                 <?php if (isset($dataArticulos) && $dataArticulos != null) {
                                                     foreach ($dataArticulos as $articulo) { ?>
                                                 <tr>
+                                                    <td><?= $articulo->Descripción ?></td>
                                                     <td><?= $articulo->Número ?></td>
                                                     <td><?= $articulo->Letra ?></td>
                                                     <td><?= $articulo->Categoría ?></td>
+                                                    <td><?= $articulo->Cantidad ?></td>
                                                     <td><?= $articulo->Precio ?></td>
+                                                    <td><?= $articulo->Importe ?></td>
                                                     <td><button type="Button" onclick="QuitarArticulo(<?=$articulo->ID?>)" id="btnQuitarArticulo" class="btn btn-danger mb-2 ml-2" >Quitar</button></td>
                                                     <td><button type="Button" onclick="ImprimirArticulo(<?=$articulo->ID?>)" id="btnImprimirArticulo" class="btn btn-info mb-2 ml-2" >Imprimir</button></td>
                                                 </tr>
@@ -362,10 +368,43 @@
                                         <!-- <div id="tablaSeleccion"> -->
                                             <div class="col-md-12">
                                             <?php if(isset($columnsArticulosDisponibles[0]))
-                                                dataTablePersonalizadaSeleccion($columnsArticulosDisponibles,$articulosDisponibles,$slug,'','text-center','', "Artículos (". count($articulosDisponibles).")",12,true,0,'datatableArticulosDisponibles',false,0,"AñadirArticulo(this)");
+                                                dataTablePersonalizadaSeleccion($columnsArticulosDisponibles,$articulosDisponibles,$slug,'','text-center','1', "Artículos (". count($articulosDisponibles).")",12,true,0,'datatableArticulosDisponibles',false,0,"AñadirCantidad(this)");
                                                 ?>   
                                             </div>
                                         <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="modalInsertarCantidad" tabindex="-1" role="dialog" aria-labelledby="modalInsertarCantidad" aria-hidden="true">
+                        <div class="modal-dialog" role="document"  style="max-width: 1350px!important;">
+                            <div class="modal-content">
+                                <div style="background-color:white;" class="modal-header">
+                                    <h5 class="modal-title" id="modalInsertarCantidadLabel"></h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div style="background-color:white;" class="modal-body" id="divModal">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="body-form-heavy" for="cantidad">Introduce la cantidad</label>
+                                                    <input class="form-control body-form-light"  id="cantidad" name="cantidad"
+                                                    type="text" placeholder="Cantidad"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <button onclick="AñadirArticulo()"  type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -588,26 +627,53 @@ function GuardarCliente()
 
 }
 
-function AñadirArticulo(boton)
+function AñadirCantidad(boton)
 {
-    console.log('llego');
     var linea = boton.parentElement.parentElement;
-    console.log('linea '+linea);
     var table = $("#datatableArticulosDisponibles").dataTable();
     var row = table.find("tr").eq(linea.rowIndex);
     var data = $("#datatableArticulosDisponibles").dataTable().fnGetData(row);
-    console.log('data '+data);
-    var idArticulo=data.ID;
-    console.log('articulo '+idArticulo);
-    var numero=data.Número;
-    var letra=data.Letra;
-    var categoria=data.Categoría;
-    var precio=data.Precio;
-    console.log('articulo '+idArticulo, 'num'+numero, 'letra'+letra, 'cat'+categoria,'precio'+precio);
 
+    $("#cantidad") .val("");
+    $('#modalInsertarCantidad').data('articulo',data.ID);
+    $('#modalInsertarCantidad').data('disponible',data.Disponible);
+    $("#modalSeleccionArticulos").modal('hide');
+    $("#modalInsertarCantidad").modal('show');
+}
+
+function AñadirArticulo(boton)
+{
+    // console.log('llego');
+    // var linea = boton.parentElement.parentElement;
+    // console.log('linea '+linea);
+    // var table = $("#datatableArticulosDisponibles").dataTable();
+    // var row = table.find("tr").eq(linea.rowIndex);
+    // var data = $("#datatableArticulosDisponibles").dataTable().fnGetData(row);
+    // console.log('data '+data);
+    // var idArticulo=data.ID;
+    // console.log('articulo '+idArticulo);
+    // var numero=data.Número;
+    // var letra=data.Letra;
+    // var categoria=data.Categoría;
+    // var precio=data.Precio;
+    // console.log('articulo '+idArticulo, 'num'+numero, 'letra'+letra, 'cat'+categoria,'precio'+precio);
+    var idArticulo = $("#modalInsertarCantidad").data('articulo');
+    var disponible = $("#modalInsertarCantidad").data('disponible');
+    var cantidad = $("#cantidad") .val();
+    cantidad=cantidad.replace(',','.');
+    if (!isNumeric(cantidad)){
+        alert('La cantidad no es numérica, introduzca cantidad válida');
+        return;
+    }
+    if (cantidad>disponible){
+        alert('La cantidad introducida supera la disponible');
+        return;
+    }
+    
     var parametros = JSON.stringify({
         idCliente:idCliente,
-        idArticulo:idArticulo
+        idArticulo:idArticulo,
+        cantidad:cantidad
     });
     $.ajax({
         data: {
@@ -667,10 +733,11 @@ function GuardarComentario()
 
 function QuitarArticulo(id)
 {
-    console.log(id);
-    var parametros = JSON.stringify({
-            id:id,
-            idCliente:idCliente,
+    if (confirm('¿Continuar eliminando el artículo del cliente?') == true) {
+        console.log(id);
+        var parametros = JSON.stringify({
+                id:id,
+                idCliente:idCliente,
         });
         $.ajax({
             data: {
@@ -689,6 +756,7 @@ function QuitarArticulo(id)
                 CargarTablaSeleccion(ArticulosDisponibles);        
             }    
         });
+    }
 }
 
 function EliminarComentario(id)
@@ -741,21 +809,29 @@ function CargarTablaArticulosCliente(dataArticulos)
     var html = '<table class="table table-responsive-sm table-sm mt-4" style="color:black;">';
     html += '<thead>';
     html += '<tr>';
+    html += '<th>Descripción</th>';
     html += '<th>Número</th>';
     html += '<th>Letra</th>';
     html += '<th>Categoría</th>';
+    html += '<th>Cantidad</th>';
     html += '<th>Precio</th>';
+    html += '<th>Importe</th>';
+    html += '<th></th>';
     html += '<th></th>';
     html += '</tr>';
     html += '</thead>';
     html += '<tbody id="articulosCliente">';
     dataArticulos.forEach(function(articulo) {
         html += '<tr>';
+        html += '<td>'+ articulo.Descripción+'</td>';
         html += '<td>'+ articulo.Número+'</td>';
         html += '<td>'+ articulo.Letra +'</td>';
         html += '<td>'+ articulo.Categoría +'</td>';
+        html += '<td>'+ articulo.Cantidad+'</td>';
         html += '<td>'+ articulo.Precio +'</td>';
+        html += '<td>'+ articulo.Importe+'</td>';
         html += '<td><button type="Button" onclick="QuitarArticulo('+articulo.ID+')" id="btnQuitarArticulo" class="btn btn-danger mb-2 ml-2" >Quitar</button></td>';
+        html += '<td><button type="Button" onclick="ImprimirArticulo('+articulo.ID+')" id="btnImprimirArticulo" class="btn btn-info mb-2 ml-2" >Imprimir</button></td>';
         html += '</tr>';
     });
     html += '</tbody>';
@@ -880,5 +956,9 @@ $("#banco").on('change', function() {
         }
     }
 });
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
 
 </script>

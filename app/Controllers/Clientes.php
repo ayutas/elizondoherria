@@ -85,12 +85,14 @@ class Clientes extends BaseController
 
 		$column1= array ('Field'=>'');
 		$column2= array ('Field'=>'ID');
-		$column3= array ('Field'=>'Número');
-        $column4= array ('Field'=>'Letra');
-        $column5= array ('Field'=>'Categoría');
-        $column6= array ('Field'=>'Precio');
+		$column3= array ('Field'=>'Descripción');
+		$column4= array ('Field'=>'Número');
+        $column5= array ('Field'=>'Letra');
+        $column6= array ('Field'=>'Categoría');
+        $column7= array ('Field'=>'Precio');
+		$column8= array ('Field'=>'Disponible');
 
-        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6);
+        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8);
 		$data['columnsArticulos'] = $columnasDatatable;
 		$data['dataArticulos'] = json_decode($articulosClientesModel->getByCliente($id));
 
@@ -160,12 +162,16 @@ class Clientes extends BaseController
 
 		
 		$column1= array ('Field'=>'');
-		$column2= array ('Field'=>'Número');
-        $column3= array ('Field'=>'Letra');
-        $column4= array ('Field'=>'Categoría');
-        $column5= array ('Field'=>'Precio');
+		$column2= array ('Field'=>'ID');
+		$column3= array ('Field'=>'Descripción');
+		$column4= array ('Field'=>'Número');
+        $column5= array ('Field'=>'Letra');
+        $column6= array ('Field'=>'Categoría');
+        $column7= array ('Field'=>'Precio');
+		$column8= array ('Field'=>'Disponible');
 
-        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5);
+        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8);
+		$data['columnsArticulos'] = $columnasDatatable;
 		$data['columnsArticulosDisponibles'] = $columnasDatatable;
 		$articulosClientesModel = new ArticuloClienteModel();
 		$seccion=session()->get('seccion');
@@ -235,11 +241,13 @@ class Clientes extends BaseController
 		$response = json_decode($this->request->getPost('data'));
 		$idCliente = $response->idCliente;
 		$idArticulo = $response->idArticulo;
+		$cantidad = $response->cantidad;
 
 		$model = new ArticuloClienteModel();
 		$newData = [
 			'ARTICULO_ID' => $idArticulo,
-			'CLIENTE_ID' => $idCliente
+			'CLIENTE_ID' => $idCliente,
+			'CANTIDAD' => $cantidad
 		];
 		$id = $model->insert($newData);
 		$seccion=session()->get('seccion');

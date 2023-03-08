@@ -10,6 +10,7 @@ class ArticuloClienteModel extends Model
     protected $allowedFields = [
         'ARTICULO_ID',
         'CLIENTE_ID', 
+        'CANTIDAD',
         'DELETED_AT',   
     ];
 
@@ -49,10 +50,13 @@ class ArticuloClienteModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TAC.ID,
-                        TA.NUMERO As 'Número',
+                        TA.DESCRIPCION AS 'Descripción',
+                        TA.NUMERO AS 'Número',
                         TA.LETRA AS 'Letra',
                         TC.NOMBRE AS 'Categoría',
-                        TC.PRECIO AS 'Precio'
+                        TAC.CANTIDAD AS 'Cantidad',
+                        TC.PRECIO AS 'Precio',
+                        TC.PRECIO*TAC.CANTIDAD AS 'Importe'
                 FROM $this->table as TAC
                 INNER JOIN tbl_articulos as TA ON TAC.ARTICULO_ID=TA.ID
                 INNER JOIN tbl_categorias as TC ON TA.CATEGORIA_ID=TC.ID
@@ -71,14 +75,17 @@ class ArticuloClienteModel extends Model
         
         $sql = "SELECT  '' as 'btnSeleccionar',
                         TA.ID as 'ID',
+                        TA.DESCRIPCION AS 'Descripción',
                         TA.NUMERO as 'Número',
                         TA.LETRA as 'Letra',
                         TC.NOMBRE AS 'Categoría',
-                        TC.PRECIO AS 'Precio'
+                        TC.PRECIO AS 'Precio',
+                        TA.DISPONIBLE-IFNULL(TAC.CANTIDAD,0) AS 'Disponible'
                 FROM tbl_articulos AS TA
                 INNER JOIN tbl_categorias as TC ON TA.CATEGORIA_ID=TC.ID
-                LEFT JOIN $this->table as TAC ON TA.ID=TAC.ARTICULO_ID AND ISNULL(TAC.DELETED_AT)
-                WHERE TA.SECCION_ID=$seccion AND ISNULL(TAC.ID)";
+                LEFT JOIN (SELECT ARTICULO_ID,SUM(CANTIDAD) AS CANTIDAD FROM $this->table WHERE ISNULL(DELETED_AT) GROUP BY ARTICULO_ID) as TAC 
+                    ON TA.ID=TAC.ARTICULO_ID
+                WHERE TA.SECCION_ID=$seccion AND TA.DISPONIBLE-IFNULL(TAC.CANTIDAD,0)>0";
 
         $query = $db->query($sql);
 		
@@ -127,7 +134,7 @@ class ArticuloClienteModel extends Model
                         TC.DNI AS 'DNI',
                         CONCAT(TA.NUMERO,TA.LETRA) AS 'Número',
                         TCA.NOMBRE AS 'Categoría',
-                        TCA.PRECIO AS 'Importe',
+                        TCA.CANTIDAD*TCA.PRECIO AS 'Importe',
                         CONCAT(TC.IBAN,TB.CODIGO,TC.AGENCIA,TC.CUENTA) AS 'Cuenta'                        
                 FROM $this->table  as TAC
                 INNER JOIN tbl_clientes AS TC

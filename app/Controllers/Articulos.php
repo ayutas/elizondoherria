@@ -99,14 +99,15 @@ class Articulos extends BaseController
 				$seccion=session()->get('seccion');
 				if ($id != "") {
 					
-					// Acutlizar rol
+					// Acutlizar articulo
 					$newData = [
 						'ID' => $id,
 						'NUMERO' => $this->request->getVar('numero'),
 						'DESCRIPCION' => $this->request->getVar('descripcion'),
 						'LETRA' => $this->request->getVar('letra'),
-						'CATEGORIA_ID' => $this->request->getVar('categoria'),
-						'SECCION_ID' => $seccion
+						'CATEGORIA_ID' => $this->request->getVar('categoria'),						
+						'SECCION_ID' => $seccion,
+						'DISPONIBLE' => $this->request->getVar('disponible')
 					];
 					
 					//Guardamos
@@ -118,7 +119,8 @@ class Articulos extends BaseController
 						'NUMERO' => $this->request->getVar('numero'),
 						'LETRA' => $this->request->getVar('letra'),
 						'CATEGORIA_ID' => $this->request->getVar('categoria'),
-						'SECCION_ID' => $seccion
+						'SECCION_ID' => $seccion,
+						'DISPONIBLE' => $this->request->getVar('disponible')
 					];
 					$id = $model->insert($newData);
 					$mensaje='Creado correctamente';

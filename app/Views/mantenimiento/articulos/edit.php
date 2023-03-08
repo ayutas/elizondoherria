@@ -46,7 +46,7 @@
                                     </div>
                                     <!-- Campo Letra -->
                                     <div class="form-group">
-                                        <label class="medium mb-1" for="precio">Letra</label>
+                                        <label class="medium mb-1" for="letra">Letra</label>
                                         <input class="form-control py-2" id="letra" name="letra" type="text"
                                             placeholder="Introduce letra"
                                             value="<?php if (isset($data[0])) {
@@ -80,16 +80,30 @@
                                                     } else {
                                                         echo set_value('precio');
                                                     }
-                                                    ?>" />
+                                                    ?>" disabled />
                                     </div>
+                                    <!-- Campo Disponible -->
+                                    <div class="form-group">
+                                        <label class="medium mb-1" for="disponible">Disponible</label>
+                                        <input class="form-control py-2" id="disponible" name="disponible" type="text"
+                                            placeholder="0"
+                                            value="<?php if (isset($data[0])) {
+                                                        echo $data[0]->Disponible;
+                                                    } else {
+                                                        echo set_value('disponible');
+                                                    }
+                                                    ?>" />
+                                    </div>                                    
                                 </div>
                             </div>
                             <hr>
                             <!-- Link Cliente asignado -->
                             <div class="form-group">
-                            <?php if (isset($clienteAsignado[0])) {?>
+                            <?php if (isset($clienteAsignado)) {?>
                                 <label class="medium mb-1" for="cliente">Asignado a cliente: </label>
-                                <a href="<?php echo $clienteAsignado[0]->Link;?> "><?php echo $clienteAsignado[0]->Cliente;?></a>                                
+                                <?php foreach($clienteAsignado as $cliente){?>
+                                <a href="<?php echo $cliente->Link;?> "><?php echo $cliente->Cliente;?></a>
+                                <?php } ?>
                             </div>
                             <?php }?>
                             <div class="form-row">
