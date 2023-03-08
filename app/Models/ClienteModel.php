@@ -21,6 +21,7 @@ class ClienteModel extends Model
         'AGENCIA',
         'CUENTA',
         'NOTAS',
+        'SECCION_ID',
         'DELETED_AT'
     ];
 
@@ -35,7 +36,7 @@ class ClienteModel extends Model
         return $data;
     }
 
-    public function getAll(){
+    public function getAll($seccion){
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TC.ID As 'ID',
@@ -43,7 +44,7 @@ class ClienteModel extends Model
                         TC.APELLIDOS As 'Apellidos',
                         TC.DNI
                 FROM $this->table TC
-                WHERE ISNULL(TC.DELETED_AT)";   
+                WHERE ISNULL(TC.DELETED_AT) AND TC.SECCION_ID=$seccion";   
 
         $query = $db->query($sql);
 		

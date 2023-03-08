@@ -34,7 +34,8 @@ class Clientes extends BaseController
 
         $columnasDatatable = array($column1,$column2,$column3,$column4);
 		$data['columnsclientes'] = $columnasDatatable;
-		$data['dataclientes'] = json_decode($ClienteModel->getAll());
+		$seccion=session()->get('seccion');
+		$data['dataclientes'] = json_decode($ClienteModel->getAll($seccion));
 
 		foreach ($data['dataclientes'] as $item) {
 			$buttonEditCliente = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >Editar</button></form>';
@@ -196,7 +197,8 @@ class Clientes extends BaseController
 		$agencia = $response->agencia;
 		$cuenta = $response->cuenta;
 		$notas = $response->notas;
-
+		$seccion =session()->get('seccion');
+		
 		$model = new ClienteModel();
 		$newData = [
 			'NOMBRE' => $nombre,
@@ -212,7 +214,8 @@ class Clientes extends BaseController
 			'BANCO_ID' => $banco,
 			'AGENCIA' => $agencia,
 			'CUENTA' => $cuenta,
-			'NOTAS' => $notas
+			'NOTAS' => $notas,
+			'SECCION_ID' => $seccion
 
 		];
 		if($id!=0){
@@ -238,7 +241,8 @@ class Clientes extends BaseController
 			'CLIENTE_ID' => $idCliente
 		];
 		$id = $model->insert($newData);
-		$artDisponibles= json_decode($model->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$artDisponibles= json_decode($model->getArticulosDisponibles($seccion));
 		$articulosCliente=json_decode($model->getByCliente($idCliente));
 		return json_encode(array($articulosCliente,$artDisponibles));
 	}
@@ -251,7 +255,8 @@ class Clientes extends BaseController
 
 		$model = new ArticuloClienteModel();		
 		$id = $model->deleteById($id);
-		$artDisponibles= json_decode($model->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$artDisponibles= json_decode($model->getArticulosDisponibles($seccion));
 		$articulosCliente=json_decode($model->getByCliente($idCliente));
 		return json_encode(array($articulosCliente,$artDisponibles));
 	}
