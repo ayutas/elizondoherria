@@ -343,6 +343,7 @@ class Clientes extends BaseController
 			$numero = $datos[0]->NUMERO;
 			$letra = $datos[0]->LETRA;
 			$categoria = $datos[0]->CATEGORIA;
+			$porcentaje = $datos[0]->PORCENTAJE;
 			$nombre = $datos[0]->NOMBRE;
 			$apellidos = $datos[0]->APELLIDOS;
 			$dni = $datos[0]->DNI;
@@ -399,15 +400,18 @@ class Clientes extends BaseController
 			$html .= '<table>';
 			$html .= '<tbody>';
 			$html .= '<tr>';  //FILA 1
-			$html .= '<td colspan="4">';
+			$html .= '<td colspan="3">';
 			$html .= '<strong>Zkia /</strong> Nº: ' . $numero;
 			$html .= '</td>';
-			$html .= '<td colspan="4">';
+			$html .= '<td colspan="3">';
 			$html .= '<strong>Karrika /</strong> Calle: ' . $letra;
 			$html .= '</td>';
-			$html .= '<td colspan="4">';
+			$html .= '<td colspan="3">';
 			$html .= '<strong>Maila/</strong> Categoría: ' . $categoria;
 			$html .= '</td>';
+			$html .= '<td colspan="3">';
+			$html .= '<strong>%</strong> ' . $porcentaje;
+			$html .= '</td>';			
 			$html .= '</tr>';
 			$html .= '</tbody>';
 			$html .= '</table>';

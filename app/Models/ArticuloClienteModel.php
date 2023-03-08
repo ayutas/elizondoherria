@@ -29,7 +29,7 @@ class ArticuloClienteModel extends Model
     public function getById($id){
         $db = \Config\Database::connect();
         
-        $sql = "SELECT  TA.NUMERO,TA.LETRA,TG.NOMBRE AS 'CATEGORIA',TC.NOMBRE,TC.APELLIDOS,TC.DNI,
+        $sql = "SELECT  TA.NUMERO,TA.LETRA,TG.NOMBRE AS 'CATEGORIA', TAC.CANTIDAD*100 AS PORCENTAJE,TC.NOMBRE,TC.APELLIDOS,TC.DNI,
                 TC.DOMICILIO,TC.POBLACION,TC.COD_POSTAL,TC.TELEFONO,TC.EMAIL,TC.IBAN,
                 TB.CODIGO AS 'COD_BANCO',TB.NOMBRE AS 'NOMBRE_BANCO',TC.AGENCIA,TC.CUENTA,TC.NOTAS,DATE_FORMAT(TAC.CREATED_AT,'%d/%m/%Y') AS CREATED_AT
                 FROM $this->table as TAC
