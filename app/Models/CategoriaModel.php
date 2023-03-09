@@ -30,7 +30,7 @@ class CategoriaModel extends Model
         $sql = "SELECT  TC.ID As 'ID',
                         TC.NOMBRE As 'Nombre',
                         TC.PRECIO As 'Precio'
-                FROM tbl_categorias TC
+                FROM $this->table TC
                 WHERE ISNULL(TC.DELETED_AT) AND TC.SECCION_ID=$seccion";
            
 		$query = $db->query($sql);
@@ -46,7 +46,7 @@ class CategoriaModel extends Model
         $sql = "SELECT  TC.ID As 'ID',
                         TC.NOMBRE As 'Nombre',
                         TC.PRECIO As 'Precio'
-                FROM tbl_categorias TC
+                FROM $this->table TC
                 WHERE ISNULL(TC.DELETED_AT) AND TC.ID=$id";
            
 		$query = $db->query($sql);
@@ -60,7 +60,7 @@ class CategoriaModel extends Model
     {
         $db = \Config\Database::connect();
         
-        $sql = "UPDATE tbl_categorias
+        $sql = "UPDATE $this->table
                 SET DELETED_AT=NOW()
                 WHERE ID=$id";
 

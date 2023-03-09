@@ -7,6 +7,8 @@ use App\Models\ClienteComentarioModel;
 use App\Models\ClienteModel;
 use App\Models\BancoModel;
 use App\Models\ReciboModel;
+use App\Models\ClienteDocumentoModel;
+use App\Models\ParametrosModel;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -82,6 +84,7 @@ class Clientes extends BaseController
 		$articulosClientesModel = new ArticuloClienteModel();
 		$clientesComentariosModel=new ClienteComentarioModel();
 		$recibosModel=new ReciboModel();
+		$clientesDocumentosModel=new ClienteDocumentoModel();
 
 		$column1= array ('Field'=>'');
 		$column2= array ('Field'=>'ID');
@@ -115,6 +118,23 @@ class Clientes extends BaseController
 			$item->btnEditar = $buttonEditComentario;
 			$item->btnEliminar = $buttonDeleteComentario;
 		}
+
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>'Título');
+        $column3= array ('Field'=>'Creado');
+        $column4= array ('Field'=>'Ruta');
+
+        $columnasDatatableDocumentos = array($column1,$column2,$column3,$column4);
+		$data['columnsDocumentos'] = $columnasDatatableDocumentos;
+		$data['dataDocumentos'] = json_decode($clientesDocumentosModel->getByCliente($id));
+		
+		foreach ($data['dataDocumentos'] as $item) {
+			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">Descargar</button>';
+			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$item->btnEditar = $buttonEditDocumento;
+			$item->btnEliminar = $buttonDeleteDocumento;
+		}
+
 
 		$column1= array ('Field'=>'ID');
 		$column2= array ('Field'=>'Número');
@@ -309,6 +329,111 @@ class Clientes extends BaseController
 			$item->btnEliminar = $buttonDeleteComentario;
 		}
 		return json_encode(array($comentariosCliente));
+	}
+
+	public function guardarDocumentoCliente()
+	{
+		$modelClientesDocumentos=new ClienteDocumentoModel();
+		$response = json_decode($this->request->getPost('data'));
+		if ( 0 < $_FILES['archivo']['error'] ) 
+		{
+			echo 'Error: ' . $_FILES['archivo']['error'] . '<br>';
+		}
+		else 
+		{
+			$modelParametros=new ParametrosModel();
+			$param=$modelParametros->first();
+			$rutaServidor=$_SERVER['DOCUMENT_ROOT'];
+			if ($param['CARPETA_APP']!="") {
+				$rutaServidor .= '/'.$param['CARPETA_APP'];
+			}
+			$carpeta_destino =  'uploads/documentos';
+	
+			if (!file_exists($rutaServidor.'/'.$carpeta_destino)) 
+			{
+				mkdir($rutaServidor.'/'.$carpeta_destino, 0777, true);
+			}
+
+			$nombreArchivo = $_FILES['archivo']['name'];
+			$elementos = array_diff(scandir($rutaServidor.'/'.$carpeta_destino), array('..', '.'));			
+			$archivo = explode('.', $nombreArchivo);
+			//CAMBIO LOS ESPACIOS POR _ AL NOMBRE DE ARCHIVO QUE PARECE QUE ME DA PROBLEMAS EN EL CHEQUEO AL COPIAR LA IMAGEN DE EJEMPLO EN LA CARPETA DE CHEQUEO CORRESPONDIENTE
+			//ADEMAS EL mb_url_title ME REEMPLAZA LOS CARACTERES RAROS O ESPECIALES
+			$archivo[0] = mb_url_title($archivo[0], '_');
+
+			foreach ($elementos as $item) {				
+				while ($item == ($archivo[0] . "." . $archivo[1])) {
+					$archivo[0] = substr(md5(time()), 0, 16);
+				}
+			}
+			$nombre = $archivo[0] . '.' . $archivo[1];			
+			$idCliente = $this->request->getPost('idCliente');
+			$titulo = $this->request->getPost('titulo');
+
+			move_uploaded_file($_FILES['archivo']['tmp_name'], $rutaServidor.'/'.$carpeta_destino.'/'.$nombre);
+		}
+
+		$objetoGuardarDocumento = 
+		[
+			'CLIENTE_ID' => $idCliente,
+			'TITULO' => $titulo,
+			'RUTA' => $carpeta_destino."/".$nombre
+		];
+		
+		$modelClientesDocumentos->insert($objetoGuardarDocumento);
+
+		$documentosCliente=json_decode($modelClientesDocumentos->getByCliente($idCliente));
+		foreach ($documentosCliente as $item) {
+			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">Descargar</button>';
+			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$item->btnEditar = $buttonEditDocumento;
+			$item->btnEliminar = $buttonDeleteDocumento;
+		}
+		return json_encode(array($documentosCliente));
+	}
+
+	public function eliminarDocumentoCliente()
+	{		
+		$response = json_decode($this->request->getPost('data'));
+		$id = $response->id;
+		$idCliente = $response->idCliente;
+
+		$model = new ClienteDocumentoModel();
+		$answer = $model->deleteById($id);
+		
+		$documentosCliente=json_decode($model->getByCliente($idCliente));
+		foreach ($documentosCliente as $item) {
+			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">Descargar</button>';
+			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$item->btnEditar = $buttonEditDocumento;
+			$item->btnEliminar = $buttonDeleteDocumento;
+		}
+		return json_encode(array($documentosCliente));
+	}
+
+	public function descargarDocumento($id)
+	{
+		$model = new ClienteDocumentoModel();
+		$datos=$model->where('ID', $id)->first();
+		$ruta=$datos['RUTA'];
+
+		$modelParametros=new ParametrosModel();
+		$param=$modelParametros->first();
+		$rutaServidor=$_SERVER['DOCUMENT_ROOT'];
+		if ($param['CARPETA_APP']!="") {
+			$rutaServidor .= '/'.$param['CARPETA_APP'];
+		}
+		$file=$rutaServidor.'/'. $ruta;
+		$nombre=basename($file);
+		if(file_exists($file)){
+
+			header("Content-Type: text/html/force-download");
+			header("Content-Disposition: attachment; filename=$nombre");
+		
+			// Read the file
+			readfile($file);
+		}
+        exit;
 	}
 
 	// Borrar

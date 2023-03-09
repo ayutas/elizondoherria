@@ -220,6 +220,15 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <!-- TAB DOCUMENTOS -->
+                                    <a class="nav-link" data-toggle="tab" href="#documentos-1"
+                                        role="tab" aria-controls="documentos" aria-selected="false">
+                                        <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">Documentos</font>
+                                        </font>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <!-- TAB RECIBOS -->
                                     <a class="nav-link" data-toggle="tab" href="#recibos-1"
                                         role="tab" aria-controls="recibos" aria-selected="false">
@@ -240,7 +249,7 @@
                                     <!--Tabla comentarios -->
                                     <?php if(isset($columnsComentarios))
                                     {                                        
-                                        dataTable("", $columnsComentarios, $dataComentarios, 'Comentarios', '4', 'text-center', "0", 4, false, 0, 'datatableComentarios');
+                                        dataTable("", $columnsComentarios, $dataComentarios, 'Comentarios', '4,5', 'text-center', "0", 4, false, 0, 'datatableComentarios');
                                     }
                                     ?>
                                     </div>
@@ -289,7 +298,21 @@
                                         </table>
                                     </div>
                                 </div>
-
+                                <div class="tab-pane" id="documentos-1" role="tabpanel">
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <button type="Button" onclick="NuevoDocumento()" id="btnNuevoDocumento" class="btn btn-primary mb-2 ml-2" >Nuevo documento</button>
+                                        </div>
+                                    </div>
+                                    <!--Tabla documentos -->
+                                    <div id="tablaDocumentos" name="tablaDocumentos">
+                                        <?php if(isset($columnsDocumentos[0]))
+                                        {
+                                            dataTable("", $columnsDocumentos, $dataDocumentos, 'Documentos', '4,5', 'text-center', "0,3", 7, false, 0, 'datatableDocumentos');
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
                                 <div class="tab-pane" id="recibos-1" role="tabpanel">
                                     <!-- <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="checkDetalleRecibos" onclick="CargarDetalleRecibos()">
@@ -299,10 +322,10 @@
                                     </div> -->
                                     <!--Tabla recibos -->
                                     <?php if(isset($columnsRecibos[0]))
-                                    {
-                                    dataTable("Recibos cliente", $columnsRecibos, $dataRecibos, 'Recibos', '6', 'text-center', "0,7",  7, false, 0, 'tablaRecibos');
-                                    }
-                                ?>
+                                        {
+                                        dataTable("Recibos cliente", $columnsRecibos, $dataRecibos, 'Recibos', '6', 'text-center', "0,7",  7, false, 0, 'tablaRecibos');
+                                        }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -386,6 +409,38 @@
                             </div>
                         </div>
                     </div>                    
+                    <!--Modal para los documentos-->
+                    <div class="modal fade" id="modalDocumentos" tabindex="-1" role="dialog" aria-labelledby="modalDocumentos" aria-hidden="true">
+                        <div class="modal-dialog" role="document"  >
+                            <div class="modal-content">
+                                <div style="background-color:white;" class="modal-header">
+                                    <h5 class="modal-title" id="modalDocumentosLabel"></h5>
+                                    <button id="btnClosemodalDocumentos" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span style="background-color:black;" aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div style="background-color:white;" class="modal-body" id="divModal">
+                                    <div class="form-group">
+                                        <label class="body-form-heavy" for="titulo">Título del documento</label>
+                                        <input class="form-control body-form-light"  id="titulo" name="titulo"
+                                        type="text" placeholder="Título"
+                                        />
+                                    </div>
+                                    <div class="custom-file mt-2 mb-2" id="div_etiqueta">
+                                        <input type="file" class="custom-file-input"
+                                            name="archivo" id="archivo"
+                                            accept="application/*">
+                                        <label class="custom-file-label" id="labelarchivo"
+                                            for="archivo" data-browse="Examinar">Seleccionar
+                                            Archivo</label>
+                                    </div>                                    
+                                    <div class="row">
+                                        <button type="Button" onclick="GuardarDocumento()" id="btnGuardarDocumento" class="btn btn-primary mt-2 mb-2 ml-2" >Guardar</button>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
                     <!-- Errores de formulario -->
                     <?php if (isset($validation)){ ?>
                     <div class="col-12">
@@ -444,7 +499,6 @@ function AsignarArticulo(input)
 
 function NuevoComentario(input)
 {
-    console.log(idCliente);
     if(idCliente!=0){
         $('#modalComentarios').data('id', 0);
         $("#comentario").val('');
@@ -461,11 +515,111 @@ function EditarComentario(boton)
     var data = $("#datatableComentarios").dataTable().fnGetData(row);       
    
     if(idCliente!=0){
-        $("#comentario").val(data.Comentario);        
-        $('#modalComentarios').data('id', data.ID);        
-        $("#modalComentarios").modal('show');        
+        $("#comentario").val(data.Comentario);
+        $('#modalComentarios').data('id', data.ID);
+        $("#modalComentarios").modal('show');
     }
 }
+
+function NuevoDocumento(input)
+{
+    if(idCliente!=0){
+        $("#titulo").val('');
+        $("#archivo").val('');
+        $("#archivo").next('.custom-file-label').html('');
+        $("#modalDocumentos").modal('show');
+    }
+}
+
+$('#archivo').on('change', function(e) 
+{
+    var fileName = e.target.files[0].name;
+    //replace the "Choose a file" label
+    $(this).next('.custom-file-label').html(fileName);
+});
+
+function GuardarDocumento(input)
+{
+    var titulo=$("#titulo").val();
+    if (titulo==""){
+        alert('Introduzca título');
+        return;
+    }
+    if ($('#archivo').val() == ''){
+        alert('No hay seleccionado ningun archivo');
+        return;
+    }
+    var file_data = $('#archivo').prop('files')[0];  
+    var parametros = JSON.stringify({
+        idCliente:idCliente,
+        titulo:titulo,
+
+    });
+    var form_data = new FormData();
+         form_data.append('archivo', file_data);
+         form_data.append('idCliente', idCliente);
+         form_data.append('titulo', titulo);
+         
+         $.ajax({
+            url: '<?= base_url()?>/Clientes/guardarDocumentoCliente',
+            dataType: 'text',  
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(response) {
+                //Cargamos los documentos en la tabla
+                console.log(response);
+                var DocumentosCliente = response[0];
+                CargarTablaDocumentos(ComentariosCliente);
+            }
+        
+    });
+    $("#modalDocumentos").modal('hide');
+}
+
+function EliminarDocumento(id)
+{    
+    if (confirm('¿Eliminar documento?') == true) {
+    
+        var parametros = JSON.stringify({
+            id:id,
+            idCliente:idCliente,
+        });
+        console.log(parametros);
+        $.ajax({
+            data: {
+                'data': parametros
+            },
+            dataType: "json",
+            //data: formData,
+            url: '<?= base_url() ?>/clientes/eliminarDocumentoCliente',
+            type: 'post',
+            beforeSend: function() {
+                $("#resultado").html("Procesando, espere por favor...");
+            },
+            success: function(response) {
+                //Cargamos los articulos en la tabla
+                console.log(response);
+                var DocumentosCliente = response[0];
+                CargarTablaDocumentos(DocumentosCliente);
+            }
+        });        
+    }
+}
+
+function DescargarDocumento(boton)
+{
+    var linea = boton.parentElement.parentElement;
+    var table = $("#datatableDocumentos").dataTable();
+    var row = table.find("tr").eq(linea.rowIndex);
+    var data = $("#datatableDocumentos").dataTable().fnGetData(row);
+    var id = data.ID;
+    window.open('<?= base_url() ?>/Clientes/descargarDocumento/'+id,
+                                "_blank");
+}
+
 
 function EditarRecibo(boton)
 {
@@ -703,19 +857,11 @@ function EliminarComentario(id)
                 $("#resultado").html("Procesando, espere por favor...");
             },
             success: function(response) {
-                    //Cargamos los articulos en la tabla
-                    console.log(response);
-                    var ComentariosCliente = response[0];
-                    CargarTablaComentarios(ComentariosCliente);
-                    // if (ComentariosCliente.length>0){
-                    //     $("#tablaComentarios").show;
-                    // } else{
-                    //     $("#tablaComentarios").hide;
-                    // }
-                }
-            
+                //Cargamos los articulos en la tabla
+                var ComentariosCliente = response[0];
+                CargarTablaComentarios(ComentariosCliente);
+            }
         });
-        $("#modalComentarios").modal('hide');
     }
 }
 
@@ -769,11 +915,16 @@ function CargarTablaSeleccion(articulosDisponibles)
 
 function CargarTablaComentarios(comentariosCliente)
 {
-    console.log($("#datatableComentarios").DataTable());
-    console.log($("#datatableComentarios"));
     $("#datatableComentarios").DataTable().clear();
     $("#datatableComentarios").DataTable().rows.add(comentariosCliente);
     $("#datatableComentarios").DataTable().draw();
+}
+
+function CargarTablaDocumentos(documentosCliente)
+{
+    $("#datatableDocumentos").DataTable().clear();
+    $("#datatableDocumentos").DataTable().rows.add(documentosCliente);
+    $("#datatableDocumentos").DataTable().draw();
 }
 
 function CargarDetalleRecibos()
