@@ -152,18 +152,15 @@
         <ul class="c-header-nav">
             <div id="divSeccion" class="c-sidebar-nav-item" style="display:none;"> 
                 <!-- Campo Seccion -->
-                <div id="comboSeccion" class="form-group" >
-                    <!-- <label class="medium mb-1" for="seccion">seccion</label> -->
-                    <select class="form-control py-2" id="seccion" name="seccion">
-                        <?php if (isset($seccionesUsuario)) {
-                            foreach ($seccionesUsuario as $seccion) { ?>
-                                <option class="" value="<?php echo $seccion->SECCION_ID; ?>">
-                                <?php echo $seccion->DESCRIPCION; ?></option><?php
-                                }
+                <select class="form-select" aria-label="Default select example" id="seccion" name="seccion">
+                    <?php if (isset($seccionesUsuario)) {
+                        foreach ($seccionesUsuario as $seccion) { ?>
+                            <option class="" value="<?php echo $seccion->SECCION_ID; ?>">
+                            <?php echo $seccion->DESCRIPCION; ?></option><?php
                             }
-                        ?>
-                    </select>    
-                </div>
+                        }
+                    ?>
+                </select>
             </div>
             <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" 
                     role="button" aria-haspopup="true" aria-expanded="false">
