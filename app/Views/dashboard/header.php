@@ -152,18 +152,15 @@
         <ul class="c-header-nav">
             <div id="divSeccion" class="c-sidebar-nav-item" style="display:none;"> 
                 <!-- Campo Seccion -->
-                <div id="comboSeccion" class="form-group" >
-                    <!-- <label class="medium mb-1" for="seccion">seccion</label> -->
-                    <select class="form-control py-2" id="seccion" name="seccion">
-                        <?php if (isset($seccionesUsuario)) {
-                            foreach ($seccionesUsuario as $seccion) { ?>
-                                <option class="" value="<?php echo $seccion->SECCION_ID; ?>">
-                                <?php echo $seccion->DESCRIPCION; ?></option><?php
-                                }
+                <select class="form-select" aria-label="Default select example" id="seccion" name="seccion">
+                    <?php if (isset($seccionesUsuario)) {
+                        foreach ($seccionesUsuario as $seccion) { ?>
+                            <option class="" value="<?php echo $seccion->SECCION_ID; ?>">
+                            <?php echo $seccion->DESCRIPCION; ?></option><?php
                             }
-                        ?>
-                    </select>    
-                </div>
+                        }
+                    ?>
+                </select>
             </div>
             <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" 
                     role="button" aria-haspopup="true" aria-expanded="false">
@@ -174,10 +171,15 @@
                         <!-- <svg class="c-icon mfe-2" href="<?= base_url() ?>/logout"> -->
                             <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-account-logout"></use>
                         <!-- </svg>  -->
-                        <a class="btn btn-primary mt-2 ml-2" href="<?= base_url() ?>/logout"> Cerrar Sesión</a>                        
+                        <a class="btn btn-primary mt-2 ml-2" href="<?= base_url() ?>/logout"> Cerrar Sesión</a>
                 </div>
-                
             </li>
+        </ul>
+        <ul class="c-header-nav">
+            <select class="form-select" aria-label="Default select example" id="idioma" name="idioma">
+                <option value="eus">Euskera</option>
+                <option value="es">Castellano</option>
+            </select>
         </ul>
         <!-- Menú Superior - Inicio -->
 
@@ -199,10 +201,12 @@
     </header>
     <!-- Menu Superior + Breadcum - Fin -->
 <script>
+   
 
     $(document).ready(function() { 
+
         $("#seccion").attr('disabled', 'disabled');
-        var secciones=<?php if (isset($seccionesUsuario)) echo json_encode($seccionesUsuario);  ?>;
+        var secciones=<?php if (isset($seccionesUsuario)) {echo json_encode($seccionesUsuario);} else { echo json_encode(array()); };  ?>;
 
         if(secciones.length>1){
             $("#divSeccion").show();
@@ -212,23 +216,40 @@
 
     $("#seccion").on('click', async function() {
         var seccion=$("#seccion").val();
-        console.log(seccion);
         var parametros = JSON.stringify({
             seccion: seccion,
-         });
-         $.ajax({
+        });
+        $.ajax({
+        data: {
+            'data': parametros
+        },
+        dataType: "json",
+        //data: formData,
+        url: '<?= base_url() ?>/Login/setSeccion',
+        type: 'post',
+
+        success: function(response) {
+        }
+        });
+    });
+
+    $("#idioma").on('change', async function() {
+        var idioma=$("#idioma").val();
+        var parametros = JSON.stringify({
+            idioma: idioma,
+        });
+        $.ajax({
             data: {
-               'data': parametros
+                'data': parametros
             },
             dataType: "json",
             //data: formData,
-            url: '<?= base_url() ?>/Login/setSeccion',
+            url: '<?= base_url() ?>/Login/setidioma',
             type: 'post',
 
             success: function(response) {
             }
-         });
-    
+        });
     });
 
 </script>

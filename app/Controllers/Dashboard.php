@@ -18,6 +18,8 @@ class Dashboard extends BaseController
         
     public function tablas()
     {
+        $idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
         echo view("dashboard/header");        
         echo view("dashboard/tablas");
         echo view("dashboard/footer");
