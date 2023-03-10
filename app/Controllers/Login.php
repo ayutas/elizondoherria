@@ -75,6 +75,7 @@ class Login extends BaseController
 			'ap2' => $user['AP2'],
 			'isLoggedIn' => true,
 			'seccion' =>$seccionId,
+			'idioma' => 'es'
 		];
 
 		session()->set($data);
@@ -89,7 +90,16 @@ class Login extends BaseController
 		$data=session()->get();
 		$data['seccion']=$seccionId;
 		session()->set($data);
-	}	
+	}
+
+	public function setIdioma()
+	{
+		$response = json_decode($this->request->getPost('data'));		
+		$idioma = $response->idioma;
+		$data=session()->get();
+		$data['idioma']=$idioma;
+		session()->set($data);
+	}
 
 	// Función para registrarse
 	public function register()
