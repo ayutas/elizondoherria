@@ -150,7 +150,7 @@
             </li>
         </ul>
         <ul class="c-header-nav">
-            <div id="divSeccion" class="c-sidebar-nav-item" style="display:none;"> 
+            <div id="divSeccion" class="c-sidebar-nav-item" style="display:none;">
                 <!-- Campo Seccion -->
                 <select class="form-select" aria-label="Default select example" id="seccion" name="seccion">
                     <?php if (isset($seccionesUsuario)) {
@@ -176,10 +176,12 @@
             </li>
         </ul>
         <ul class="c-header-nav">
-            <select class="form-select" aria-label="Default select example" id="idioma" name="idioma">
-                <option value="eus">Euskera</option>
-                <option value="es">Castellano</option>
-            </select>
+            <div id="divIdioma" class="c-sidebar-nav-item" style="display:none;">
+                <select class="form-select" aria-label="Default select example" id="idioma" name="idioma">
+                    <option value="eus">EUS</option>
+                    <option value="es">CAS</option>
+                </select>
+            </div>
         </ul>
         <!-- Menú Superior - Inicio -->
 
@@ -202,8 +204,14 @@
     <!-- Menu Superior + Breadcum - Fin -->
 <script>
    
+   var cargado=0;
 
     $(document).ready(function() { 
+
+        var idioma=<?php if (isset($idioma)) {echo json_encode($idioma);} else { echo json_encode('es'); };  ?>;
+        console.log(idioma);
+        $("#idioma").val(idioma).change();
+        $("#divIdioma").show();
 
         $("#seccion").attr('disabled', 'disabled');
         var secciones=<?php if (isset($seccionesUsuario)) {echo json_encode($seccionesUsuario);} else { echo json_encode(array()); };  ?>;
@@ -212,6 +220,7 @@
             $("#divSeccion").show();
             $("#seccion").attr('disabled', false);
         }
+        cargado=1;
     });
 
     $("#seccion").on('click', async function() {
@@ -234,22 +243,26 @@
     });
 
     $("#idioma").on('change', async function() {
-        var idioma=$("#idioma").val();
-        var parametros = JSON.stringify({
-            idioma: idioma,
-        });
-        $.ajax({
-            data: {
-                'data': parametros
-            },
-            dataType: "json",
-            //data: formData,
-            url: '<?= base_url() ?>/Login/setidioma',
-            type: 'post',
+        if(cargado==1){
+            var idioma=$("#idioma").val();
+            var parametros = JSON.stringify({
+                idioma: idioma,
+            });
+            $.ajax({
+                data: {
+                    'data': parametros
+                },
+                dataType: "json",
+                //data: formData,
+                url: '<?= base_url() ?>/Login/setidioma',
+                type: 'post',
 
-            success: function(response) {
-            }
-        });
+                success: function(response) {
+                    console.log(response);
+                    location.reload();
+                }
+            });
+        }
     });
 
 </script>

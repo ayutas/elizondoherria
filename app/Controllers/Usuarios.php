@@ -17,6 +17,9 @@ class Usuarios extends BaseController
 		$uri = service('uri');
 
 		$data = [];
+		$idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 		$model = new UsuarioModel();
 
 		$column1= array ('Field'=>'ID');
@@ -50,6 +53,9 @@ class Usuarios extends BaseController
 	{
 		//Variable con todos los datos a pasar a las vistas
 		$data = [];
+        $idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 
 		// Cargamos los helpers de formularios
 		helper(['form']);
@@ -79,7 +85,7 @@ class Usuarios extends BaseController
 			$rules = [
 
 				'nombre' =>  'required|min_length[3]|max_length[100]',
-				'usuario' =>  'required|min_length[3]|max_length[100]',
+				'usuario' =>  'required|is_unique[tbl_usuario.USUARIO]|min_length[3]|max_length[100]',
 				// 'contrasena' =>  'required|min_length[3]|max_length[100]',
 			];
 
@@ -90,8 +96,6 @@ class Usuarios extends BaseController
 					'NOMBRE' => $this->request->getVar('nombre'),
 					'AP1' => $this->request->getVar('apellido1'),
 					'AP2' => $this->request->getVar('apellido2'),
-					'ID_DELEGACION' => $this->request->getVar('id_delegacion'),
-					'ADMINISTRADOR' => $this->request->getVar('admin'),
 					'USUARIO' => $this->request->getVar('usuario'),
 					'CONTRASENA' => $this->request->getVar('contrasena')
 				];
@@ -113,7 +117,6 @@ class Usuarios extends BaseController
 						'NOMBRE' => $this->request->getVar('nombre'),
 						'AP1' => $this->request->getVar('apellido1'),
 						'AP2' => $this->request->getVar('apellido2'),
-						'ADMINISTRADOR' => $admin,
 						'USUARIO' => $this->request->getVar('usuario'),
 						'CONTRASENA' => $this->request->getVar('contrasena')
 
@@ -124,7 +127,6 @@ class Usuarios extends BaseController
 						'NOMBRE' => $this->request->getVar('nombre'),
 						'AP1' => $this->request->getVar('apellido1'),
 						'AP2' => $this->request->getVar('apellido2'),
-						'ADMINISTRADOR' => $admin,
 						'USUARIO' => $this->request->getVar('usuario'),
 					];
 				}
@@ -155,6 +157,9 @@ class Usuarios extends BaseController
 		//Variable con todos los datos a pasar a las vistas
 		$data = [];
 
+		$idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 		// Cargamos los helpers de formularios
 		helper(['form']);
 		$uri = service('uri');
@@ -168,7 +173,6 @@ class Usuarios extends BaseController
 				'nombre' =>  'required|min_length[3]|max_length[100]',
 				'usuario' =>  'required|min_length[3]|max_length[100]|is_unique[tbl_usuarios.USUARIO]',
 				'contrasena' =>  'required|min_length[3]|max_length[100]',
-				'id_delegacion' =>  'required' //|nonzero',
 			];
 
 			// Comprobación de las validaciones
@@ -178,8 +182,6 @@ class Usuarios extends BaseController
 					'NOMBRE' => $this->request->getVar('nombre'),
 					'AP1' => $this->request->getVar('apellido1'),
 					'AP2' => $this->request->getVar('apellido2'),
-					'ID_DELEGACION' => $this->request->getVar('id_delegacion'),
-					'ADMINISTRADOR' => $this->request->getVar('admin'),
 					'USUARIO' => $this->request->getVar('usuario'),
 					'CONTRASENA' => $this->request->getVar('contrasena')
 				];
@@ -199,8 +201,6 @@ class Usuarios extends BaseController
 					'NOMBRE' => $this->request->getVar('nombre'),
 					'AP1' => $this->request->getVar('apellido1'),
 					'AP2' => $this->request->getVar('apellido2'),
-					'ID_DELEGACION' => $this->request->getVar('id_delegacion'),
-					'ADMINISTRADOR' => $admin,
 					'USUARIO' => $this->request->getVar('usuario'),
 					'CONTRASENA' => $this->request->getVar('contrasena')
 				];
@@ -218,9 +218,6 @@ class Usuarios extends BaseController
 				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
 			}
 		}
-
-		$delegacionModel = new DelegacionModel();
-		$data['delegaciones'] = json_decode($delegacionModel->getAll());
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';
 		$data['slug'] = $this->redireccion;

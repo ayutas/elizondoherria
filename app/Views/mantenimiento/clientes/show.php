@@ -6,7 +6,7 @@ helper('html');
         <div class="container-fluid">
             <div class="fade-in">
                 <!-- titulo -->
-                <h1>Clientes</h1>
+                <h1><?php echo lang('Translate.clientes'); ?></h1>
                 <div clas="row">
                     <div class="container mt-4">
                         <?php if (session()->get('success')) : ?>
@@ -21,25 +21,15 @@ helper('html');
                         <?php endif; ?>
                     </div>
                     <form action="<?php echo $action ?>" method="get">
-                        <button type="submit" class="btn btn-primary mb-2 ml-2">Nuevo Cliente</button>
+                        <button type="submit" class="btn btn-primary mb-2 ml-2"><?php echo lang('Translate.newcliente'); ?></button>
                     </form>
 
                     <?php
-                    dataTable("Clientes", $columnsclientes, $dataclientes, 'Clientes', '4,5', 'text-center', "0", 4, false, 0, 'tablaClientes');
+                    dataTable(lang('Translate.clientes'), $columnsclientes, $dataclientes, 'Clientes', '4,5', 'text-center', "0", 4, false, 0, 'tablaClientes');
                     ?>
                 </div>
-                <!-- <div clas="row">
-                    <form action="<?php echo $action ?>" method="get">
-                        <a href="<?= base_url() ?>/delegacionesLineas/new" class="btn btn-primary mb-2 ml-2">Nueva
-                            Línea</a>
-                    </form>
-
-                    <?php
-                    // dataTable("Lineas delegación", $columnsLineas, $dataLineas, 'DelegacionesLineas', '4,5', 'text-center', "0", 6, false, 0, 'tablaLineasDelegaciones');
-                    ?>
-                </div> -->
-                <div>
-                </div>
+            </div>
+        </div>
     </main>
 </div>
 <script>

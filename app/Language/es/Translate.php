@@ -1,6 +1,54 @@
 <?php
-return [
-    "clientes"      => "Cliente",
-    "siguiente"      => "siguiente"
+return [    
+    "RECIBOS"      => "RECIBOS",
+    "TABLAS"      => "TABLAS",
+    "panel"      => "Panel principal",
+    "mantenimiento"      => "Mantenimiento tablas",
+    "clientes"      => "Clientes",
+    "articulos"      => "Artículos",
+    "categorias"      => "Categorías",
+    "usuarios"      => "Usuarios",
+    "newarticulo"      => "Nuevo Artículo",
+    "descripcion"      => "Descripción",
+    "numero"      => "Número",
+    "letra"      => "Letra",
+    "categoria"      => "Categoría",
+    "precio"      => "Precio",
+    "disponible"      => "Disponible",
+    "asignadoA"      => "Asignado a:",
+    "actualizar"      => "Actualizar",
+    "crear"      => "Crear",
+    "newcategoria"      => "Nueva Categoría",
+    "nombre"      => "Nombre",
+    "newcliente"      => "Nuevo Cliente",
+    "newusuario"      => "Nuevo usuario",
+    "apellido1"      => "Apellido 1",
+    "apellido2"      => "Apellido 2",
+    "usuario"      => "Usuario",
+    "contraseña"      => "Contraseña",
+    "apellidos"      => "Apellidos",
+    "dni"      => "DNI",
+    "domicilio"      => "Domicilio",
+    "poblacion"      => "Población",
+    "cpostal"      => "Código postal",
+    "contacto"      => "Contacto",
+    "telefono"      => "Teléfono",
+    "email"      => "Email",
+    "cuenta"      => "Cuenta IBAN",
+    "notas"      => "Notas",
+    "comentarios"      => "Comentarios",
+    "documentos"      => "Documentos",
+    "recibos"      => "Recibos",
+    "newcomentario"      => "Nuevo comentario",
+    "newdocumento"      => "Nuevo Documento",
+    "asignarArticulo"      => "Asignar articulo",
+    "quitar"      => "Quitar",
+    "imprimir"      => "Imprimir",
+    "cantidad"      => "Cantidad",
+    "importe"      => "Importe",
+
+    
+
+    
 ];
 ?>

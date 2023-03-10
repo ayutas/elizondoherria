@@ -99,6 +99,7 @@ class Login extends BaseController
 		$data=session()->get();
 		$data['idioma']=$idioma;
 		session()->set($data);
+		return json_encode(array(true));
 	}
 
 	// Función para registrarse

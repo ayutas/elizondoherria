@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="fade-in">
                     <!-- titulo -->
-                    <h1>Cliente</h1>
+                    <h1><?php echo lang('Translate.clientes'); ?></h1>
                     <div clas="row">
                         <div class="container mt-4">
                         <?php if(session()->get('success')): ?>
@@ -25,7 +25,7 @@
                             <div class="col-md-4">                        
                                 <!-- Campo Nombre -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="nombre">Nombre</label>
+                                    <label class="medium mb-1" for="nombre"><?php echo lang('Translate.nombre'); ?></label>
                                     <input class="form-control py-2" id="nombre" name="nombre" type="text"
                                         placeholder="Introduce nombre" value="<?php if(isset($data[0]))
                                         {
@@ -40,7 +40,7 @@
                             <div class="col-md-4">
                                 <!-- Campo Apellidos -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="apellidos">Apellidos</label>
+                                    <label class="medium mb-1" for="apellidos"><?php echo lang('Translate.apellidos'); ?></label>
                                     <input class="form-control py-2" id="apellidos" name="apellidos" type="text"
                                         placeholder="Introduce apellidos" value="<?php if(isset($data[0]))
                                         {
@@ -55,7 +55,7 @@
                             <div class="col-md-4">
                                 <!-- Campo DNI -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="dni">DNI</label>
+                                    <label class="medium mb-1" for="dni"><?php echo lang('Translate.dni'); ?></label>
                                     <input class="form-control py-2" id="dni" name="dni" type="text"
                                         placeholder="Introduce DNI" value="<?php if(isset($data[0]))
                                         {
@@ -72,7 +72,7 @@
                             <div class="col-md-4">                        
                                 <!-- Campo Domicilio -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="domicilio">Domicilio</label>
+                                    <label class="medium mb-1" for="domicilio"><?php echo lang('Translate.domicilio'); ?></label>
                                     <input class="form-control py-2" id="domicilio" name="domicilio" type="text"
                                         placeholder="Introduce domicilio" value="<?php if(isset($data[0]))
                                         {
@@ -87,7 +87,7 @@
                             <div class="col-md-4">
                                 <!-- Campo Poblacion -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="poblacion">Población</label>
+                                    <label class="medium mb-1" for="poblacion"><?php echo lang('Translate.poblacion'); ?></label>
                                     <input class="form-control py-2" id="poblacion" name="poblacion" type="text"
                                         placeholder="Introduce población" value="<?php if(isset($data[0]))
                                         {
@@ -102,7 +102,7 @@
                             <div class="col-md-4">
                                 <!-- Campo CPostal -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="cpostal">Código postal</label>
+                                    <label class="medium mb-1" for="cpostal"><?php echo lang('Translate.cpostal'); ?></label>
                                     <input class="form-control py-2" id="cpostal" name="cpostal" type="text"
                                         placeholder="Introduce código postal" value="<?php if(isset($data[0]))
                                         {
@@ -119,7 +119,7 @@
                             <div class="col-md-4">
                                 <!-- Campo Contacto -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="contacto">Contacto</label>
+                                    <label class="medium mb-1" for="contacto"><?php echo lang('Translate.contacto'); ?></label>
                                     <input class="form-control py-2" id="contacto" name="contacto" type="text"
                                         placeholder="Introduce nombre contacto" value="<?php if(isset($data[0]))
                                         {
@@ -134,7 +134,7 @@
                             <div class="col-md-4">
                                 <!-- Campo Telefono -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="telefono">Teléfono</label>
+                                    <label class="medium mb-1" for="telefono"><?php echo lang('Translate.telefono'); ?></label>
                                     <input class="form-control py-2" id="telefono" name="telefono" type="text"
                                         placeholder="Introduce telefono contacto" value="<?php if(isset($data[0]))
                                         {
@@ -149,7 +149,7 @@
                             <div class="col-md-4">
                                 <!-- Campo Email -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="email">Email</label>
+                                    <label class="medium mb-1" for="email"><?php echo lang('Translate.email'); ?></label>
                                     <input class="form-control py-2" id="email" name="email" type="text"
                                         placeholder="Introduce email contacto" value="<?php if(isset($data[0]))
                                         {
@@ -166,7 +166,7 @@
                             <div class="col-md-12">
                                 <!-- Campo Cuenta -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="cuenta">Cuenta</label>
+                                    <label class="medium mb-1" for="cuenta"><?php echo lang('Translate.cuenta'); ?></label>
                                     <input class="form-control py-2" id="cuenta" name="cuenta" type="text"
                                         placeholder="ES0011112222333344445555" value="<?php if(isset($data[0]))
                                         {
@@ -183,7 +183,7 @@
                             <div class="col-md-12">
                                 <!-- Campo Notas -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="notas">Notas</label>
+                                    <label class="medium mb-1" for="notas"><?php echo lang('Translate.notas'); ?></label>
                                     <textarea class="form-control py-2" id="notas" name="notas" rows="4" cols="50"
                                         placeholder="Introduce notas"><?php if(isset($data[0]))
                                         {
@@ -206,7 +206,7 @@
                                     <a class="nav-link active" data-toggle="tab" href="#comentarios-1"
                                         role="tab" aria-controls="comentarios" aria-selected="true">
                                         <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">Comentarios</font>
+                                            <font style="vertical-align: inherit;"><?php echo lang('Translate.comentarios'); ?></font>
                                         </font>
                                     </a>
                                 </li>                
@@ -215,7 +215,7 @@
                                     <a class="nav-link" data-toggle="tab" href="#articulos-1" role="tab"
                                         aria-controls="articulos" aria-selected="false">
                                         <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">Artículos</font>
+                                            <font style="vertical-align: inherit;"><?php echo lang('Translate.articulos'); ?></font>
                                         </font>
                                     </a>
                                 </li>
@@ -224,7 +224,7 @@
                                     <a class="nav-link" data-toggle="tab" href="#documentos-1"
                                         role="tab" aria-controls="documentos" aria-selected="false">
                                         <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">Documentos</font>
+                                            <font style="vertical-align: inherit;"><?php echo lang('Translate.documentos'); ?></font>
                                         </font>
                                     </a>
                                 </li>
@@ -233,7 +233,7 @@
                                     <a class="nav-link" data-toggle="tab" href="#recibos-1"
                                         role="tab" aria-controls="recibos" aria-selected="false">
                                         <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">Recibos</font>
+                                            <font style="vertical-align: inherit;"><?php echo lang('Translate.recibos'); ?></font>
                                         </font>
                                     </a>
                                 </li>
@@ -242,7 +242,7 @@
                                 <div class="tab-pane active" id="comentarios-1" role="tabpanel">
                                     <div class="form-row">
                                         <div class="col-md-12">
-                                            <button type="Button" onclick="NuevoComentario()" id="btnNuevoComentario" class="btn btn-primary mb-2 ml-2" >Nuevo comentario</button>
+                                            <button type="Button" onclick="NuevoComentario()" id="btnNuevoComentario" class="btn btn-primary mb-2 ml-2" ><?php echo lang('Translate.newcomentario'); ?></button>
                                         </div>
                                     </div>
                                     <div id="tablaComentarios" name="tablaComentarios">
@@ -257,7 +257,7 @@
                                 <div class="tab-pane" id="articulos-1" role="tabpanel">
                                     <div class="form-row">
                                         <div class="col-md-12">
-                                            <button type="Button" onclick="AsignarArticulo()" id="btnAsignarArticulo" class="btn btn-primary mb-2 ml-2" >Asignar articulo</button>
+                                            <button type="Button" onclick="AsignarArticulo()" id="btnAsignarArticulo" class="btn btn-primary mb-2 ml-2" ><?php echo lang('Translate.asignarArticulo'); ?></button>
                                         </div>
                                     </div>
 
@@ -266,13 +266,13 @@
                                             style="color:black;">
                                             <thead>
                                                 <tr>
-                                                    <th>Descripción</th>
-                                                    <th>Número</th>
-                                                    <th>Letra</th>
-                                                    <th>Categoría</th>
-                                                    <th>Cantidad</th>
-                                                    <th>Precio</th>
-                                                    <th>Importe</th>
+                                                    <th><?php echo lang('Translate.descripcion'); ?></th>
+                                                    <th><?php echo lang('Translate.numero'); ?></th>
+                                                    <th><?php echo lang('Translate.letra'); ?></th>
+                                                    <th><?php echo lang('Translate.categoria'); ?></th>
+                                                    <th><?php echo lang('Translate.cantidad'); ?></th>
+                                                    <th><?php echo lang('Translate.precio'); ?></th>
+                                                    <th><?php echo lang('Translate.importe'); ?></th>
                                                     <th></th>
                                                     <th></th>
                                                 </tr>
@@ -288,8 +288,8 @@
                                                     <td><?= $articulo->Cantidad ?></td>
                                                     <td><?= $articulo->Precio ?></td>
                                                     <td><?= $articulo->Importe ?></td>
-                                                    <td><button type="Button" onclick="QuitarArticulo(<?=$articulo->ID?>)" id="btnQuitarArticulo" class="btn btn-danger mb-2 ml-2" >Quitar</button></td>
-                                                    <td><button type="Button" onclick="ImprimirArticulo(<?=$articulo->ID?>)" id="btnImprimirArticulo" class="btn btn-info mb-2 ml-2" >Imprimir</button></td>
+                                                    <td><button type="Button" onclick="QuitarArticulo(<?=$articulo->ID?>)" id="btnQuitarArticulo" class="btn btn-danger mb-2 ml-2" ><?php echo lang('Translate.quitar'); ?></button></td>
+                                                    <td><button type="Button" onclick="ImprimirArticulo(<?=$articulo->ID?>)" id="btnImprimirArticulo" class="btn btn-info mb-2 ml-2" ><?php echo lang('Translate.imprimir'); ?></button></td>
                                                 </tr>
                                                 <?php }
                                                 } ?>
@@ -301,7 +301,7 @@
                                 <div class="tab-pane" id="documentos-1" role="tabpanel">
                                     <div class="form-row">
                                         <div class="col-md-12">
-                                            <button type="Button" onclick="NuevoDocumento()" id="btnNuevoDocumento" class="btn btn-primary mb-2 ml-2" >Nuevo documento</button>
+                                            <button type="Button" onclick="NuevoDocumento()" id="btnNuevoDocumento" class="btn btn-primary mb-2 ml-2" ><?php echo lang('Translate.newdocumento'); ?></button>
                                         </div>
                                     </div>
                                     <!--Tabla documentos -->
@@ -452,13 +452,11 @@
 
                     <div class="col-12 form-group mt-4 mb-0">
                         <button class="btn btn-primary btn-block" type="button" onclick="GuardarCliente()"><?php if (isset($data[0]))
-                        { 
-                            echo 'Actualizar';
-                        }
-                        else
-                        {
-                            echo 'Crear';
-                        }
+                            { 
+                                echo lang('Translate.actualizar');
+                            } else {
+                                echo lang('Translate.crear');
+                            }
                         ?></button>
                     </div>
                         

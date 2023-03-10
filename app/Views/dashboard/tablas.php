@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="fade-in">
                 <!-- titulo -->
-                <h1>Mantenimiento tablas</h1>              
+                <h1><?php echo lang('Translate.mantenimiento'); ?></h1>              
                 <div class="row col-12">
                     <div class="col-3"><a class="btn btn-primary tablasbtn" href="<?= base_url()?>/clientes"><?php echo lang('Translate.clientes'); ?></a></div>                    
-                    <div class="col-3"><a href="<?= base_url()?>/articulos" class="btn btn-primary tablasbtn">Artículos</a></div>
-                    <div class="col-3"><a href="<?= base_url()?>/categorias" class="btn btn-primary tablasbtn">Categorías</a></div>
-                    <div class="col-3"><a class="btn btn-primary tablasbtn" href="<?= base_url()?>/usuarios">Usuarios</a></div>
+                    <div class="col-3"><a href="<?= base_url()?>/articulos" class="btn btn-primary tablasbtn"><?php echo lang('Translate.articulos'); ?></a></div>
+                    <div class="col-3"><a href="<?= base_url()?>/categorias" class="btn btn-primary tablasbtn"><?php echo lang('Translate.categorias'); ?></a></div>
+                    <div class="col-3"><a class="btn btn-primary tablasbtn" href="<?= base_url()?>/usuarios"><?php echo lang('Translate.usuarios'); ?></a></div>
                 </div>
 
                 <div class="row col-12 mt-4">

@@ -26,6 +26,9 @@ class Clientes extends BaseController
 		$uri = service('uri');
 
 		$data = [];
+		$idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 		$ClienteModel = new ClienteModel();
 		$articulosClientesModel = new ArticuloClienteModel();
 
@@ -58,6 +61,9 @@ class Clientes extends BaseController
 	{
 		//Variable con todos los datos a pasar a las vistas
 		$data = [];
+        $idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 
 		// Cargamos los helpers de formularios
 		helper(['form']);
@@ -170,6 +176,9 @@ class Clientes extends BaseController
 	{
 		//Variable con todos los datos a pasar a las vistas
 		$data = [];
+		$idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 
 		// Cargamos los helpers de formularios
 		helper(['form']);

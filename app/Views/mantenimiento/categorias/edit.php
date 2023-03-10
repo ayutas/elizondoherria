@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="fade-in">
                 <!-- titulo -->
-                <h1>Categorias</h1>
+                <h1><?php echo lang('Translate.categorias'); ?></h1>
                 <div clas="row">
                     <div class="container mt-4">
                     <?php if(session()->get('success')): ?>
@@ -22,7 +22,7 @@
                             <div class="col-md-12">                        
                                 <!-- Campo Nombre -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="nombre">Nombre categoria</label>
+                                    <label class="medium mb-1" for="nombre"><?php echo lang('Translate.nombre'); ?></label>
                                     <input class="form-control py-2" id="nombre" name="nombre" type="text"
                                         placeholder="Introduce nombre" value="<?php if(isset($data[0]))
                                         {
@@ -32,12 +32,10 @@
                                             echo set_value('nombre');
                                         }
                                         ?>" />
-                                    <input class="form-control py-2" id="id" name="id" type="hidden"
-                                        placeholder="Introduce nombre" value="" />
                                 </div>
                                 <!-- Campo Precio -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="precio">Precio categoria</label>
+                                    <label class="medium mb-1" for="precio"><?php echo lang('Translate.precio'); ?></label>
                                     <input class="form-control py-2" id="precio" name="precio" type="text"
                                         placeholder="Introduce precio" value="<?php if(isset($data[0]))
                                         {
@@ -46,9 +44,7 @@
                                         else{
                                             echo set_value('precio');
                                         }
-                                        ?>" />
-                                    <input class="form-control py-2" id="id" name="id" type="hidden"
-                                        placeholder="Introduce precio" value="" />
+                                        ?>" />                                    
                                 </div>                                   
                             </div>
                         </div>
@@ -65,11 +61,9 @@
                         <div class="col-12 form-group mt-4 mb-0">
                             <button class="btn btn-primary btn-block" type="submit"><?php if (isset($data[0]))
                             { 
-                                echo 'Actualizar';
-                            }
-                            else
-                            {
-                                echo 'Crear';
+                                echo lang('Translate.actualizar');
+                            } else {
+                                echo lang('Translate.crear');
                             }
                             ?></button>
                         </div>
