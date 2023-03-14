@@ -46,9 +46,32 @@ return [
     "imprimir"      => "Imprimir",
     "cantidad"      => "Cantidad",
     "importe"      => "Importe",
+    "recibosCliente"      => "Recibos cliente",
+    "aceptar"      => "Aceptar",
+    "tituloDocumento"      => "Título del documento",
+    "seleccionarArchivo"      => "Seleccionar Archivo",
+    "crearRecibos"      => "CREAR RECIBOS",
+    "consultas"      => "CONSULTAS",
+    "fecha"      => "Fecha",
+    "referencia"      => "Referencia",
+    "concepto"      => "Concepto",
+    "introduzcaReferencia"      => "Introduzca referencia",
+    "introduzcaConcepto"      => "Introduzca concepto",
+    "introduzcaTitulo"      => "Introduzca título",
+    "noSeleccionadoArchivo"      => "No ha seleccionado ningun archivo",
+    "dniNoValido"      => "DNI/CIF no válido",
+    "longitudCuentaNoValida"      => "Introduzca concepto",
+    "introduzcaConcepto"      => "Cuenta no válida, debe tener 24 dígitos/carácteres",
+    "ibanIncorrecto"      => "IBAN de la cuenta incorrecto",
+    "cantidadNoNumerica"      => "La cantidad no es numérica, introduzca cantidad válida",
+    "eliminarRegistro"      => "¿Desea eliminar el registro?",
+    "necesarioGuardarCliente"      => "Es necesario guardar el cliente. ¿Continuar guardando?",
+    "eliminarDocumento"      => "¿Eliminar documento?",
+    "eliminar"      => "¿Está seguro de que desea eliminar?",
+    "modificarReciboCobrado"      => "¿Modificar recibo como cobrado?",
+    "modificarReciboNoCobrado"      => "¿Modificar recibo como no cobrado?",
+    "procesando"      => "Procesando, espere por favor...",
+    "grabadoCliente"      => "Se ha grabado el cliente <strong>Correctamente!</strong>",
 
-    
-
-    
 ];
 ?>

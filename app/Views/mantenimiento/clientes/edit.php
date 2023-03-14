@@ -323,7 +323,7 @@
                                     <!--Tabla recibos -->
                                     <?php if(isset($columnsRecibos[0]))
                                         {
-                                        dataTable("Recibos cliente", $columnsRecibos, $dataRecibos, 'Recibos', '6', 'text-center', "0,7",  7, false, 0, 'tablaRecibos');
+                                        dataTable(lang('Translate.recibosCliente'), $columnsRecibos, $dataRecibos, 'Recibos', '6', 'text-center', "0,7",  7, false, 0, 'tablaRecibos');
                                         }
                                     ?>
                                 </div>
@@ -345,7 +345,7 @@
                                         <!-- <div id="tablaSeleccion"> -->
                                             <div class="col-md-12">
                                             <?php if(isset($columnsArticulosDisponibles[0]))
-                                                dataTablePersonalizadaSeleccion($columnsArticulosDisponibles,$articulosDisponibles,$slug,'','text-center','1', "Artículos (". count($articulosDisponibles).")",12,true,0,'datatableArticulosDisponibles',false,0,"AñadirCantidad(this)");
+                                                dataTablePersonalizadaSeleccion($columnsArticulosDisponibles,$articulosDisponibles,$slug,'','text-center','1', lang('Translate.articulos')."(". count($articulosDisponibles).")",12,true,0,'datatableArticulosDisponibles',false,0,"AñadirCantidad(this)");
                                                 ?>   
                                             </div>
                                         <!-- </div> -->
@@ -369,7 +369,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label class="body-form-heavy" for="cantidad">Introduce la cantidad</label>
+                                                    <label class="body-form-heavy" for="cantidad"><?php echo lang('Translate.cantidad'); ?></label>
                                                     <input class="form-control body-form-light"  id="cantidad" name="cantidad"
                                                     type="text" placeholder="Cantidad"
                                                     />
@@ -380,7 +380,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                        <button onclick="AñadirArticulo()"  type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+                                        <button onclick="AñadirArticulo()"  type="button" class="btn btn-success" data-dismiss="modal"><?php echo lang('Translate.aceptar'); ?></button>
                                         </div>
                                     </div>
                                 </div>
@@ -403,7 +403,7 @@
                                         placeholder="Introduce comentario"></textarea>
                                     </div>
                                     <div class="row">
-                                        <button type="Button" onclick="GuardarComentario()" id="btnGuardarComentario" class="btn btn-primary mb-2 ml-2" >Guardar</button>
+                                        <button type="Button" onclick="GuardarComentario()" id="btnGuardarComentario" class="btn btn-primary mb-2 ml-2" ><?php echo lang('Translate.aceptar'); ?></button>
                                     </div>                                    
                                 </div>
                             </div>
@@ -421,7 +421,7 @@
                                 </div>
                                 <div style="background-color:white;" class="modal-body" id="divModal">
                                     <div class="form-group">
-                                        <label class="body-form-heavy" for="titulo">Título del documento</label>
+                                        <label class="body-form-heavy" for="titulo"><?php echo lang('Translate.tituloDocumento'); ?></label>
                                         <input class="form-control body-form-light"  id="titulo" name="titulo"
                                         type="text" placeholder="Título"
                                         />
@@ -431,11 +431,10 @@
                                             name="archivo" id="archivo"
                                             accept="application/*">
                                         <label class="custom-file-label" id="labelarchivo"
-                                            for="archivo" data-browse="Examinar">Seleccionar
-                                            Archivo</label>
+                                            for="archivo" data-browse="Examinar"><?php echo lang('Translate.seleccionarArchivo'); ?></label>
                                     </div>                                    
                                     <div class="row">
-                                        <button type="Button" onclick="GuardarDocumento()" id="btnGuardarDocumento" class="btn btn-primary mt-2 mb-2 ml-2" >Guardar</button>
+                                        <button type="Button" onclick="GuardarDocumento()" id="btnGuardarDocumento" class="btn btn-primary mt-2 mb-2 ml-2" ><?php echo lang('Translate.aceptar'); ?></button>
                                     </div>                                    
                                 </div>
                             </div>
@@ -482,11 +481,10 @@ $( document ).ready(function() {
 
 function AsignarArticulo(input)
 {
-    console.log(idCliente);
     if(idCliente!=0){            
         $("#modalSeleccionArticulos").modal('show');
     } else{
-        if (confirm("Para poder asignar es necesario guardar el cliente. ¿Continuar guardando?")) {
+        if (confirm("<?php echo lang('Translate.necesarioGuardarCliente'); ?>")) {
             ShowAlGuardar=0;
             GuardarCliente();
             $("#modalSeleccionArticulos").modal('show');
@@ -500,7 +498,16 @@ function NuevoComentario(input)
     if(idCliente!=0){
         $('#modalComentarios').data('id', 0);
         $("#comentario").val('');
-        $("#modalComentarios").modal('show');        
+        $("#modalComentarios").modal('show');
+    } else{
+        if (confirm("<?php echo lang('Translate.necesarioGuardarCliente'); ?>")) {
+            ShowAlGuardar=0;
+            GuardarCliente();
+            $('#modalComentarios').data('id', 0);
+            $("#comentario").val('');
+            $("#modalComentarios").modal('show');
+            ShowAlGuardar=1;
+        }
     }
 }
 
@@ -526,6 +533,16 @@ function NuevoDocumento(input)
         $("#archivo").val('');
         $("#archivo").next('.custom-file-label').html('');
         $("#modalDocumentos").modal('show');
+    } else{
+        if (confirm("<?php echo lang('Translate.necesarioGuardarCliente'); ?>")) {
+            ShowAlGuardar=0;
+            GuardarCliente();
+            $("#titulo").val('');
+            $("#archivo").val('');
+            $("#archivo").next('.custom-file-label').html('');
+            $("#modalDocumentos").modal('show');
+            ShowAlGuardar=1;
+        }
     }
 }
 
@@ -540,11 +557,11 @@ function GuardarDocumento(input)
 {
     var titulo=$("#titulo").val();
     if (titulo==""){
-        alert('Introduzca título');
+        alert('<?php echo lang('Translate.introduzcaTitulo'); ?>');
         return;
     }
     if ($('#archivo').val() == ''){
-        alert('No hay seleccionado ningun archivo');
+        alert('<?php echo lang('Translate.noSeleccionadoArchivo'); ?>');
         return;
     }
     var file_data = $('#archivo').prop('files')[0];  
@@ -579,7 +596,7 @@ function GuardarDocumento(input)
 
 function EliminarDocumento(id)
 {    
-    if (confirm('¿Eliminar documento?') == true) {
+    if (confirm('<?php echo lang('Translate.eliminarDocumento'); ?>') == true) {
     
         var parametros = JSON.stringify({
             id:id,
@@ -595,7 +612,7 @@ function EliminarDocumento(id)
             url: '<?= base_url() ?>/clientes/eliminarDocumentoCliente',
             type: 'post',
             beforeSend: function() {
-                $("#resultado").html("Procesando, espere por favor...");
+                $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
             },
             success: function(response) {
                 //Cargamos los articulos en la tabla
@@ -640,7 +657,7 @@ function GuardarCliente()
     var dni= $('#dni').val();
     if (!validar_dni_nif_nie(dni))
     {
-        alert('DNI/CIF no válido');
+        alert('<?php echo lang('Translate.dniNoValido'); ?>');
         return;
     }
 
@@ -653,13 +670,13 @@ function GuardarCliente()
     var cuenta= $('#cuenta').val();
 
     if (cuenta.length!=24){
-        alert('Cuenta no válida, debe tener 24 dígitos/carácteres');
+        alert('<?php echo lang('Translate.longitudCuentaNoValida'); ?>');
         return;
     }
     
     if (!fn_ValidateIBAN(cuenta))
     {
-        alert('IBAN de la cuenta no válido');
+        alert('<?php echo lang('Translate.ibanIncorrecto'); ?>');
         return;
     }
     var notas= $('#notas').val();
@@ -687,7 +704,7 @@ function GuardarCliente()
         url: '<?= base_url() ?>/clientes/guardarCliente',
         type: 'post',
         beforeSend: function() {
-            $("#resultado").html("Procesando, espere por favor...");
+            $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
         },
         success: function(response) {
             if(ShowAlGuardar){
@@ -695,8 +712,7 @@ function GuardarCliente()
                 window.location.replace("<?= base_url() ?>/hilerria/clientes/show/"); //le pongo hilerria porque no se porque no lo coge desde el base_url??
             } else {
                 idCliente = response[0];
-                $(".alert").html(
-                    "Se ha grabado el cliente <strong>Correctamente!</strong>");
+                $(".alert").html("<?php echo lang('Translate.grabadoCliente'); ?>");
                 if ($('.alert').hasClass('alert-warning')) {
                     $('.alert').removeClass('alert-warning');
                     $('.alert').addClass('alert-success');
@@ -737,11 +753,11 @@ function AñadirArticulo(boton)
     var cantidad = $("#cantidad") .val();
     cantidad=cantidad.replace(',','.');
     if (!isNumeric(cantidad)){
-        alert('La cantidad no es numérica, introduzca cantidad válida');
+        alert('<?php echo lang('Translate.cantidadNoNumerica'); ?>');
         return;
     }
     if (cantidad>disponible){
-        alert('La cantidad introducida supera la disponible');
+        alert('<?php echo lang('Translate.cantidadSuperaDisponible'); ?>');
         return;
     }
     
@@ -759,7 +775,7 @@ function AñadirArticulo(boton)
         url: '<?= base_url() ?>/clientes/guardarArticuloCliente',
         type: 'post',
         beforeSend: function() {
-            $("#resultado").html("Procesando, espere por favor...");
+            $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
         },
         success: function(response) {
                 //Cargamos los articulos en la tabla
@@ -793,7 +809,7 @@ function GuardarComentario()
         url: '<?= base_url() ?>/clientes/guardarComentarioCliente',
         type: 'post',
         beforeSend: function() {
-            $("#resultado").html("Procesando, espere por favor...");
+            $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
         },
         success: function(response) {
                 //Cargamos los articulos en la tabla
@@ -808,7 +824,7 @@ function GuardarComentario()
 
 function QuitarArticulo(id)
 {
-    if (confirm('¿Continuar eliminando el artículo del cliente?') == true) {
+    if (confirm('<?php echo lang('Translate.eliminar'); ?>') == true) {
         console.log(id);
         var parametros = JSON.stringify({
                 id:id,
@@ -836,7 +852,7 @@ function QuitarArticulo(id)
 
 function EliminarComentario(id)
 {    
-    if (confirm('¿Eliminar comentario?') == true) {
+    if (confirm('<?php echo lang('Translate.eliminar'); ?>') == true) {
     
         var parametros = JSON.stringify({
             id:id,
@@ -852,7 +868,7 @@ function EliminarComentario(id)
             url: '<?= base_url() ?>/clientes/eliminarComentarioCliente',
             type: 'post',
             beforeSend: function() {
-                $("#resultado").html("Procesando, espere por favor...");
+                $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
             },
             success: function(response) {
                 //Cargamos los articulos en la tabla
@@ -874,13 +890,13 @@ function CargarTablaArticulosCliente(dataArticulos)
     var html = '<table class="table table-responsive-sm table-sm mt-4" style="color:black;">';
     html += '<thead>';
     html += '<tr>';
-    html += '<th>Descripción</th>';
-    html += '<th>Número</th>';
-    html += '<th>Letra</th>';
-    html += '<th>Categoría</th>';
-    html += '<th>Cantidad</th>';
-    html += '<th>Precio</th>';
-    html += '<th>Importe</th>';
+    html += '<th><?php echo lang('Translate.descripcion'); ?></th>';
+    html += '<th><?php echo lang('Translate.numero'); ?></th>';
+    html += '<th><?php echo lang('Translate.letra'); ?></th>';
+    html += '<th><?php echo lang('Translate.categoria'); ?></th>';
+    html += '<th><?php echo lang('Translate.cantidad'); ?></th>';
+    html += '<th><?php echo lang('Translate.precio'); ?></th>';
+    html += '<th><?php echo lang('Translate.importe'); ?></th>';
     html += '<th></th>';
     html += '<th></th>';
     html += '</tr>';
