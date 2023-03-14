@@ -487,8 +487,9 @@ function AsignarArticulo(input)
         if (confirm("<?php echo lang('Translate.necesarioGuardarCliente'); ?>")) {
             ShowAlGuardar=0;
             GuardarCliente();
-            $("#modalSeleccionArticulos").modal('show');
-            ShowAlGuardar=1;
+            if(idCliente!=0){
+                $("#modalSeleccionArticulos").modal('show');
+            }
         }
     }
 }
@@ -503,17 +504,17 @@ function NuevoComentario(input)
         if (confirm("<?php echo lang('Translate.necesarioGuardarCliente'); ?>")) {
             ShowAlGuardar=0;
             GuardarCliente();
-            $('#modalComentarios').data('id', 0);
-            $("#comentario").val('');
-            $("#modalComentarios").modal('show');
-            ShowAlGuardar=1;
+            if(idCliente!=0){
+                $('#modalComentarios').data('id', 0);
+                $("#comentario").val('');
+                $("#modalComentarios").modal('show');
+            }
         }
     }
 }
 
 function EditarComentario(boton)
 {
-    // var btn = boton.parentElement.parentElement;
     var linea = boton.parentElement.parentElement;
     var table = $("#datatableComentarios").dataTable();
     var row = table.find("tr").eq(linea.rowIndex);
@@ -537,11 +538,12 @@ function NuevoDocumento(input)
         if (confirm("<?php echo lang('Translate.necesarioGuardarCliente'); ?>")) {
             ShowAlGuardar=0;
             GuardarCliente();
-            $("#titulo").val('');
-            $("#archivo").val('');
-            $("#archivo").next('.custom-file-label').html('');
-            $("#modalDocumentos").modal('show');
-            ShowAlGuardar=1;
+            if(idCliente!=0){
+                $("#titulo").val('');
+                $("#archivo").val('');
+                $("#archivo").next('.custom-file-label').html('');
+                $("#modalDocumentos").modal('show');
+            }
         }
     }
 }
@@ -649,19 +651,24 @@ function EditarRecibo(boton)
     var idRecibo=data.ID;
     
     if(idRecibo!=0){
-        window.location.replace("<?= base_url() ?>/recibos/edit/"+idRecibo);        
+        window.location.assign("<?= base_url() ?>/recibos/edit/"+idRecibo);
     }
 }
 
 function GuardarCliente()
 {   
     var nombre= $('#nombre').val();
+    if (nombre=="")
+    {
+        alert('<?php echo lang('Translate.introduzcaNombre'); ?>');
+        return false;
+    }
     var apellidos= $('#apellidos').val();
     var dni= $('#dni').val();
     if (!validar_dni_nif_nie(dni))
     {
         alert('<?php echo lang('Translate.dniNoValido'); ?>');
-        return;
+        return false;
     }
 
     var domicilio= $('#domicilio').val();
@@ -671,19 +678,14 @@ function GuardarCliente()
     var telefono= $('#telefono').val();
     var email= $('#email').val();
     var cuenta= $('#cuenta').val();
-
-    if (cuenta.length!=24){
-        alert('<?php echo lang('Translate.longitudCuentaNoValida'); ?>');
-        return;
-    }
     
     if (!fn_ValidateIBAN(cuenta))
     {
         alert('<?php echo lang('Translate.ibanIncorrecto'); ?>');
-        return;
+        return false;
     }
     var notas= $('#notas').val();
-    console.log('idCliente: '+idCliente);
+    // console.log('idCliente: '+idCliente);
     var parametros = JSON.stringify({
         id:idCliente,
         nombre:nombre,
@@ -706,30 +708,36 @@ function GuardarCliente()
         //data: formData,
         url: '<?= base_url() ?>/clientes/guardarCliente',
         type: 'post',
+        async: false,
         beforeSend: function() {
             $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
         },
         success: function(response) {
-            if(ShowAlGuardar){
-                // similar behavior as an HTTP redirect
-                window.location.replace("<?= base_url() ?>/hilerria/clientes/show/"); //le pongo hilerria porque no se porque no lo coge desde el base_url??
+            if(response[0]==true){
+                if(ShowAlGuardar==1){
+                    // similar behavior as an HTTP redirect
+                    window.location.assign("<?= base_url() ?>/clientes/show"); //le pongo hilerria porque no se porque no lo coge desde el base_url??
+                } else {
+                    idCliente = response[1];
+                    ShowAlGuardar=1;
+                    $(".alert").html("<?php echo lang('Translate.grabadoCliente'); ?>");
+                    if ($('.alert').hasClass('alert-warning')) {
+                        $('.alert').removeClass('alert-warning');
+                        $('.alert').addClass('alert-success');
+                    };
+                    if ($('.alert').hasClass('alert-danger')) {
+                        $('.alert').removeClass('alert-danger');
+                        $('.alert').addClass('alert-success');
+                    };
+                    $('.alert').show();
+                    setInterval(function() {
+                        $('.alert').hide();
+                    }, 5000)                    
+                };
             } else {
-                idCliente = response[0];
-                $(".alert").html("<?php echo lang('Translate.grabadoCliente'); ?>");
-                if ($('.alert').hasClass('alert-warning')) {
-                    $('.alert').removeClass('alert-warning');
-                    $('.alert').addClass('alert-success');
-                };
-                if ($('.alert').hasClass('alert-danger')) {
-                    $('.alert').removeClass('alert-danger');
-                    $('.alert').addClass('alert-success');
-                };
-                $('.alert').show();
-                setInterval(function() {
-                    $('.alert').hide();
-                }, 5000)
-
-            }
+                alert(response[1]);
+                return false;
+            };
         }
     });
 
