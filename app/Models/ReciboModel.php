@@ -43,15 +43,15 @@ class ReciboModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TR.ID,
-                        TR.FECHA AS 'Fecha',
-                        TR.NUMERO AS 'Número',
-                        TR.REF AS 'Ref',
-                        TR.CONCEPTO AS 'Concepto',
-                        TR.NOMBRE AS 'Nombre',
-                        TR.DNI AS 'DNI',                        
-                        TR.IMPORTE AS 'Importe',
-                        TR.CUENTA AS 'Cuenta',
-                        TR.CREATED_AT AS 'Creado'
+                        TR.FECHA AS '".lang('Translate.fecha')."',
+                        TR.NUMERO AS '".lang('Translate.numero')."',
+                        TR.REF AS '".lang('Translate.referencia')."',
+                        TR.CONCEPTO AS '".lang('Translate.concepto')."',
+                        TR.NOMBRE AS '".lang('Translate.nombre')."',
+                        TR.DNI AS '".lang('Translate.dni')."',                        
+                        TR.IMPORTE AS '".lang('Translate.importe')."',
+                        TR.CUENTA AS '".lang('Translate.cuenta')."',
+                        TR.CREATED_AT AS '".lang('Translate.created')."'
                 FROM $this->table TR
                 WHERE TR.SECCION_ID=$idSeccion";
 
@@ -92,11 +92,11 @@ class ReciboModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TR.ID,
-                        TR.NUMERO AS 'Número', 
-                        DATE_FORMAT(TR.FECHA,'%d/%m/%Y') AS 'Fecha',
-                        TR.REF AS 'Referencia',
-                        TR.CONCEPTO AS 'Concepto',
-                        TR.IMPORTE AS 'Importe'
+                        TR.NUMERO AS '".lang('Translate.numero')."', 
+                        DATE_FORMAT(TR.FECHA,'%d/%m/%Y') AS '".lang('Translate.fecha')."',
+                        TR.REF AS '".lang('Translate.referencia')."',
+                        TR.CONCEPTO AS '".lang('Translate.concepto')."',
+                        TR.IMPORTE AS '".lang('Translate.importe')."'
                 FROM $this->table TR
                 WHERE TR.CLIENTE_ID=$idCliente";
 		$query = $db->query($sql);

@@ -37,9 +37,9 @@ class ClienteModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TC.ID As 'ID',
-                        TC.NOMBRE As 'Nombre',
-                        TC.APELLIDOS As 'Apellidos',
-                        TC.DNI
+                        TC.NOMBRE As '".lang('Translate.nombre')."',
+                        TC.APELLIDOS As '".lang('Translate.apellidos')."',
+                        TC.DNI AS ".lang('Translate.dni')."
                 FROM $this->table TC
                 WHERE ISNULL(TC.DELETED_AT) AND TC.SECCION_ID=$seccion";   
 

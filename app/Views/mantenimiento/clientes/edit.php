@@ -824,7 +824,7 @@ function GuardarComentario()
 
 function QuitarArticulo(id)
 {
-    if (confirm('<?php echo lang('Translate.eliminar'); ?>') == true) {
+    if (confirm('<?php echo lang('Translate.eliminarSeguro'); ?>') == true) {
         console.log(id);
         var parametros = JSON.stringify({
                 id:id,
@@ -852,7 +852,7 @@ function QuitarArticulo(id)
 
 function EliminarComentario(id)
 {    
-    if (confirm('<?php echo lang('Translate.eliminar'); ?>') == true) {
+    if (confirm('<?php echo lang('Translate.eliminarSeguro'); ?>') == true) {
     
         var parametros = JSON.stringify({
             id:id,

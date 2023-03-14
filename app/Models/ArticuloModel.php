@@ -31,11 +31,11 @@ class ArticuloModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TA.ID as 'ID',
-                        TA.DESCRIPCION as 'Descripción',
-                        TA.NUMERO as 'Número',
-                        TA.LETRA as 'Letra',
-                        TC.NOMBRE as 'Categoría',
-                        TC.PRECIO as 'Precio'
+                        TA.DESCRIPCION as '".lang('Translate.descripcion')."',
+                        TA.NUMERO as '".lang('Translate.numero')."',
+                        TA.LETRA as '".lang('Translate.letra')."',
+                        TC.NOMBRE as '".lang('Translate.categoria')."',
+                        TC.PRECIO as '".lang('Translate.precio')."'
                 FROM $this->table TA
                 INNER JOIN tbl_categorias AS TC ON TA.CATEGORIA_ID=TC.ID
                 WHERE ISNULL(TA.DELETED_AT) AND TA.SECCION_ID=$seccion";

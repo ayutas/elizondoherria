@@ -23,27 +23,27 @@ class Usuarios extends BaseController
 		$model = new UsuarioModel();
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Nombre');
-		$column3= array ('Field'=>'Apellido1');
-		$column4= array ('Field'=>'Apellido2');
-		$column5= array ('Field'=>'Admin');
-		$column6= array ('Field'=>'Usuario');
-		$column7= array ('Field'=>'Creado');
-		$column8= array ('Field'=>'Actualizado');
+		$column2= array ('Field'=>lang('Translate.nombre'));
+		$column3= array ('Field'=>lang('Translate.apellido1'));
+		$column4= array ('Field'=>lang('Translate.apellido2'));
+		$column5= array ('Field'=>lang('Translate.usuario'));
+		$column6= array ('Field'=>lang('Translate.created'));
+		$column7= array ('Field'=>lang('Translate.updated'));
 		
-		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8);
+		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7);
 		$data['columns'] = $columnasDatatable;
 		$data['data'] = json_decode($model->getAll());
 
 		foreach ($data['data'] as $item) {
-			$buttonEdit = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >Editar</button></form>';
-			$buttonDelete = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $item->ID . '" style="color:white;" class="btn btn-danger" >Eliminar</button>';
+			$buttonEdit = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >'.lang('Translate.editar').'</button></form>';
+			$buttonDelete = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $item->ID . '" style="color:white;" class="btn btn-danger" >'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEdit;
 			$item->btnEliminar = $buttonDelete;
 		}
 
 		// Cargamos las vistas en orden
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/show', $data);
 		echo view('dashboard/footer', $data);
@@ -64,19 +64,6 @@ class Usuarios extends BaseController
 		$model = new UsuarioModel();
 
 		$data['id'] = $id;
-
-
-		if ($id == "") {
-
-			if ($id == "") {
-				// Creamos una session para mostrar el mensaje de denegación por permiso
-				$session = session();
-				$session->setFlashdata('error', 'No se ha seleccionado ningun elemento para editar');
-
-				// Redireccionamos a la pagina de login
-				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
-			}
-		}
 
 		// Comprobamos el metodo de la petición
 		if ($this->request->getMethod() == 'post') {
@@ -136,17 +123,18 @@ class Usuarios extends BaseController
 
 				// Creamos una session para mostrar el mensaje de registro correcto
 				$session = session();
-				$session->setFlashdata('success', 'Actualizado correctamente');
+				$session->setFlashdata('success',  lang('Translate.actualizado'));
 
 				// Redireccionamos a la pagina
 				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
 			}
 		}
 
-		$data['data'] = json_decode($model->getData($id));
+		$data['data'] = json_decode($model->getById($id));
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		$data['slug'] =  $this->redireccion;
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/edit', $data);
 		echo view('dashboard/footer', $data);
@@ -212,7 +200,7 @@ class Usuarios extends BaseController
 
 				// Creamos una session para mostrar el mensaje de registro correcto
 				$session = session();
-				$session->setFlashdata('success', 'Creado correctamente');
+				$session->setFlashdata('success',  lang('Translate.creado'));
 
 				// Redireccionamos a la pagina
 				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
@@ -221,7 +209,7 @@ class Usuarios extends BaseController
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';
 		$data['slug'] = $this->redireccion;
-
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/edit', $data);
 		echo view('dashboard/footer', $data);
@@ -236,7 +224,7 @@ class Usuarios extends BaseController
 		$answer = $model->deleteById($id);
 		// Creamos una session para mostrar el mensaje de registro correcto
 		$session = session();
-		$session->setFlashdata('success', 'Eliminado correctamente');
+		$session->setFlashdata('success',  lang('Translate.eliminado'));
 
 		// Redireccionamos a la pagina de login
 		return redirect()->to(base_url() . "/" . $this->redireccion . '/show');

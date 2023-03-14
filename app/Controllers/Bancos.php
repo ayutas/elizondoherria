@@ -39,6 +39,7 @@ class Bancos extends BaseController
 
 		// Cargamos las vistas en orden
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/show', $data);
 		echo view('dashboard/footer', $data);
@@ -121,6 +122,7 @@ class Bancos extends BaseController
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		$data['slug'] = $this->redireccion;
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/edit', $data);
 		echo view('dashboard/footer', $data);
@@ -186,7 +188,7 @@ class Bancos extends BaseController
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';
 		$data['slug'] = $this->redireccion;
-
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/edit', $data);
 		echo view('dashboard/footer', $data);

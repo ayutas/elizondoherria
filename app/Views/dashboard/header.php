@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ELIZONDOKO HILERRIA</title>
+    <title>ELIZONDOKO HERRIA</title>
     <script
 			  src="https://code.jquery.com/jquery-3.5.1.js"
 			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -59,8 +59,8 @@
             <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/dashboard">
                     <svg class="c-sidebar-nav-icon" >
                         <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-speedometer"></use>
-                    </svg> Inicio</a></li>
-            <li class="c-sidebar-nav-title">Menu</li>
+                    </svg> <?php echo lang('Translate.inicio');?></a></li>
+            <li class="c-sidebar-nav-title"><?php echo lang('Translate.menu');?></li>
             
             <?php 
 
@@ -69,7 +69,7 @@
             <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/recibos">
                 <svg class="c-sidebar-nav-icon">
                     <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-clipboard"></use>
-                </svg> Recibos</a>
+                </svg> <?php echo lang('Translate.recibos');?></a>
             </li>
             <?php if(session()->get('admin')==1){?>
                 <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/consultas">
@@ -80,19 +80,19 @@
                 <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">                
                     <svg class="c-sidebar-nav-icon">                        
                         <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-trello"></use>
-                    </svg> Mantenimiento Tablas</a>
+                    </svg> <?php echo lang('Translate.mantenimiento');?></a>
                     <ul class="c-sidebar-nav-dropdown-items">
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/clientes">
-                        Clientes</a>
+                        <?php echo lang('Translate.clientes');?></a>
                         </li>
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/articulos">
-                        Artículos</a>
+                        <?php echo lang('Translate.articulos');?></a>
                         </li> 
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/categorias">
-                        Categorías</a>
+                        <?php echo lang('Translate.categorias');?></a>
                         </li>
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/usuarios">
-                        Usuarios</a>
+                        <?php echo lang('Translate.usuarios');?></a>
                         </li> 
                     </ul>
                 </li>
@@ -171,7 +171,7 @@
                         <!-- <svg class="c-icon mfe-2" href="<?= base_url() ?>/logout"> -->
                             <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-account-logout"></use>
                         <!-- </svg>  -->
-                        <a class="btn btn-primary mt-2 ml-2" href="<?= base_url() ?>/logout"> Cerrar Sesión</a>
+                        <a class="btn btn-primary mt-2 ml-2" href="<?= base_url() ?>/logout"> <?php echo lang('Translate.cerrarSesion');?></a>
                 </div>
             </li>
         </ul>
@@ -190,9 +190,10 @@
             
             <!-- Breadcum - Inicio -->
             <ol class="breadcrumb border-0 m-0 px-0 px-md-3">
-                <li class="breadcrumb-item">INICIO</li>
-                
-                <li class="breadcrumb-item"><a href="<?= base_url() ?>/<?php echo $uri->getSegment(1) ?>"><?php echo strtoupper($uri->getSegment(1)) ?></a></li>
+                <li class="breadcrumb-item"><a href="<?= base_url() ?>/dashboard"><?php echo lang('Translate.INICIO');?></a></li>
+                <?php if(strtoupper($uri->getSegment(1))!="DASHBOARD") { ?>
+                    <li class="breadcrumb-item"><a href="<?= base_url() ?>/<?php echo $uri->getSegment(1) ?>"><?php echo strtoupper($migapan) ?></a></li>
+                <?php } ?>
                 <!-- <li class="breadcrumb-item active">Dashboard</li> -->
             </ol>
             <!-- Breadcum - Inicio -->

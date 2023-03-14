@@ -24,30 +24,13 @@ class ClienteComentarioModel extends Model
         return $data;
     }
 
-    public function getById($id){
-        $db = \Config\Database::connect();
-        
-        $sql = "SELECT  TC.ID As 'ID',
-                        TC.NOMBRE As 'Nombre',
-                        TC.APELLIDOS As 'Apellidos',
-                        TC.DNI
-                FROM $this->table TC
-                WHERE TC.ID=$id AND ISNULL(TC.DELETED_AT)";   
-
-        $query = $db->query($sql);
-		
-		$results = $query->getResult();
-		
-        return json_encode($results);
-    }
-
     public function getByCliente($idCliente){
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TC.ID As 'ID',
-                        TC.COMENTARIO As 'Comentario',
-                        TC.CREATED_AT As 'Creado',
-                        TC.UPDATED_AT As 'Modificado'
+                        TC.COMENTARIO As '".lang('Translate.comentario')."',
+                        TC.CREATED_AT As '".lang('Translate.created')."',
+                        TC.UPDATED_AT As '".lang('Translate.updated')."'
                 FROM $this->table TC                
                 WHERE TC.CLIENTE_ID=$idCliente AND ISNULL(TC.DELETED_AT)";   
 

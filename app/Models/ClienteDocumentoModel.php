@@ -19,8 +19,8 @@ class ClienteDocumentoModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  ID,
-                        TITULO AS 'Título',
-                        CREATED_AT AS 'Creado',
+                        TITULO AS '".lang('Translate.titulo')."',
+                        CREATED_AT AS '".lang('Translate.created')."',
                         RUTA AS 'Ruta'
                 FROM $this->table TCD
                 WHERE TCD.CLIENTE_ID=$clienteId";
