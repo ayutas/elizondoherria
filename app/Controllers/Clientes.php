@@ -26,13 +26,16 @@ class Clientes extends BaseController
 		$uri = service('uri');
 
 		$data = [];
+		$idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 		$ClienteModel = new ClienteModel();
 		$articulosClientesModel = new ArticuloClienteModel();
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Nombre');
-        $column3= array ('Field'=>'Apellidos');
-        $column4= array ('Field'=>'DNI');
+		$column2= array ('Field'=>lang('Translate.nombre'));
+        $column3= array ('Field'=>lang('Translate.apellidos'));
+        $column4= array ('Field'=>lang('Translate.dni'));
 
         $columnasDatatable = array($column1,$column2,$column3,$column4);
 		$data['columnsclientes'] = $columnasDatatable;
@@ -40,14 +43,15 @@ class Clientes extends BaseController
 		$data['dataclientes'] = json_decode($ClienteModel->getAll($seccion));
 
 		foreach ($data['dataclientes'] as $item) {
-			$buttonEditCliente = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >Editar</button></form>';
-			$buttonDeleteCliente = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $item->ID . '" style="color:white;" class="btn btn-danger" >Eliminar</button>';
+			$buttonEditCliente = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >'.lang('Translate.editar').'</button></form>';
+			$buttonDeleteCliente = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $item->ID . '" style="color:white;" class="btn btn-danger" >'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEditCliente;
 			$item->btnEliminar = $buttonDeleteCliente;
 		}
 
 		// Cargamos las vistas en orden
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		// $data['actionLineas'] = base_url() . '/clientesLineas/new';
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/show', $data);
@@ -58,6 +62,9 @@ class Clientes extends BaseController
 	{
 		//Variable con todos los datos a pasar a las vistas
 		$data = [];
+        $idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 
 		// Cargamos los helpers de formularios
 		helper(['form']);
@@ -68,18 +75,6 @@ class Clientes extends BaseController
 
 		$data['id'] = $id;
 
-		if ($id == "") {
-
-			if ($id == "") {
-				// Creamos una session para mostrar el mensaje de denegación por permiso
-				$session = session();
-				$session->setFlashdata('error', 'No se ha seleccionado ningun elemento para editar');
-
-				// Redireccionamos a la pagina de login
-				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
-			}
-		}
-
 		$data['data'] = json_decode($ClienteModel->getById($id));
 		$articulosClientesModel = new ArticuloClienteModel();
 		$clientesComentariosModel=new ClienteComentarioModel();
@@ -88,12 +83,12 @@ class Clientes extends BaseController
 
 		$column1= array ('Field'=>'');
 		$column2= array ('Field'=>'ID');
-		$column3= array ('Field'=>'Descripción');
-		$column4= array ('Field'=>'Número');
-        $column5= array ('Field'=>'Letra');
-        $column6= array ('Field'=>'Categoría');
-        $column7= array ('Field'=>'Precio');
-		$column8= array ('Field'=>'Disponible');
+		$column3= array ('Field'=>lang('Translate.descripcion'));
+		$column4= array ('Field'=>lang('Translate.numero'));
+        $column5= array ('Field'=>lang('Translate.letra'));
+        $column6= array ('Field'=>lang('Translate.categoria'));
+        $column7= array ('Field'=>lang('Translate.precio'));
+		$column8= array ('Field'=>lang('Translate.disponible'));
 
         $columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8);
 		$data['columnsArticulos'] = $columnasDatatable;
@@ -104,24 +99,24 @@ class Clientes extends BaseController
 		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles($seccion));
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Comentario');
-        $column3= array ('Field'=>'Creado');
-        $column4= array ('Field'=>'Modificado');
+		$column2= array ('Field'=>lang('Translate.comentario'));
+        $column3= array ('Field'=>lang('Translate.created'));
+        $column4= array ('Field'=>lang('Translate.updated'));
 
         $columnasDatatableComentarios = array($column1,$column2,$column3,$column4);
 		$data['columnsComentarios'] = $columnasDatatableComentarios;
 		$data['dataComentarios'] = json_decode($clientesComentariosModel->getByCliente($id));
 		
 		foreach ($data['dataComentarios'] as $item) {
-			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">Editar</button>';
-			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.editar').'</button>';
+			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEditComentario;
 			$item->btnEliminar = $buttonDeleteComentario;
 		}
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Título');
-        $column3= array ('Field'=>'Creado');
+		$column2= array ('Field'=>lang('Translate.titulo'));
+        $column3= array ('Field'=>lang('Translate.created'));
         $column4= array ('Field'=>'Ruta');
 
         $columnasDatatableDocumentos = array($column1,$column2,$column3,$column4);
@@ -129,19 +124,19 @@ class Clientes extends BaseController
 		$data['dataDocumentos'] = json_decode($clientesDocumentosModel->getByCliente($id));
 		
 		foreach ($data['dataDocumentos'] as $item) {
-			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">Descargar</button>';
-			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.descargar').'</button>';
+			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEditDocumento;
 			$item->btnEliminar = $buttonDeleteDocumento;
 		}
 
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Número');
-		$column3= array ('Field'=>'Fecha');
-		$column4= array ('Field'=>'Referencia');
-		$column5= array ('Field'=>'Concepto');
-        $column6= array ('Field'=>'Importe');
+		$column2= array ('Field'=>lang('Translate.numero'));
+		$column3= array ('Field'=>lang('Translate.fecha'));
+		$column4= array ('Field'=>lang('Translate.referencia'));
+		$column5= array ('Field'=>lang('Translate.concepto'));
+        $column6= array ('Field'=>lang('Translate.importe'));
 
         $columnasDatatableRecibos = array($column1,$column2,$column3,$column4,$column5,$column6);
 		$data['columnsRecibos'] = $columnasDatatableRecibos;
@@ -149,7 +144,7 @@ class Clientes extends BaseController
 		// return var_dump($data['dataComentarios'] );
 		
 		foreach ($data['dataRecibos'] as $item) {
-			$buttonEditComentario = '<button type="Button" onclick="EditarRecibo(this)" id="btnEditarRecibo" class="btn btn-info btnEditar data-id="' . $item->ID . '" style="color:white;">Ver</button>';
+			$buttonEditComentario = '<button type="Button" onclick="EditarRecibo(this)" id="btnEditarRecibo" class="btn btn-info btnEditar data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.ver').'</button>';
 			// $buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
 			$item->btnEditar = $buttonEditComentario;
 			$item->btnEliminar =''; //$buttonDeleteComentario;
@@ -161,6 +156,7 @@ class Clientes extends BaseController
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		$data['slug'] = $this->redireccion;
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/edit', $data);
 		echo view('dashboard/footer', $data);
@@ -170,6 +166,9 @@ class Clientes extends BaseController
 	{
 		//Variable con todos los datos a pasar a las vistas
 		$data = [];
+		$idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 
 		// Cargamos los helpers de formularios
 		helper(['form']);
@@ -183,12 +182,12 @@ class Clientes extends BaseController
 		
 		$column1= array ('Field'=>'');
 		$column2= array ('Field'=>'ID');
-		$column3= array ('Field'=>'Descripción');
-		$column4= array ('Field'=>'Número');
-        $column5= array ('Field'=>'Letra');
-        $column6= array ('Field'=>'Categoría');
-        $column7= array ('Field'=>'Precio');
-		$column8= array ('Field'=>'Disponible');
+		$column3= array ('Field'=>lang('Translate.descripcion'));
+		$column4= array ('Field'=>lang('Translate.numero'));
+        $column5= array ('Field'=>lang('Translate.letra'));
+        $column6= array ('Field'=>lang('Translate.categoria'));
+        $column7= array ('Field'=>lang('Translate.precio'));
+		$column8= array ('Field'=>lang('Translate.disponible'));
 
         $columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8);
 		$data['columnsArticulos'] = $columnasDatatable;
@@ -197,10 +196,27 @@ class Clientes extends BaseController
 		$seccion=session()->get('seccion');
 		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles($seccion));
 
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>lang('Translate.comentario'));
+        $column3= array ('Field'=>lang('Translate.created'));
+        $column4= array ('Field'=>lang('Translate.updated'));
+
+        $columnasDatatableComentarios = array($column1,$column2,$column3,$column4);
+		$data['columnsComentarios'] = $columnasDatatableComentarios;
+		$data['dataComentarios'] =[];
+
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>lang('Translate.titulo'));
+        $column3= array ('Field'=>lang('Translate.created'));
+        $column4= array ('Field'=>'Ruta');
+
+        $columnasDatatableDocumentos = array($column1,$column2,$column3,$column4);
+		$data['columnsDocumentos'] = $columnasDatatableDocumentos;
+		$data['dataDocumentos'] =[];
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';		
 		$data['slug'] = $this->redireccion;
-
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/edit', $data);
 		echo view('dashboard/footer', $data);
@@ -224,6 +240,11 @@ class Clientes extends BaseController
 		$seccion =session()->get('seccion');
 		
 		$model = new ClienteModel();
+		$datos=json_decode($model->existeDniActivoSeccion($dni,$seccion));
+		if(isset($datos[0])){
+			return json_encode([false,lang('Translate.existeDni')]);
+		}
+
 		$newData = [
 			'NOMBRE' => $nombre,
 			'APELLIDOS' => $apellidos,
@@ -246,7 +267,7 @@ class Clientes extends BaseController
 		} else{
 			$id = $model->insert($newData);
 		}
-		return json_encode(['id' => $id]);
+		return json_encode([true,$id]);
 
 	}
 
@@ -304,8 +325,8 @@ class Clientes extends BaseController
 		}
 		$comentariosCliente=json_decode($model->getByCliente($idCliente));
 		foreach ($comentariosCliente as $item) {
-			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">Editar</button>';
-			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.editar').'</button>';
+			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEditComentario;
 			$item->btnEliminar = $buttonDeleteComentario;
 		}
@@ -323,8 +344,8 @@ class Clientes extends BaseController
 		
 		$comentariosCliente=json_decode($model->getByCliente($idCliente));
 		foreach ($comentariosCliente as $item) {
-			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">Editar</button>';
-			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.editar').'Editar</button>';
+			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEditComentario;
 			$item->btnEliminar = $buttonDeleteComentario;
 		}
@@ -384,8 +405,8 @@ class Clientes extends BaseController
 
 		$documentosCliente=json_decode($modelClientesDocumentos->getByCliente($idCliente));
 		foreach ($documentosCliente as $item) {
-			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">Descargar</button>';
-			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.descargar').'</button>';
+			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEditDocumento;
 			$item->btnEliminar = $buttonDeleteDocumento;
 		}
@@ -403,8 +424,8 @@ class Clientes extends BaseController
 		
 		$documentosCliente=json_decode($model->getByCliente($idCliente));
 		foreach ($documentosCliente as $item) {
-			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">Descargar</button>';
-			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.descargar').'</button>';
+			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEditDocumento;
 			$item->btnEliminar = $buttonDeleteDocumento;
 		}
@@ -445,7 +466,7 @@ class Clientes extends BaseController
 
 		// Creamos una session para mostrar el mensaje de registro correcto
 		$session = session();
-		$session->setFlashdata('success', 'Eliminado correctamente');
+		$session->setFlashdata('success', lang('Translate.eliminado'));
 
 		// Redireccionamos a la pagina de login
 		return redirect()->to(base_url() . "/" .  $this->redireccion . '/show');
@@ -690,7 +711,7 @@ class Clientes extends BaseController
         
         //---------------------------------------------------        
         header("Content-type:application/pdf");
-        header("Content-Disposition:inline;filename=consulta.pdf");
+        header("Content-Disposition:inline;filename=impreso.pdf");
 		$output = $dompdf->output();
         echo ($output);
         exit;

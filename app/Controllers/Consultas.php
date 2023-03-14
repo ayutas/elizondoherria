@@ -51,7 +51,7 @@ class Consultas extends BaseController
 
         $data['columns']= json_decode($results);		
         $data['data']= json_decode($results);	
-        
+        $data['migapan']=lang('Translate.'.$this->redireccion);
         echo view('dashboard/header',$data);   
         echo view("dashboard/consultas",$data);
         echo view("dashboard/footer",$data);

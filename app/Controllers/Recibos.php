@@ -17,6 +17,7 @@ class Recibos extends BaseController
 	// Ver
 	public function show()
 	{
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header');
 		echo view($this->redireccionView . '/opciones');
 		echo view('dashboard/footer');
@@ -32,17 +33,17 @@ class Recibos extends BaseController
 		$model = new ReciboModel();
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Fecha');
-		$column3= array ('Field'=>'Número');
-		$column4= array ('Field'=>'Ref');
-		$column5= array ('Field'=>'Concepto');
-		$column6= array ('Field'=>'Nombre');
-		$column7= array ('Field'=>'DNI');
-		$column8= array ('Field'=>'Artículo');
-		$column9= array ('Field'=>'Categoría');
-		$column10= array ('Field'=>'Importe');
-		$column11= array ('Field'=>'Cuenta');
-		$column12= array ('Field'=>'Creado');
+		$column2= array ('Field'=>lang('Translate.fecha'));
+		$column3= array ('Field'=>lang('Translate.numero'));
+		$column4= array ('Field'=>lang('Translate.referencia'));
+		$column5= array ('Field'=>lang('Translate.concepto'));
+		$column6= array ('Field'=>lang('Translate.nombre'));
+		$column7= array ('Field'=>lang('Translate.dni'));
+		$column8= array ('Field'=>lang('Translate.articulo'));
+		$column9= array ('Field'=>lang('Translate.categoria'));
+		$column10= array ('Field'=>lang('Translate.importe'));
+		$column11= array ('Field'=>lang('Translate.cuenta'));
+		$column12= array ('Field'=>lang('Translate.created'));
 		
 		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8,$column9,$column10,$column11,$column12);
 		$data['columns'] = $columnasDatatable;
@@ -50,14 +51,15 @@ class Recibos extends BaseController
 		$data['data'] = json_decode($model->getAll($seccion));
 
 		foreach ($data['data'] as $item) {
-			$buttonEdit = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >Editar</button></form>';
-			$buttonDelete = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $item->ID . '" style="color:white;" class="btn btn-danger" >Eliminar</button>';
+			$buttonEdit = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >'.lang('Translate.editar').'</button></form>';
+			$buttonDelete = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $item->ID . '" style="color:white;" class="btn btn-danger" >'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEdit;
 			$item->btnEliminar = $buttonDelete;
 		}
 
 		// Cargamos las vistas en orden
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/show', $data);
 		echo view('dashboard/footer', $data);
@@ -76,19 +78,6 @@ class Recibos extends BaseController
 		$modelLineas = new ReciboLineaModel();
 
 		$data['id'] = $id;
-
-
-		if ($id == "") {
-
-			if ($id == "") {
-				// Creamos una session para mostrar el mensaje de denegación por permiso
-				$session = session();
-				$session->setFlashdata('error', 'No se ha seleccionado ningun elemento para editar');
-
-				// Redireccionamos a la pagina de login
-				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
-			}
-		}
 		
 		$data['data'] = json_decode($model->getById($id));
 
@@ -97,6 +86,7 @@ class Recibos extends BaseController
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		$data['slug'] =  $this->redireccion;
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/edit', $data);
 		echo view('dashboard/footer', $data);
@@ -116,12 +106,12 @@ class Recibos extends BaseController
 		$column1= array ('Field'=>'');
 		$column2= array ('Field'=>'');
 		$column3= array ('Field'=>'ID');
-		$column4= array ('Field'=>'Nombre');
-		$column5= array ('Field'=>'DNI');
-		$column6= array ('Field'=>'Número');
-		$column7= array ('Field'=>'Categoría');
-		$column8= array ('Field'=>'Importe');
-		$column9= array ('Field'=>'Cuenta');
+		$column4= array ('Field'=>lang('Translate.nombre'));
+		$column5= array ('Field'=>lang('Translate.dni'));
+		$column6= array ('Field'=>lang('Translate.numero'));
+		$column7= array ('Field'=>lang('Translate.categoria'));
+		$column8= array ('Field'=>lang('Translate.importe'));
+		$column9= array ('Field'=>lang('Translate.cuenta'));
 
 		
 		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8,$column9);
@@ -133,7 +123,7 @@ class Recibos extends BaseController
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';		
 		$data['slug'] = $this->redireccion;
-
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/new', $data);
 		echo view('dashboard/footer', $data);
@@ -160,7 +150,7 @@ class Recibos extends BaseController
 		$model->save($newData);
 		// Creamos una session para mostrar el mensaje de registro correcto
 		$session = session();
-		$session->setFlashdata('success', 'Modificado correctamente');
+		$session->setFlashdata('success',  lang('Translate.actualizado'));
 
 		// Redireccionamos a la pagina de login
 		return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
@@ -174,7 +164,7 @@ class Recibos extends BaseController
 		$answer = $model->deleteById($id,$usuarioId);
 		// Creamos una session para mostrar el mensaje de registro correcto
 		$session = session();
-		$session->setFlashdata('success', 'Eliminado correctamente');
+		$session->setFlashdata('success',  lang('Translate.eliminado'));
 
 		// Redireccionamos a la pagina de login
 		return redirect()->to(base_url() . "/" . $this->redireccion . '/show');

@@ -28,8 +28,8 @@ class CategoriaModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TC.ID As 'ID',
-                        TC.NOMBRE As 'Nombre',
-                        TC.PRECIO As 'Precio'
+                        TC.NOMBRE As '".lang('Translate.nombre')."',
+                        TC.PRECIO As '".lang('Translate.precio')."'
                 FROM $this->table TC
                 WHERE ISNULL(TC.DELETED_AT) AND TC.SECCION_ID=$seccion";
            

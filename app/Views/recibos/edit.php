@@ -273,9 +273,9 @@ function GuardarRecibo()
     var continuar=false;
     var cobrado= $('#checkCobrado').prop('checked');
     if(cobrado){
-        continuar=confirm('¿Modificar recibo como cobrado?');
+        continuar=confirm('<?php echo lang('Translate.modificarReciboCobrado'); ?>');
     }else{
-        continuar=confirm('¿Modificar recibo como no cobrado?');
+        continuar=confirm('<?php echo lang('Translate.modificarReciboNoCobrado'); ?>');
     }
     
     console.log('cobrado: '+cobrado);
@@ -293,7 +293,7 @@ function GuardarRecibo()
             url: '<?= base_url() ?>/recibos/guardarRecibo',
             type: 'post',
             beforeSend: function() {
-                $("#resultado").html("Procesando, espere por favor...");
+                $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
             },
             success: function(response) {            
             }

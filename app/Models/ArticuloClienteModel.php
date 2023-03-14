@@ -49,13 +49,13 @@ class ArticuloClienteModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TAC.ID,
-                        TA.DESCRIPCION AS 'Descripción',
-                        TA.NUMERO AS 'Número',
-                        TA.LETRA AS 'Letra',
-                        TC.NOMBRE AS 'Categoría',
-                        TAC.CANTIDAD AS 'Cantidad',
-                        TC.PRECIO AS 'Precio',
-                        TC.PRECIO*TAC.CANTIDAD AS 'Importe'
+                        TA.DESCRIPCION AS '".lang('Translate.descripcion')."',
+                        TA.NUMERO AS '".lang('Translate.numero')."',
+                        TA.LETRA AS '".lang('Translate.letra')."',
+                        TC.NOMBRE AS '".lang('Translate.categoria')."',
+                        TAC.CANTIDAD AS '".lang('Translate.cantidad')."',
+                        TC.PRECIO AS '".lang('Translate.precio')."',
+                        TC.PRECIO*TAC.CANTIDAD AS '".lang('Translate.importe')."'
                 FROM $this->table as TAC
                 INNER JOIN tbl_articulos as TA ON TAC.ARTICULO_ID=TA.ID
                 INNER JOIN tbl_categorias as TC ON TA.CATEGORIA_ID=TC.ID
@@ -73,13 +73,14 @@ class ArticuloClienteModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  '' as 'btnSeleccionar',
+        
                         TA.ID as 'ID',
-                        TA.DESCRIPCION AS 'Descripción',
-                        TA.NUMERO as 'Número',
-                        TA.LETRA as 'Letra',
-                        TC.NOMBRE AS 'Categoría',
-                        TC.PRECIO AS 'Precio',
-                        TA.DISPONIBLE-IFNULL(TAC.CANTIDAD,0) AS 'Disponible'
+                        TA.DESCRIPCION AS '".lang('Translate.descripcion')."',
+                        TA.NUMERO AS '".lang('Translate.numero')."',
+                        TA.LETRA AS '".lang('Translate.letra')."',
+                        TC.NOMBRE AS '".lang('Translate.categoria')."',
+                        TC.PRECIO AS '".lang('Translate.precio')."',
+                        TA.DISPONIBLE-IFNULL(TAC.CANTIDAD,0) AS '".lang('Translate.disponible')."'
                 FROM tbl_articulos AS TA
                 INNER JOIN tbl_categorias as TC ON TA.CATEGORIA_ID=TC.ID
                 LEFT JOIN (SELECT ARTICULO_ID,SUM(CANTIDAD) AS CANTIDAD FROM $this->table WHERE ISNULL(DELETED_AT) GROUP BY ARTICULO_ID) as TAC 

@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="fade-in">
                 <!-- titulo -->
-                <h1>Articulos</h1>
+                <h1><?php echo lang('Translate.articulos'); ?></h1>
                 <div clas="row">
                     <div class="container mt-4">
                         <?php if (session()->get('success')) : ?>
@@ -22,7 +22,7 @@
                                 <div class="col-md-12">
                                     <!-- Campo descripcion -->
                                     <div class="form-group">
-                                        <label class="medium mb-1" for="descripcion">Descripción</label>
+                                        <label class="medium mb-1" for="descripcion"><?php echo lang('Translate.descripcion'); ?></label>
                                         <input class="form-control py-2" id="descripcion" name="descripcion" type="text"
                                             placeholder="Introduce descripción"
                                             value="<?php if (isset($data[0])) {
@@ -34,7 +34,7 @@
                                     </div>
                                     <!-- Campo Numero -->
                                     <div class="form-group">
-                                        <label class="medium mb-1" for="numero">Número</label>
+                                        <label class="medium mb-1" for="numero"><?php echo lang('Translate.numero'); ?></label>
                                         <input class="form-control py-2" id="numero" name="numero" type="text"
                                             placeholder="Introduce número"
                                             value="<?php if (isset($data[0])) {
@@ -46,7 +46,7 @@
                                     </div>
                                     <!-- Campo Letra -->
                                     <div class="form-group">
-                                        <label class="medium mb-1" for="letra">Letra</label>
+                                        <label class="medium mb-1" for="letra"><?php echo lang('Translate.letra'); ?></label>
                                         <input class="form-control py-2" id="letra" name="letra" type="text"
                                             placeholder="Introduce letra"
                                             value="<?php if (isset($data[0])) {
@@ -58,7 +58,7 @@
                                     </div>
                                     <!-- Campo Banco -->
                                     <div id="comboCategorias" class="form-group">
-                                        <label class="medium mb-1" for="categoria">Categoría</label>
+                                        <label class="medium mb-1" for="categoria"><?php echo lang('Translate.categoria'); ?></label>
                                         <select class="form-control py-2" id="categoria" name="categoria">
                                             <option value="0">-</option>
                                             <?php if (isset($categorias)) {
@@ -71,8 +71,8 @@
                                         </select>    
                                     </div>
                                     <!-- Campo Precio -->
-                                    <div class="form-group">
-                                        <label class="medium mb-1" for="precio">Precio</label>
+                                    <div class="form-group" disabled>
+                                        <label class="medium mb-1" for="precio"><?php echo lang('Translate.precio'); ?></label>
                                         <input class="form-control py-2" id="precio" name="precio" type="text"
                                             placeholder="0.00"
                                             value="<?php if (isset($data[0])) {
@@ -84,7 +84,7 @@
                                     </div>
                                     <!-- Campo Disponible -->
                                     <div class="form-group">
-                                        <label class="medium mb-1" for="disponible">Disponible</label>
+                                        <label class="medium mb-1" for="disponible"><?php echo lang('Translate.disponible'); ?></label>
                                         <input class="form-control py-2" id="disponible" name="disponible" type="text"
                                             placeholder="0"
                                             value="<?php if (isset($data[0])) {
@@ -100,7 +100,7 @@
                             <!-- Link Cliente asignado -->
                             <div class="form-group">
                             <?php if (isset($clienteAsignado)) {?>
-                                <label class="medium mb-1" for="cliente">Asignado a cliente: </label>
+                                <label class="medium mb-1" for="cliente"><?php echo lang('Translate.asignadoA'); ?> </label>
                                 <?php foreach($clienteAsignado as $cliente){?>
                                 <a href="<?php echo $cliente->Link;?> "><?php echo $cliente->Cliente;?></a>
                                 <?php } ?>
@@ -118,9 +118,9 @@
 
                                 <div class="col-12 form-group mt-4 mb-0">
                                     <button class="btn btn-primary btn-block" type="submit"><?php if (isset($data[0])) {
-                                        echo 'Actualizar';
+                                        echo lang('Translate.actualizar');
                                     } else {
-                                        echo 'Crear';
+                                        echo lang('Translate.crear');
                                     }
                                     ?></button>
                                 </div>
