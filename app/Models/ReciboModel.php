@@ -225,7 +225,7 @@ class ReciboModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT CONCAT(YEAR(TR.FECHA),'/',TR.NUMERO) AS NUMRECIBO, TR.CONCEPTO, TR.IMPORTE, TR.DNI, TR.FECHA,
-                TR.NOMBRE,TR.CUENTA, TR.DOMICILIO,TR.POBLACION,TR.COD_POSTAL
+                TR.NOMBRE,REPLACE(TR.CUENTA,' ','') AS CUENTA, TR.DOMICILIO,TR.POBLACION,TR.COD_POSTAL
                 FROM $this->table AS TR
                 WHERE TR.REF = '$referencia'";
         
