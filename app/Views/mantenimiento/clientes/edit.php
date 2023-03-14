@@ -247,7 +247,7 @@
                                     </div>
                                     <div id="tablaComentarios" name="tablaComentarios">
                                     <!--Tabla comentarios -->
-                                    <?php if(isset($columnsComentarios))
+                                    <?php if(isset($columnsComentarios[0]))
                                     {                                        
                                         dataTable("", $columnsComentarios, $dataComentarios, 'Comentarios', '4,5', 'text-center', "0", 4, false, 0, 'datatableComentarios');
                                     }
@@ -308,7 +308,7 @@
                                     <div id="tablaDocumentos" name="tablaDocumentos">
                                         <?php if(isset($columnsDocumentos[0]))
                                         {
-                                            dataTable("", $columnsDocumentos, $dataDocumentos, 'Documentos', '4,5', 'text-center', "0,3", 7, false, 0, 'datatableDocumentos');
+                                            dataTable("", $columnsDocumentos, $dataDocumentos, 'Documentos', '4,5', 'text-center', "0,3", 4, false, 0, 'datatableDocumentos');
                                         }
                                         ?>
                                     </div>
@@ -359,8 +359,8 @@
                             <div class="modal-content">
                                 <div style="background-color:white;" class="modal-header">
                                     <h5 class="modal-title" id="modalInsertarCantidadLabel"></h5>
-                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                                    <button id="btnClosemodalInsertarCantidad" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span style="background-color:black;" aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div style="background-color:white;" class="modal-body" id="divModal">
@@ -380,7 +380,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                        <button onclick="AñadirArticulo()"  type="button" class="btn btn-success" data-dismiss="modal"><?php echo lang('Translate.aceptar'); ?></button>
+                                        <button onclick="AñadirArticulo()"  type="button" class="btn btn-primary" data-dismiss="modal"><?php echo lang('Translate.aceptar'); ?></button>
                                         </div>
                                     </div>
                                 </div>
@@ -403,7 +403,7 @@
                                         placeholder="Introduce comentario"></textarea>
                                     </div>
                                     <div class="row">
-                                        <button type="Button" onclick="GuardarComentario()" id="btnGuardarComentario" class="btn btn-primary mb-2 ml-2" ><?php echo lang('Translate.aceptar'); ?></button>
+                                        <button type="Button" onclick="GuardarComentario()" id="btnGuardarComentario" class="btn btn-primary mt-2 mb-2 ml-2" ><?php echo lang('Translate.aceptar'); ?></button>
                                     </div>                                    
                                 </div>
                             </div>
@@ -551,6 +551,9 @@ $('#archivo').on('change', function(e)
     var fileName = e.target.files[0].name;
     //replace the "Choose a file" label
     $(this).next('.custom-file-label').html(fileName);
+    if($("#titulo").val()==""){
+        $("#titulo").val(fileName);
+    }
 });
 
 function GuardarDocumento(input)
@@ -602,7 +605,7 @@ function EliminarDocumento(id)
             id:id,
             idCliente:idCliente,
         });
-        console.log(parametros);
+        // console.log(parametros);
         $.ajax({
             data: {
                 'data': parametros
@@ -616,7 +619,7 @@ function EliminarDocumento(id)
             },
             success: function(response) {
                 //Cargamos los articulos en la tabla
-                console.log(response);
+                // console.log(response);
                 var DocumentosCliente = response[0];
                 CargarTablaDocumentos(DocumentosCliente);
             }
@@ -779,7 +782,7 @@ function AñadirArticulo(boton)
         },
         success: function(response) {
                 //Cargamos los articulos en la tabla
-                console.log(response);
+                // console.log(response);
                 var ArticulosCliente = response[0];
                 var ArticulosDisponibles = response[1];
                 CargarTablaArticulosCliente(ArticulosCliente);
@@ -799,7 +802,7 @@ function GuardarComentario()
         idCliente:idCliente,
         comentario:comentario
     });
-    console.log(parametros);
+    // console.log(parametros);
     $.ajax({
         data: {
             'data': parametros
@@ -813,7 +816,7 @@ function GuardarComentario()
         },
         success: function(response) {
                 //Cargamos los articulos en la tabla
-                console.log(response);
+                // console.log(response);
                 var ComentariosCliente = response[0];
                 CargarTablaComentarios(ComentariosCliente);
             }
@@ -825,7 +828,7 @@ function GuardarComentario()
 function QuitarArticulo(id)
 {
     if (confirm('<?php echo lang('Translate.eliminarSeguro'); ?>') == true) {
-        console.log(id);
+        // console.log(id);
         var parametros = JSON.stringify({
                 id:id,
                 idCliente:idCliente,
@@ -840,7 +843,7 @@ function QuitarArticulo(id)
             type: 'post',
             success: function(response) {
                 //Cargamos los articulos en la tabla
-                console.log(response);
+                // console.log(response);
                 var ArticulosCliente = response[0];
                 var ArticulosDisponibles = response[1];
                 CargarTablaArticulosCliente(ArticulosCliente);
@@ -858,7 +861,7 @@ function EliminarComentario(id)
             id:id,
             idCliente:idCliente,
         });
-        console.log(parametros);
+        // console.log(parametros);
         $.ajax({
             data: {
                 'data': parametros
