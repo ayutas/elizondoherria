@@ -240,6 +240,11 @@ class Clientes extends BaseController
 		$seccion =session()->get('seccion');
 		
 		$model = new ClienteModel();
+		$datos=json_decode($model->existeDniActivoSeccion($dni,$seccion));
+		if(isset($datos[0])){
+			return json_encode([false,lang('Translate.existeDni')]);
+		}
+
 		$newData = [
 			'NOMBRE' => $nombre,
 			'APELLIDOS' => $apellidos,
@@ -262,7 +267,7 @@ class Clientes extends BaseController
 		} else{
 			$id = $model->insert($newData);
 		}
-		return json_encode(['id' => $id]);
+		return json_encode([true,$id]);
 
 	}
 

@@ -89,6 +89,24 @@ class ClienteModel extends Model
 		$query = $db->query($sql);
 		
 		return $query->getResult();
-    } 
+    }
+
+    public function existeDniActivoSeccion($dni,$seccion)
+    {
+        $db = \Config\Database::connect();
+        
+        $sql = "SELECT  *
+                FROM $this->table TC
+                WHERE ISNULL(TC.DELETED_AT) 
+                AND TC.DNI='$dni' 
+                AND TC.SECCION_ID=$seccion";
+
+		$query = $db->query($sql);
+		
+		$results = $query->getResult();
+		
+        return json_encode($results);
+    }
+        
 }
 
