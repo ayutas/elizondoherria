@@ -590,9 +590,11 @@ function GuardarDocumento(input)
             type: 'post',
             success: function(response) {
                 //Cargamos los documentos en la tabla
-                console.log(response);
-                var DocumentosCliente = response[0];
-                CargarTablaDocumentos(ComentariosCliente);
+                // console.log(JSON.parse(response));
+                //HAGO EL JSON.parse porque al hacer la llamada tipo text en vez de json para poder grabar el archivo, la respuesta viene como texto, 
+                //asi que lo convierto en JSON para poder cargar el dataTable
+                var DocumentosCliente = JSON.parse(response)[0];
+                CargarTablaDocumentos(DocumentosCliente);
             }
         
     });
