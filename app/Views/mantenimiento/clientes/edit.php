@@ -168,7 +168,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="cuenta"><?php echo lang('Translate.cuenta'); ?></label>
                                     <input class="form-control py-2" id="cuenta" name="cuenta" type="text"
-                                        placeholder="ES0011112222333344445555" value="<?php if(isset($data[0]))
+                                        placeholder="ES00 1111 2222 3333 4444 5555" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Cuenta;
                                         }  
@@ -1012,6 +1012,106 @@ function getnumIBAN(letra) {
 
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+document.getElementById("cuenta").addEventListener("keypress",ctaPress);
+document.getElementById("cuenta").addEventListener("keyup",ctaUp);
+document.getElementById("cuenta").addEventListener("paste",paste);
+ 
+/**
+ * Evento que se ejecuta cuando se pulsa una tecla
+ */
+function ctaPress(e)
+{
+    var a=e;
+ 
+    var valor=e.target.value;
+    var longitud=valor.length;
+    if(valor.length>=29) {
+        e.preventDefault();
+    }
+ 
+    // verificamos que sea introduzcan dos letras al inicio y numeros a continuacion
+    var patronA=new RegExp(/^([a-zA-Z])$/);
+    var patron1=new RegExp(/^([0-9])$/);
+    if((longitud<2 && patronA.test(e.key)===false) || (longitud>=2 && patron1.test(e.key)===false))
+    {
+        e.preventDefault();
+    }
+ 
+    // una vez se haya validado el valor, lo redibujamos correctamente
+    setTimeout(() => {
+        a.target.value=redibujar(a.target.value);
+    });
+}
+ 
+/**
+ * Evento que se ejecuta cuando se suelta una tecla
+ * Lo utilizamos para controlar si borra algun digito
+ */
+function ctaUp(e)
+{
+    var tecla=e.which || e.keyCode;
+    // 8 - Backspace
+    // 46 - Delete
+    if(tecla==8 || tecla==46)
+    {
+        e.target.value=redibujar(e.target.value);
+    }
+}
+ 
+/**
+ * Función para redibujar el numero de cuenta
+ * Se utiliza para cuando de borra o copia un numero de cuenta
+ *
+ * @param string valor
+ */
+function redibujar(valor)
+{
+    // eliminamos los espacios de la cadena
+    valor=valor.replace(/\s/g, '').toUpperCase();
+ 
+    // dibujamos nuevamente la cadena con los espacios se separacion
+    var result="";
+    var longitud=0;
+    for(var i=0;i<valor.length;i++)
+    {
+ 
+        // añadimos los espacios de separacion
+        if(longitud==4 || longitud==9 || longitud==14 || longitud==19 || longitud==24)
+        {
+            result+=" ";
+        }
+        result+=valor[i];
+        longitud=result.length;
+    }
+    return result;
+}
+ 
+/**
+ * Funcion que se ejecuta cuando se intente pegar un código
+ * NOTA: Solo funciona si el campo esta vacio
+ */
+function paste(e)
+{
+    var a=e;
+ 
+    // obtenemos el valor pegado desde la API de clipboard
+    var clipboardData = e.clipboardData || window.clipboardData;
+    var pastedData = clipboardData.getData('Text');
+ 
+    var patron=new RegExp(/^([a-zA-Z]{2})([0-9]{1,22})?$/);
+    if(a.target.value!="" || patron.test(pastedData)===false)
+    {
+        e.stopPropagation();
+        e.preventDefault();
+        return;
+    }
+ 
+    // Una vez pegado se ejecuta esta funcion
+    window.setTimeout(() => {
+        a.target.value=redibujar(a.target.value);
+    });
 }
 
 </script>
