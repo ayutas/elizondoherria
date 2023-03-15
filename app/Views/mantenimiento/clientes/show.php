@@ -25,7 +25,7 @@ helper('html');
                     </form>
 
                     <?php
-                    dataTable(lang('Translate.clientes'), $columnsclientes, $dataclientes, 'Clientes', '4,5', 'text-center', "0", 4, false, 0, 'tablaClientes');
+                    dataTable(lang('Translate.clientes'), $columnsclientes, $dataclientes, 'Clientes', '5,6', 'text-center', "0", 4, false, 0, 'tablaClientes');
                     ?>
                 </div>
             </div>

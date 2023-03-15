@@ -163,6 +163,24 @@
                             </div>
                         </div>
                         <div class="form-row">
+                            <div class="col-md-4">
+                                <!-- Campo zona -->
+                                <div class="form-group">
+                                    <label class="medium mb-1" for="zona"><?php echo lang('Translate.zona'); ?></label>
+                                    <select class="form-control py-2" id="zona" name="zona">
+                                        <option value="0">-</option>
+                                        <?php if (isset($zonas)) {
+                                            foreach ($zonas as $zona) { ?>
+                                                <option class="" value="<?php echo $zona->ID; ?>"
+                                                <?php if(isset($data[0])){ if ($zona->ID==$data[0]->Zona){?> selected <?php }};?>                                                    
+                                                >
+                                                <?php echo $zona->DESCRIPCION; ?></option><?php
+                                                }
+                                            }
+                                        ?>
+                                    </select>                                          
+                                </div>
+                            </div>                            
                             <div class="col-md-2">
                                 <!-- Campo Forma Pago -->
                                 <div class="form-group">
@@ -181,7 +199,7 @@
                                     </select>                                          
                                 </div>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-6">
                                 <!-- Campo Cuenta -->
                                 <div class="form-group">
                                     <label class="medium mb-1" for="cuenta"><?php echo lang('Translate.cuenta'); ?></label>
@@ -708,6 +726,7 @@ function GuardarCliente()
     var contacto= $('#contacto').val();
     var telefono= $('#telefono').val();
     var email= $('#email').val();
+    var zona= $('#zona').val();
     var formaPago= $('#formaPago').val();
     var cuenta= $('#cuenta').val();
     //SI LA FORMA DE PAGO ES 1 (RECIBO), COMPROBAMOS IBAN
@@ -731,6 +750,7 @@ function GuardarCliente()
         contacto:contacto,
         telefono:telefono,
         email:email,
+        zona:zona,
         formaPago:formaPago,
         cuenta:cuenta,
         notas:notas

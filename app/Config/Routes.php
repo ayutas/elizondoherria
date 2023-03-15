@@ -73,6 +73,11 @@ $routes->get('/usuarios/show', 'Usuarios::show',['filter' => 'auth']);
 $routes->get('/usuarios/edit', 'Usuarios::edit',['filter' => 'auth']);
 $routes->get('/usuarios/new', 'Usuarios::new',['filter' => 'auth']);
 
+//Mto Zonas
+$routes->get('/zonas', 'Zonas::show',['filter' => 'auth']);
+$routes->get('/zonas/show', 'Zonas::show',['filter' => 'auth']);
+$routes->get('/zonas/edit', 'Zonas::edit',['filter' => 'auth']);
+$routes->get('/zonas/new', 'Zonas::new',['filter' => 'auth']);
 
 /**
  * --------------------------------------------------------------------

@@ -91,5 +91,9 @@ return [
     "RECIBO"      => "RECIBO",
     "TRANSFERENCIA"      => "TRANSFERENCIA",
     "CONTADO"      => "CONTADO",
+    "zonas"      => "Zonas",
+    "newzona"      => "Nueva Zona",
+    "zona"      => "Zona",
+    "formaPago"      => "Forma pago",
 ];
 ?>

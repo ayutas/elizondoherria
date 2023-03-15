@@ -9,6 +9,7 @@ use App\Models\FormaPagoModel;
 use App\Models\ReciboModel;
 use App\Models\ClienteDocumentoModel;
 use App\Models\ParametrosModel;
+use App\Models\ZonaModel;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -36,8 +37,9 @@ class Clientes extends BaseController
 		$column2= array ('Field'=>lang('Translate.nombre'));
         $column3= array ('Field'=>lang('Translate.apellidos'));
         $column4= array ('Field'=>lang('Translate.dni'));
+		$column5= array ('Field'=>lang('Translate.zona'));
 
-        $columnasDatatable = array($column1,$column2,$column3,$column4);
+        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5);
 		$data['columnsclientes'] = $columnasDatatable;
 		$seccion=session()->get('seccion');
 		$data['dataclientes'] = json_decode($ClienteModel->getAll($seccion));
@@ -160,6 +162,9 @@ class Clientes extends BaseController
 			$item->DESCRIPCION=$descripcion;
 		}
 
+		$zonaModel = new ZonaModel();
+		$data['zonas']=json_decode($zonaModel->getData($seccion));
+
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		$data['slug'] = $this->redireccion;
 		$data['migapan']=lang('Translate.'.$this->redireccion);
@@ -225,6 +230,9 @@ class Clientes extends BaseController
 			$item->DESCRIPCION=$descripcion;
 		}
 
+		$zonaModel = new ZonaModel();
+		$data['zonas']=json_decode($zonaModel->getAll($seccion));
+
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';		
 		$data['slug'] = $this->redireccion;
 		$data['migapan']=lang('Translate.'.$this->redireccion);
@@ -246,7 +254,8 @@ class Clientes extends BaseController
 		$contacto = $response->contacto;
 		$telefono = $response->telefono;
 		$email = $response->email;
-		$formaPago = $response->formaPago;		
+		$zona = $response->zona;
+		$formaPago = $response->formaPago;
 		$cuenta = $response->cuenta;
 		$notas = $response->notas;
 		$seccion =session()->get('seccion');
@@ -270,8 +279,8 @@ class Clientes extends BaseController
 			'FORMAPAGO_ID' => $formaPago,
 			'CUENTA' => $cuenta,
 			'NOTAS' => $notas,
-			'SECCION_ID' => $seccion
-
+			'SECCION_ID' => $seccion,
+			'ZONA_ID' => $zona
 		];
 		if($id!=0){
 			$newData['ID'] = $id;
