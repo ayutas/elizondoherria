@@ -16,9 +16,11 @@ class ClienteModel extends Model
         'CONTACTO',
         'TELEFONO',
         'EMAIL',
+        'FORMAPAGO_ID',
         'CUENTA',
         'NOTAS',
         'SECCION_ID',
+        'ZONA_ID',
         'DELETED_AT'
     ];
 
@@ -39,8 +41,11 @@ class ClienteModel extends Model
         $sql = "SELECT  TC.ID As 'ID',
                         TC.NOMBRE As '".lang('Translate.nombre')."',
                         TC.APELLIDOS As '".lang('Translate.apellidos')."',
-                        TC.DNI AS ".lang('Translate.dni')."
+                        TC.DNI AS ".lang('Translate.dni').",
+                        IFNULL(TZ.DESCRIPCION,'') AS ".lang('Translate.zona')."
                 FROM $this->table TC
+                LEFT JOIN tbl_zonas TZ
+                ON TC.ZONA_ID=TZ.ID
                 WHERE ISNULL(TC.DELETED_AT) AND TC.SECCION_ID=$seccion";   
 
         $query = $db->query($sql);
@@ -63,8 +68,10 @@ class ClienteModel extends Model
                         TC.CONTACTO AS 'Contacto',
                         TC.TELEFONO AS 'Telefono',
                         TC.EMAIL AS 'Email',
+                        TC.FORMAPAGO_ID AS 'FormaPago',
                         TC.CUENTA AS 'Cuenta',
-                        TC.NOTAS AS 'Notas'
+                        TC.NOTAS AS 'Notas',
+                        TC.ZONA_ID AS 'Zona'
                 FROM $this->table TC
                 WHERE ISNULL(TC.DELETED_AT)";   
 
@@ -91,7 +98,7 @@ class ClienteModel extends Model
 		return $query->getResult();
     }
 
-    public function existeDniActivoSeccion($dni,$seccion)
+    public function existeDniActivoSeccion($dni,$seccion,$id)
     {
         $db = \Config\Database::connect();
         
@@ -100,7 +107,9 @@ class ClienteModel extends Model
                 WHERE ISNULL(TC.DELETED_AT) 
                 AND TC.DNI='$dni' 
                 AND TC.SECCION_ID=$seccion";
-
+        if($id!=0) {
+            $sql.=" AND TC.ID<>$id";
+        }
 		$query = $db->query($sql);
 		
 		$results = $query->getResult();

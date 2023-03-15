@@ -54,7 +54,7 @@ class CategoriaModel extends Model
 		$results = $query->getResult();
 		
         return json_encode($results);
-    }    
+    }
        
     public function deleteById($id)
     {

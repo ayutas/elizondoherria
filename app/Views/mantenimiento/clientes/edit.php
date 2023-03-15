@@ -162,12 +162,48 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">                            
-                            <div class="col-md-12">
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                <!-- Campo zona -->
+                                <div class="form-group">
+                                    <label class="medium mb-1" for="zona"><?php echo lang('Translate.zona'); ?></label>
+                                    <select class="form-control py-2" id="zona" name="zona">
+                                        <option value="0">-</option>
+                                        <?php if (isset($zonas)) {
+                                            foreach ($zonas as $zona) { ?>
+                                                <option class="" value="<?php echo $zona->ID; ?>"
+                                                <?php if(isset($data[0])){ if ($zona->ID==$data[0]->Zona){?> selected <?php }};?>                                                    
+                                                >
+                                                <?php echo $zona->DESCRIPCION; ?></option><?php
+                                                }
+                                            }
+                                        ?>
+                                    </select>                                          
+                                </div>
+                            </div>                            
+                            <div class="col-md-2">
+                                <!-- Campo Forma Pago -->
+                                <div class="form-group">
+                                    <label class="medium mb-1" for="formaPago"><?php echo lang('Translate.formaPago'); ?></label>
+                                    <select class="form-control py-2" id="formaPago" name="formaPago">
+                                        <option value="0">-</option>
+                                        <?php if (isset($formasPago)) {
+                                            foreach ($formasPago as $formaPago) { ?>
+                                                <option class="" value="<?php echo $formaPago->ID; ?>"
+                                                <?php if(isset($data[0])){ if ($formaPago->ID==$data[0]->FormaPago){?> selected <?php }};?>                                                    
+                                                >
+                                                <?php echo $formaPago->DESCRIPCION; ?></option><?php
+                                                }
+                                            }
+                                        ?>
+                                    </select>                                          
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <!-- Campo Cuenta -->
                                 <div class="form-group">
                                     <label class="medium mb-1" for="cuenta"><?php echo lang('Translate.cuenta'); ?></label>
-                                    <input class="form-control py-2" id="cuenta" name="cuenta" type="text"
+                                    <input class="form-control py-2" id="cuenta" name="cuenta" type="text" disabled
                                         placeholder="ES00 1111 2222 3333 4444 5555" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Cuenta;
@@ -476,7 +512,18 @@ $( document ).ready(function() {
         var data=<?php echo json_encode($data[0]); ?>;
         idCliente=data.ID;
     <?php }?>
+    if ($("#formaPago").val()==1){
+        $("#cuenta").attr('disabled', false);
+    }
 
+});
+
+$("#formaPago").on('change', async function() {
+    if ($("#formaPago").val()==1){
+        $("#cuenta").attr('disabled', false);
+    } else {
+        $("#cuenta").attr('disabled', 'disabled');
+    }
 });
 
 function AsignarArticulo(input)
@@ -679,12 +726,16 @@ function GuardarCliente()
     var contacto= $('#contacto').val();
     var telefono= $('#telefono').val();
     var email= $('#email').val();
+    var zona= $('#zona').val();
+    var formaPago= $('#formaPago').val();
     var cuenta= $('#cuenta').val();
-    
-    if (!fn_ValidateIBAN(cuenta))
-    {
-        alert('<?php echo lang('Translate.ibanIncorrecto'); ?>');
-        return false;
+    //SI LA FORMA DE PAGO ES 1 (RECIBO), COMPROBAMOS IBAN
+    if(formaPago==1){
+        if (!fn_ValidateIBAN(cuenta))
+        {
+            alert('<?php echo lang('Translate.ibanIncorrecto'); ?>');
+            return false;
+        }
     }
     var notas= $('#notas').val();
     // console.log('idCliente: '+idCliente);
@@ -699,6 +750,8 @@ function GuardarCliente()
         contacto:contacto,
         telefono:telefono,
         email:email,
+        zona:zona,
+        formaPago:formaPago,
         cuenta:cuenta,
         notas:notas
     });
