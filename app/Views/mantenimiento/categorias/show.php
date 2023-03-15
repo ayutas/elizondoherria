@@ -25,7 +25,7 @@
                         </form>
 
                         <?php // Miga de pan   
-                            dataTable(lang('Translate.newcategoria'),$columns,$data,'categorias','3,4','text-center',"0",4);         
+                            dataTable(lang('Translate.categorias'),$columns,$data,'categorias','3,4','text-center',"0",4);         
                         ?>    
                     </div>
                 </div>
