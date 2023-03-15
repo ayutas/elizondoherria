@@ -16,6 +16,7 @@ class ClienteModel extends Model
         'CONTACTO',
         'TELEFONO',
         'EMAIL',
+        'FORMAPAGO_ID',
         'CUENTA',
         'NOTAS',
         'SECCION_ID',
@@ -63,6 +64,7 @@ class ClienteModel extends Model
                         TC.CONTACTO AS 'Contacto',
                         TC.TELEFONO AS 'Telefono',
                         TC.EMAIL AS 'Email',
+                        TC.FORMAPAGO_ID AS 'FormaPago',
                         TC.CUENTA AS 'Cuenta',
                         TC.NOTAS AS 'Notas'
                 FROM $this->table TC
@@ -91,7 +93,7 @@ class ClienteModel extends Model
 		return $query->getResult();
     }
 
-    public function existeDniActivoSeccion($dni,$seccion)
+    public function existeDniActivoSeccion($dni,$seccion,$id)
     {
         $db = \Config\Database::connect();
         
@@ -100,7 +102,9 @@ class ClienteModel extends Model
                 WHERE ISNULL(TC.DELETED_AT) 
                 AND TC.DNI='$dni' 
                 AND TC.SECCION_ID=$seccion";
-
+        if($id!=0) {
+            $sql.=" AND TC.ID<>$id";
+        }
 		$query = $db->query($sql);
 		
 		$results = $query->getResult();

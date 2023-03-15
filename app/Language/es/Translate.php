@@ -88,5 +88,8 @@ return [
     "cerrarSesion"      => "Cerrar Sesión",
     "INICIO"      => "INICIO",
     "existeDni"      => "Imposible guardar, ya existe un cliente con ese DNI",
+    "RECIBO"      => "RECIBO",
+    "TRANSFERENCIA"      => "TRANSFERENCIA",
+    "CONTADO"      => "CONTADO",
 ];
 ?>

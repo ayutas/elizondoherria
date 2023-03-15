@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\ArticuloClienteModel;
 use App\Models\ClienteComentarioModel;
 use App\Models\ClienteModel;
-use App\Models\BancoModel;
+use App\Models\FormaPagoModel;
 use App\Models\ReciboModel;
 use App\Models\ClienteDocumentoModel;
 use App\Models\ParametrosModel;
@@ -151,8 +151,14 @@ class Clientes extends BaseController
 		}
 		// return var_dump($data['dataRecibos'] );
 
-		// $BancoModel = new BancoModel();
-		// $data['bancos']=json_decode($BancoModel->getAll());
+		$formaPagoModel = new FormaPagoModel();
+		$data['formasPago']=json_decode($formaPagoModel->getAll($seccion));
+		//TRADUCIMOS LAS FORMAS DE PAGO
+		foreach ($data['formasPago'] as $item) {
+			$valor='Translate.'.$item->DESCRIPCION;
+			$descripcion=lang($valor);
+			$item->DESCRIPCION=$descripcion;
+		}
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		$data['slug'] = $this->redireccion;
@@ -175,11 +181,7 @@ class Clientes extends BaseController
 		$uri = service('uri');
 
 		$ClienteModel = new ClienteModel();
-		
-		// $BancoModel = new BancoModel();
-		// $data['bancos']=json_decode($BancoModel->getAll());
 
-		
 		$column1= array ('Field'=>'');
 		$column2= array ('Field'=>'ID');
 		$column3= array ('Field'=>lang('Translate.descripcion'));
@@ -214,6 +216,15 @@ class Clientes extends BaseController
 		$data['columnsDocumentos'] = $columnasDatatableDocumentos;
 		$data['dataDocumentos'] =[];
 
+		$formaPagoModel = new FormaPagoModel();
+		$data['formasPago']=json_decode($formaPagoModel->getAll($seccion));
+		//TRADUCIMOS LAS FORMAS DE PAGO
+		foreach ($data['formasPago'] as $item) {
+			$valor='Translate.'.$item->DESCRIPCION;
+			$descripcion=lang($valor);
+			$item->DESCRIPCION=$descripcion;
+		}
+
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';		
 		$data['slug'] = $this->redireccion;
 		$data['migapan']=lang('Translate.'.$this->redireccion);
@@ -234,13 +245,14 @@ class Clientes extends BaseController
 		$cpostal = $response->cpostal;
 		$contacto = $response->contacto;
 		$telefono = $response->telefono;
-		$email = $response->email;		
+		$email = $response->email;
+		$formaPago = $response->formaPago;		
 		$cuenta = $response->cuenta;
 		$notas = $response->notas;
 		$seccion =session()->get('seccion');
 		
 		$model = new ClienteModel();
-		$datos=json_decode($model->existeDniActivoSeccion($dni,$seccion));
+		$datos=json_decode($model->existeDniActivoSeccion($dni,$seccion,$id));
 		if(isset($datos[0])){
 			return json_encode([false,lang('Translate.existeDni')]);
 		}
@@ -255,13 +267,13 @@ class Clientes extends BaseController
 			'CONTACTO' => $contacto,
 			'TELEFONO' => $telefono,
 			'EMAIL' => $email,
+			'FORMAPAGO_ID' => $formaPago,
 			'CUENTA' => $cuenta,
 			'NOTAS' => $notas,
 			'SECCION_ID' => $seccion
 
 		];
 		if($id!=0){
-			
 			$newData['ID'] = $id;
 			$model->save($newData);
 		} else{
