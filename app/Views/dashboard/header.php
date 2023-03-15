@@ -70,33 +70,36 @@
                 <svg class="c-sidebar-nav-icon">
                     <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-clipboard"></use>
                 </svg> <?php echo lang('Translate.recibos');?></a>
-            </li>
-            <?php if(session()->get('admin')==1){?>
+            </li>            
                 <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/consultas">
                     <svg class="c-sidebar-nav-icon">
                         <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-search"></use>
                     </svg> Consultas</a>
                 </li>             -->
-                <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">                
-                    <svg class="c-sidebar-nav-icon">                        
-                        <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-trello"></use>
-                    </svg> <?php echo lang('Translate.mantenimiento');?></a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/clientes">
-                        <?php echo lang('Translate.clientes');?></a>
-                        </li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/articulos">
-                        <?php echo lang('Translate.articulos');?></a>
-                        </li> 
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/categorias">
-                        <?php echo lang('Translate.categorias');?></a>
-                        </li>
+            <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">                
+                <svg class="c-sidebar-nav-icon">                        
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-trello"></use>
+                </svg> <?php echo lang('Translate.mantenimiento');?></a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/clientes">
+                    <?php echo lang('Translate.clientes');?></a>
+                    </li>
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/articulos">
+                    <?php echo lang('Translate.articulos');?></a>
+                    </li> 
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/categorias">
+                    <?php echo lang('Translate.categorias');?></a>
+                    </li>
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/zonas">
+                    <?php echo lang('Translate.zonas');?></a>
+                    </li> 
+                    <?php if(session()->get('admin')==1){?>
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/usuarios">
                         <?php echo lang('Translate.usuarios');?></a>
                         </li> 
-                    </ul>
-                </li>
-            <?php }?>
+                    <?php } ?>                        
+                </ul>
+            </li>
             
             <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
                 <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
@@ -209,7 +212,7 @@
 
     $(document).ready(function() { 
 
-        var idioma=<?php if (isset($idioma)) {echo json_encode($idioma);} else { echo json_encode('es'); };  ?>;
+        var idioma=<?php session()->get('admin'); ?>;
         console.log(idioma);
         $("#idioma").val(idioma).change();
         $("#divIdioma").show();
