@@ -184,7 +184,7 @@
         <ul class="c-header-nav">
             <div id="divIdioma" class="c-sidebar-nav-item" style="display:none;">
                 <select class="form-select" aria-label="Default select example" id="idioma" name="idioma">
-                    <option value="eus">EUS</option>
+                    <option value="eu">EUS</option>
                     <option value="es">CAS</option>
                 </select>
             </div>
@@ -265,7 +265,7 @@
                 type: 'post',
 
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
                     location.reload();
                 }
             });
