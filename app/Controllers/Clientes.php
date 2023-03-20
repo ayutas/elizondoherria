@@ -231,7 +231,7 @@ class Clientes extends BaseController
 		}
 
 		$zonaModel = new ZonaModel();
-		$data['zonas']=json_decode($zonaModel->getAll($seccion));
+		$data['zonas']=json_decode($zonaModel->getData($seccion));
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';		
 		$data['slug'] = $this->redireccion;
@@ -255,6 +255,7 @@ class Clientes extends BaseController
 		$telefono = $response->telefono;
 		$email = $response->email;
 		$zona = $response->zona;
+		$numero = $response->numero;
 		$formaPago = $response->formaPago;
 		$cuenta = $response->cuenta;
 		$notas = $response->notas;
@@ -280,7 +281,8 @@ class Clientes extends BaseController
 			'CUENTA' => $cuenta,
 			'NOTAS' => $notas,
 			'SECCION_ID' => $seccion,
-			'ZONA_ID' => $zona
+			'ZONA_ID' => $zona,
+			'NUMERO' => $numero
 		];
 		if($id!=0){
 			$newData['ID'] = $id;

@@ -21,6 +21,7 @@ class ClienteModel extends Model
         'NOTAS',
         'SECCION_ID',
         'ZONA_ID',
+        'NUMERO',
         'DELETED_AT'
     ];
 
@@ -71,7 +72,8 @@ class ClienteModel extends Model
                         TC.FORMAPAGO_ID AS 'FormaPago',
                         TC.CUENTA AS 'Cuenta',
                         TC.NOTAS AS 'Notas',
-                        TC.ZONA_ID AS 'Zona'
+                        TC.ZONA_ID AS 'Zona',
+                        TC.NUMERO AS 'Numero'
                 FROM $this->table TC
                 WHERE ISNULL(TC.DELETED_AT)";   
 

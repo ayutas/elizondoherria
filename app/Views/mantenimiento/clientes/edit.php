@@ -163,7 +163,22 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-4">
+                            <div class="col-md-2">
+                                <!-- Campo numero -->
+                                <div class="form-group">
+                                    <label class="medium mb-1" for="numero"><?php echo lang('Translate.numero'); ?></label>
+                                    <input class="form-control py-2" id="numero" name="numero" type="text"
+                                        placeholder="<?php echo lang('Translate.introduzcaNumero'); ?>" value="<?php if(isset($data[0]))
+                                        {
+                                            echo $data[0]->Numero;
+                                        }  
+                                        else{
+                                            echo set_value('numero');
+                                        }
+                                        ?>" />
+                                </div>
+                            </div>                              
+                            <div class="col-md-2">
                                 <!-- Campo zona -->
                                 <div class="form-group">
                                     <label class="medium mb-1" for="zona"><?php echo lang('Translate.zona'); ?></label>
@@ -726,6 +741,7 @@ function GuardarCliente()
     var contacto= $('#contacto').val();
     var telefono= $('#telefono').val();
     var email= $('#email').val();
+    var numero= $('#numero').val();
     var zona= $('#zona').val();
     var formaPago= $('#formaPago').val();
     var cuenta= $('#cuenta').val();
@@ -750,6 +766,7 @@ function GuardarCliente()
         contacto:contacto,
         telefono:telefono,
         email:email,
+        numero:numero,
         zona:zona,
         formaPago:formaPago,
         cuenta:cuenta,
