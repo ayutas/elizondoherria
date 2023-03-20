@@ -96,7 +96,10 @@
                     <?php if(session()->get('admin')==1){?>
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/usuarios">
                         <?php echo lang('Translate.usuarios');?></a>
-                        </li> 
+                        </li>
+                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/secciones">
+                        <?php echo lang('Translate.secciones');?></a>
+                        </li>
                     <?php } ?>                        
                 </ul>
             </li>
@@ -212,8 +215,8 @@
 
     $(document).ready(function() { 
 
-        var idioma=<?php session()->get('admin'); ?>;
-        console.log(idioma);
+        var idioma=<?php if (isset($idioma)) {echo json_encode($idioma);} else { echo json_encode('es'); };  ?>;
+        // console.log(idioma);
         $("#idioma").val(idioma).change();
         $("#divIdioma").show();
 

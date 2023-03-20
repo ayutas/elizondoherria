@@ -39,7 +39,7 @@ return [
     "comentarios"      => "Comentarios",
     "documentos"      => "Documentos",
     "recibos"      => "Recibos",
-    "newcomentario"      => "Nuevo comentario",
+    "newcomentario"      => "Nuevo Comentario",
     "newdocumento"      => "Nuevo Documento",
     "asignarArticulo"      => "Asignar articulo",
     "quitar"      => "Quitar",
@@ -95,5 +95,10 @@ return [
     "newzona"      => "Nueva Zona",
     "zona"      => "Zona",
     "formaPago"      => "Forma pago",
+    "secciones"      => "Secciones",
+    "newseccion"      => "Nueva Sección",
+    "seccion"      => "Sección",
+    "bic"      => "BIC",
+    "identificador"      => "Identificador",
 ];
 ?>
