@@ -1,7 +1,7 @@
 
         <footer class="c-footer">
-        <div><a href=mailto:ayutas@hotmail.com">Antton Mujika</a> © 2022 </div>
-        <div class="mfs-auto">Desarrollado por&nbsp;<a href="mailto:ayutas@hotmail.com">Ayutas</a></div>
+        <div><a href="https://www.linkedin.com/in/antxon-mujika-tomasena-10507b57" target="_blank">Antton Mujika</a> © 2022 </div>
+        <div class="mfs-auto"><a href="mailto:ayutas@hotmail.com">Ayutas</a></div>
         </footer>     
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
