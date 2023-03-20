@@ -84,7 +84,27 @@
                                             echo set_value('contrasena');
                                         }
                                         ?>" />
-                                </div>                            
+                                </div>
+                                <!-- Checks secciones -->
+                                <div class="form-group">
+                                        <label class="medium mb-1" for="secciones"><?php echo lang('Translate.secciones'); ?>:</label>
+                                        <?php if (isset($secciones)) {
+                                            foreach ($secciones as $seccion) { ?>
+                                                <label class="small mb-1" for="seccion"><?php echo $seccion->Descripción; ?></label>
+                                                <input class="" type="checkbox" id="seccion<?php echo $seccion->ID; ?>" value="<?php echo $seccion->ID ?>"
+                                                <?php if (isset($seccionesUsuario)) {
+                                                        foreach ($seccionesUsuario as $seccionUsuario) {                                                
+                                                        if ($seccion->ID == $seccionUsuario->SECCION_ID) {
+                                                            echo 'checked';
+                                                        } 
+                                                    }
+                                                } ?>
+                                                name="seccion[]" />
+                                            <?php
+                                            }
+                                        }
+                                        ?>
+                                </div>
                             </div>
                         </div>
 
