@@ -90,7 +90,7 @@ $(document).ready(function() {
                 .popover({
                     placement:'bottom',
                     // title: '¡¡ Atención !!',
-                    content: "Bloq. Mayus. activado"
+                    content: "<?php echo lang('Translate.mayusculasActivo'); ?>"
                 });                
                 $("#password").popover('show');            
         }else{

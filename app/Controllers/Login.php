@@ -75,7 +75,7 @@ class Login extends BaseController
 			'ap2' => $user['AP2'],
 			'isLoggedIn' => true,
 			'seccion' =>$seccionId,
-			'idioma' => 'es'
+			'idioma' => locale_get_default()
 		];
 
 		session()->set($data);

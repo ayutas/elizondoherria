@@ -82,7 +82,7 @@ return [
     "identificador"      => "Identificador",
     "examinar"      => "Examinar",
     "iniciarSesion"      => "Saioa hasi",
-    "mayusculasActivo"      => "Bloq. Mayus. activado",
+    "mayusculasActivo"      => "Bloq. Mayus. aktibatuta",
     //-----------------------
 
     //Mensajes
