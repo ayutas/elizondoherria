@@ -100,5 +100,18 @@ return [
     "seccion"      => "Sección",
     "bic"      => "BIC",
     "identificador"      => "Identificador",
+    "introduzcaNumero"      => "Introduzca número",
+    "introduzcaApellidos"      => "Introduzca apellidos",
+    "introduzcaDni"      => "Introduzca DNI",
+    "introduzcaDomicilio"      => "Introduzca domicilio",
+    "introduzcaPoblacion"      => "Introduzca población",
+    "introduzcaCPostal"      => "Introduzca código postal",
+    "introduzcaContacto"      => "Introduzca contacto",
+    "introduzcaTelefono"      => "Introduzca teléfono",
+    "introduzcaEmail"      => "Introduzca email",
+    "introduzcaNotas"      => "Introduzca notas",
+    // "introduzcaTelefono"      => "Introduzca número",
+    // "introduzcaTelefono"      => "Introduzca número",
+
 ];
 ?>
