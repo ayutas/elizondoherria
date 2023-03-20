@@ -24,7 +24,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="descripcion"><?php echo lang('Translate.descripcion'); ?></label>
                                     <input class="form-control py-2" id="descripcion" name="descripcion" type="text"
-                                        placeholder="Introduce descripcion" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaDescripcion'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->DESCRIPCION;
                                         }  

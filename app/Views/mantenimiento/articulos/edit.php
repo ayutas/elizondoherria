@@ -24,7 +24,7 @@
                                     <div class="form-group">
                                         <label class="medium mb-1" for="descripcion"><?php echo lang('Translate.descripcion'); ?></label>
                                         <input class="form-control py-2" id="descripcion" name="descripcion" type="text"
-                                            placeholder="Introduce descripción"
+                                            placeholder="<?php echo lang('Translate.introduzcaDescripcion'); ?>"
                                             value="<?php if (isset($data[0])) {
                                                         echo $data[0]->Descripción;
                                                     } else {
@@ -36,7 +36,7 @@
                                     <div class="form-group">
                                         <label class="medium mb-1" for="numero"><?php echo lang('Translate.numero'); ?></label>
                                         <input class="form-control py-2" id="numero" name="numero" type="text"
-                                            placeholder="Introduce número"
+                                            placeholder="<?php echo lang('Translate.introduzcaNumero'); ?>"
                                             value="<?php if (isset($data[0])) {
                                                         echo $data[0]->Número;
                                                     } else {
@@ -48,7 +48,7 @@
                                     <div class="form-group">
                                         <label class="medium mb-1" for="letra"><?php echo lang('Translate.letra'); ?></label>
                                         <input class="form-control py-2" id="letra" name="letra" type="text"
-                                            placeholder="Introduce letra"
+                                            placeholder="<?php echo lang('Translate.introduzcaLetra'); ?>"
                                             value="<?php if (isset($data[0])) {
                                                         echo $data[0]->Letra;
                                                     } else {

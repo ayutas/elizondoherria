@@ -422,7 +422,7 @@
                                                 <div class="form-group">
                                                     <label class="body-form-heavy" for="cantidad"><?php echo lang('Translate.cantidad'); ?></label>
                                                     <input class="form-control body-form-light"  id="cantidad" name="cantidad"
-                                                    type="text" placeholder="Cantidad"
+                                                    type="text" placeholder="<?php echo lang('Translate.cantidad'); ?>"
                                                     />
                                                 </div>
                                             </div>
@@ -451,7 +451,7 @@
                                 <div style="background-color:white;" class="modal-body" id="divModal">
                                     <div class="row">
                                         <textarea name="comentario" id="comentario" rows="4" cols="50"
-                                        placeholder="Introduce comentario"></textarea>
+                                        placeholder="<?php echo lang('Translate.introduzcaComentario'); ?>"></textarea>
                                     </div>
                                     <div class="row">
                                         <button type="Button" onclick="GuardarComentario()" id="btnGuardarComentario" class="btn btn-primary mt-2 mb-2 ml-2" ><?php echo lang('Translate.aceptar'); ?></button>
@@ -474,7 +474,7 @@
                                     <div class="form-group">
                                         <label class="body-form-heavy" for="titulo"><?php echo lang('Translate.tituloDocumento'); ?></label>
                                         <input class="form-control body-form-light"  id="titulo" name="titulo"
-                                        type="text" placeholder="Título"
+                                        type="text" placeholder="<?php echo lang('Translate.introduzcaTitulo'); ?>"
                                         />
                                     </div>
                                     <div class="custom-file mt-2 mb-2" id="div_etiqueta">
@@ -482,7 +482,7 @@
                                             name="archivo" id="archivo"
                                             accept="application/*">
                                         <label class="custom-file-label" id="labelarchivo"
-                                            for="archivo" data-browse="Examinar"><?php echo lang('Translate.seleccionarArchivo'); ?></label>
+                                            for="archivo" data-browse="<?php echo lang('Translate.examinar'); ?>"><?php echo lang('Translate.seleccionarArchivo'); ?></label>
                                     </div>                                    
                                     <div class="row">
                                         <button type="Button" onclick="GuardarDocumento()" id="btnGuardarDocumento" class="btn btn-primary mt-2 mb-2 ml-2" ><?php echo lang('Translate.aceptar'); ?></button>

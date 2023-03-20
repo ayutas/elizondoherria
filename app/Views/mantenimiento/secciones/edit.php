@@ -24,7 +24,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="descripcion"><?php echo lang('Translate.descripcion'); ?></label>
                                     <input class="form-control py-2" id="descripcion" name="descripcion" type="text"
-                                        placeholder="Introduce descripcion" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaDescripcion'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Descripcion;
                                         }  
@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="nombre"><?php echo lang('Translate.nombre'); ?></label>
                                     <input class="form-control py-2" id="nombre" name="nombre" type="text"
-                                        placeholder="Introduce nombre" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaNombre'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Nombre;
                                         }  
@@ -56,7 +56,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="domicilio"><?php echo lang('Translate.domicilio'); ?></label>
                                     <input class="form-control py-2" id="domicilio" name="domicilio" type="text"
-                                        placeholder="Introduce domicilio" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaDomicilio'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Domicilio;
                                         }  
@@ -71,7 +71,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="poblacion"><?php echo lang('Translate.poblacion'); ?></label>
                                     <input class="form-control py-2" id="poblacion" name="poblacion" type="text"
-                                        placeholder="Introduce población" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaPoblacion'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Poblacion;
                                         }  
@@ -86,7 +86,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="cpostal"><?php echo lang('Translate.cpostal'); ?></label>
                                     <input class="form-control py-2" id="cpostal" name="cpostal" type="text"
-                                        placeholder="Introduce código postal" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaCPostal'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->CPostal;
                                         }  
@@ -103,7 +103,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="cuenta"><?php echo lang('Translate.cuenta'); ?></label>
                                     <input class="form-control py-2" id="cuenta" name="cuenta" type="text"
-                                        placeholder="Introduce cuenta" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaCuenta'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Cuenta;
                                         }  
@@ -118,7 +118,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="bic"><?php echo lang('Translate.bic'); ?></label>
                                     <input class="form-control py-2" id="bic" name="bic" type="text"
-                                        placeholder="Introduce población" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaBic'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->BIC;
                                         }  
@@ -133,7 +133,7 @@
                                 <div class="form-group">
                                     <label class="medium mb-1" for="identificador"><?php echo lang('Translate.identificador'); ?></label>
                                     <input class="form-control py-2" id="identificador" name="identificador" type="text"
-                                        placeholder="Introduce código postal" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaIdentificador'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Identificador;
                                         }  

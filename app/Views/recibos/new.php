@@ -30,13 +30,13 @@
                                 </div>
                                 <!-- Campo Referencia -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="referencia"><?php echo lang('Translate.recibos'); ?></label>
-                                    <input class="form-control body-form-light" id="referencia" name="referencia" type="text" placeholder="Referencia" />
+                                    <label class="medium mb-1" for="referencia"><?php echo lang('Translate.referencia'); ?></label>
+                                    <input class="form-control body-form-light" id="referencia" name="referencia" type="text" placeholder="<?php echo lang('Translate.introduzcaReferencia'); ?>" />
                                 </div>                                
                                 <!-- Campo Concepto -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="concepto"><?php echo lang('Translate.recibos'); ?></label>
-                                    <input class="form-control body-form-light" id="concepto" name="concepto" type="text" placeholder="Concepto" />
+                                    <label class="medium mb-1" for="concepto"><?php echo lang('Translate.concepto'); ?></label>
+                                    <input class="form-control body-form-light" id="concepto" name="concepto" type="text" placeholder="<?php echo lang('Translate.introduzcaConcepto'); ?>" />
                                 </div>
                             </div>
                         </div>

@@ -17,7 +17,7 @@
                         </div>
                         <?php endif; ?>
 
-                        <h1 class="text-center" style="color:white;">Iniciar sesión</h1>
+                        <h1 class="text-center" style="color:white;"><?php echo lang('Translate.iniciarSesion'); ?></h1>
                         <br>
                         <form action="<?= base_url()?>/" method="post">
                             <!-- <p class="text-muted">Sign In to your account</p> -->
@@ -30,7 +30,7 @@
                                         </svg>
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" name="email" placeholder="Introduce el email"
+                                <input class="form-control" type="text" name="email" placeholder="<?php echo lang('Translate.introduzcaUsuario'); ?>"
                                     style="color:white;" value="<?= set_value('email') ?>">
                             </div>
                             <div class="input-group mb-4">
@@ -44,13 +44,13 @@
                                     </span>
                                 </div>
                                 <input class="form-control" type="password" id="password" name="password"
-                                    placeholder="Introduce contraseña">
+                                    placeholder="<?php echo lang('Translate.introduzcaContrasena'); ?>">
                             </div>
-                            <div id="divMayus" style="visibility:hidden">Bloq. Mayus. activado</div> <br>
+                            <div id="divMayus" style="visibility:hidden"><?php echo lang('Translate.mayusculasActivo'); ?></div> <br>
 
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <button class="btn btn-primary px-4" type="submit">Iniciar sesión </button>
+                                    <button class="btn btn-primary px-4" type="submit"><?php echo lang('Translate.iniciarSesion'); ?></button>
                                 </div>
                             </div>
                             <?php
