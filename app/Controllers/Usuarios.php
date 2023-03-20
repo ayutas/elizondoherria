@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\UsuarioModel;
+use App\Models\SeccionModel;
+use App\Models\SeccionUsuarioModel;
 
 class Usuarios extends BaseController
 {
@@ -72,7 +74,7 @@ class Usuarios extends BaseController
 			$rules = [
 
 				'nombre' =>  'required|min_length[3]|max_length[100]',
-				'usuario' =>  'required|is_unique[tbl_usuario.USUARIO]|min_length[3]|max_length[100]',
+				'usuario' =>  'required|min_length[3]|max_length[100]',
 				// 'contrasena' =>  'required|min_length[3]|max_length[100]',
 			];
 
@@ -121,6 +123,17 @@ class Usuarios extends BaseController
 				//Guardamos
 				$model->save($newData);
 
+				//SECCIONES USUARIO
+				$seccionUsuarioModel = new SeccionUsuarioModel();
+				$seccionUsuarioModel->where('USUARIO_ID', $id)->delete();
+				foreach ($this->request->getVar('seccion') as $seccion) {
+					$newData = [
+						'USUARIO_ID' => $id,
+						'SECCION_ID' => $seccion,
+					];
+					$seccionUsuarioModel->insert($newData);
+				}				
+
 				// Creamos una session para mostrar el mensaje de registro correcto
 				$session = session();
 				$session->setFlashdata('success',  lang('Translate.actualizado'));
@@ -131,6 +144,13 @@ class Usuarios extends BaseController
 		}
 
 		$data['data'] = json_decode($model->getById($id));
+
+		$seccionModel = new SeccionModel();
+		$data['secciones'] = json_decode($seccionModel->getAll());
+		
+		$seccionUsuarioModel = new SeccionUsuarioModel();
+		$seccionesUsuario = json_decode($seccionUsuarioModel->getSeccionesByUsuario($id));
+		$data['seccionesUsuario'] = $seccionesUsuario;
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		$data['slug'] =  $this->redireccion;
@@ -193,10 +213,19 @@ class Usuarios extends BaseController
 					'CONTRASENA' => $this->request->getVar('contrasena')
 				];
 
-				//return var_dump($newData);
 				//Guardamos
-				$model->save($newData);
-				//return var_dump($model);
+				$id=$model->insert($newData);
+
+				//SECCIONES USUARIO
+				$seccionUsuarioModel = new SeccionUsuarioModel();
+				foreach ($this->request->getVar('seccion') as $seccion) {
+					$newData = [
+						'USUARIO_ID' => $id,
+						'SECCION_ID' => $seccion,
+					];
+					$seccionUsuarioModel->insert($newData);
+				}
+
 
 				// Creamos una session para mostrar el mensaje de registro correcto
 				$session = session();
@@ -206,6 +235,9 @@ class Usuarios extends BaseController
 				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
 			}
 		}
+
+		$seccionModel = new SeccionModel();
+		$data['secciones'] = json_decode($seccionModel->getAll());
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';
 		$data['slug'] = $this->redireccion;

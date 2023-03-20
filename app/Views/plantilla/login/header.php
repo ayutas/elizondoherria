@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Iniciar Sesión - ELIZONDOKO HILERRIA</title>
+    <title>ELIZONDOKO HILERRIA</title>
     <link href="<?=base_url()?>/assets/css/styles.css" rel="stylesheet" />
     <link href="<?=base_url()?>/assets/css/utils.css" rel="stylesheet" />    
     <link rel="stylesheet" href="<?= base_url() ?>/assets/coreui/dist/css/coreui.min.css">

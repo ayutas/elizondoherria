@@ -79,6 +79,12 @@ $routes->get('/zonas/show', 'Zonas::show',['filter' => 'auth']);
 $routes->get('/zonas/edit', 'Zonas::edit',['filter' => 'auth']);
 $routes->get('/zonas/new', 'Zonas::new',['filter' => 'auth']);
 
+//Mto Secciones
+$routes->get('/secciones', 'Secciones::show',['filter' => 'auth']);
+$routes->get('/secciones/show', 'Secciones::show',['filter' => 'auth']);
+$routes->get('/secciones/edit', 'Secciones::edit',['filter' => 'auth']);
+$routes->get('/secciones/new', 'Secciones::new',['filter' => 'auth']);
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing
