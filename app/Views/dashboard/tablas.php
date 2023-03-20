@@ -17,6 +17,7 @@
                     <div class="col-4"><a href="<?= base_url()?>/zonas" class="btn btn-primary tablasbtn"><?php echo lang('Translate.zonas'); ?></a></div>
                     <?php if($admin==1){ ?>
                         <div class="col-4"><a class="btn btn-primary tablasbtn" href="<?= base_url()?>/usuarios"><?php echo lang('Translate.usuarios'); ?></a></div>
+                        <div class="col-4"><a class="btn btn-primary tablasbtn" href="<?= base_url()?>/secciones"><?php echo lang('Translate.secciones'); ?></a></div>
                         <!-- <div class="col-4"><a href="<?= base_url()?>/bancos" class="btn btn-primary tablasbtn">Bancos</a></div>                     -->
                         <!-- <div class="col-4"><a class="btn btn-primary tablasbtn" href="<?= base_url()?>/usuarios">Usuarios</a></div> -->
                         <!-- <div class="col-4"><a href="<?= base_url()?>/formularios" class="btn btn-primary tablasbtn">Recibos</a></div> -->
