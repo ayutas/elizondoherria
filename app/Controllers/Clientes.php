@@ -5,8 +5,11 @@ namespace App\Controllers;
 use App\Models\ArticuloClienteModel;
 use App\Models\ClienteComentarioModel;
 use App\Models\ClienteModel;
-use App\Models\BancoModel;
+use App\Models\FormaPagoModel;
 use App\Models\ReciboModel;
+use App\Models\ClienteDocumentoModel;
+use App\Models\ParametrosModel;
+use App\Models\ZonaModel;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -24,27 +27,33 @@ class Clientes extends BaseController
 		$uri = service('uri');
 
 		$data = [];
+		$idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 		$ClienteModel = new ClienteModel();
 		$articulosClientesModel = new ArticuloClienteModel();
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Nombre');
-        $column3= array ('Field'=>'Apellidos');
-        $column4= array ('Field'=>'DNI');
+		$column2= array ('Field'=>lang('Translate.nombre'));
+        $column3= array ('Field'=>lang('Translate.apellidos'));
+        $column4= array ('Field'=>lang('Translate.dni'));
+		$column5= array ('Field'=>lang('Translate.zona'));
 
-        $columnasDatatable = array($column1,$column2,$column3,$column4);
+        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5);
 		$data['columnsclientes'] = $columnasDatatable;
-		$data['dataclientes'] = json_decode($ClienteModel->getAll());
+		$seccion=session()->get('seccion');
+		$data['dataclientes'] = json_decode($ClienteModel->getAll($seccion));
 
 		foreach ($data['dataclientes'] as $item) {
-			$buttonEditCliente = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >Editar</button></form>';
-			$buttonDeleteCliente = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $item->ID . '" style="color:white;" class="btn btn-danger" >Eliminar</button>';
+			$buttonEditCliente = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >'.lang('Translate.editar').'</button></form>';
+			$buttonDeleteCliente = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $item->ID . '" style="color:white;" class="btn btn-danger" >'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEditCliente;
 			$item->btnEliminar = $buttonDeleteCliente;
 		}
 
 		// Cargamos las vistas en orden
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		// $data['actionLineas'] = base_url() . '/clientesLineas/new';
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/show', $data);
@@ -55,6 +64,9 @@ class Clientes extends BaseController
 	{
 		//Variable con todos los datos a pasar a las vistas
 		$data = [];
+        $idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 
 		// Cargamos los helpers de formularios
 		helper(['form']);
@@ -65,77 +77,97 @@ class Clientes extends BaseController
 
 		$data['id'] = $id;
 
-		if ($id == "") {
-
-			if ($id == "") {
-				// Creamos una session para mostrar el mensaje de denegación por permiso
-				$session = session();
-				$session->setFlashdata('error', 'No se ha seleccionado ningun elemento para editar');
-
-				// Redireccionamos a la pagina de login
-				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
-			}
-		}
-
 		$data['data'] = json_decode($ClienteModel->getById($id));
 		$articulosClientesModel = new ArticuloClienteModel();
 		$clientesComentariosModel=new ClienteComentarioModel();
 		$recibosModel=new ReciboModel();
+		$clientesDocumentosModel=new ClienteDocumentoModel();
 
 		$column1= array ('Field'=>'');
 		$column2= array ('Field'=>'ID');
-		$column3= array ('Field'=>'Número');
-        $column4= array ('Field'=>'Letra');
-        $column5= array ('Field'=>'Categoría');
-        $column6= array ('Field'=>'Precio');
+		$column3= array ('Field'=>lang('Translate.descripcion'));
+		$column4= array ('Field'=>lang('Translate.numero'));
+        $column5= array ('Field'=>lang('Translate.letra'));
+        $column6= array ('Field'=>lang('Translate.categoria'));
+        $column7= array ('Field'=>lang('Translate.precio'));
+		$column8= array ('Field'=>lang('Translate.disponible'));
 
-        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6);
+        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8);
 		$data['columnsArticulos'] = $columnasDatatable;
 		$data['dataArticulos'] = json_decode($articulosClientesModel->getByCliente($id));
 
 		$data['columnsArticulosDisponibles'] = $columnasDatatable;
-		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles($seccion));
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Comentario');
-        $column3= array ('Field'=>'Creado');
-        $column4= array ('Field'=>'Modificado');
+		$column2= array ('Field'=>lang('Translate.comentario'));
+        $column3= array ('Field'=>lang('Translate.created'));
+        $column4= array ('Field'=>lang('Translate.updated'));
 
         $columnasDatatableComentarios = array($column1,$column2,$column3,$column4);
 		$data['columnsComentarios'] = $columnasDatatableComentarios;
 		$data['dataComentarios'] = json_decode($clientesComentariosModel->getByCliente($id));
 		
 		foreach ($data['dataComentarios'] as $item) {
-			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">Editar</button>';
-			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.editar').'</button>';
+			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEditComentario;
 			$item->btnEliminar = $buttonDeleteComentario;
 		}
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Número');
-		$column3= array ('Field'=>'Fecha');
-		$column4= array ('Field'=>'Concepto');
-        $column5= array ('Field'=>'Importe');
+		$column2= array ('Field'=>lang('Translate.titulo'));
+        $column3= array ('Field'=>lang('Translate.created'));
+        $column4= array ('Field'=>'Ruta');
 
-        $columnasDatatableRecibos = array($column1,$column2,$column3,$column4,$column5);
+        $columnasDatatableDocumentos = array($column1,$column2,$column3,$column4);
+		$data['columnsDocumentos'] = $columnasDatatableDocumentos;
+		$data['dataDocumentos'] = json_decode($clientesDocumentosModel->getByCliente($id));
+		
+		foreach ($data['dataDocumentos'] as $item) {
+			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.descargar').'</button>';
+			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
+			$item->btnEditar = $buttonEditDocumento;
+			$item->btnEliminar = $buttonDeleteDocumento;
+		}
+
+
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>lang('Translate.numero'));
+		$column3= array ('Field'=>lang('Translate.fecha'));
+		$column4= array ('Field'=>lang('Translate.referencia'));
+		$column5= array ('Field'=>lang('Translate.concepto'));
+        $column6= array ('Field'=>lang('Translate.importe'));
+
+        $columnasDatatableRecibos = array($column1,$column2,$column3,$column4,$column5,$column6);
 		$data['columnsRecibos'] = $columnasDatatableRecibos;
 		$data['dataRecibos'] = json_decode($recibosModel->getByIdCliente($id));
 		// return var_dump($data['dataComentarios'] );
 		
 		foreach ($data['dataRecibos'] as $item) {
-			$buttonEditComentario = '<button type="Button" onclick="EditarRecibo(this)" id="btnEditarRecibo" class="btn btn-info btnEditar data-id="' . $item->ID . '" style="color:white;">Ver</button>';
+			$buttonEditComentario = '<button type="Button" onclick="EditarRecibo(this)" id="btnEditarRecibo" class="btn btn-info btnEditar data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.ver').'</button>';
 			// $buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
 			$item->btnEditar = $buttonEditComentario;
 			$item->btnEliminar =''; //$buttonDeleteComentario;
 		}
 		// return var_dump($data['dataRecibos'] );
 
-		$BancoModel = new BancoModel();
-		$data['bancos']=json_decode($BancoModel->getAll());
+		$formaPagoModel = new FormaPagoModel();
+		$data['formasPago']=json_decode($formaPagoModel->getAll($seccion));
+		//TRADUCIMOS LAS FORMAS DE PAGO
+		foreach ($data['formasPago'] as $item) {
+			$valor='Translate.'.$item->DESCRIPCION;
+			$descripcion=lang($valor);
+			$item->DESCRIPCION=$descripcion;
+		}
+
+		$zonaModel = new ZonaModel();
+		$data['zonas']=json_decode($zonaModel->getData($seccion));
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		$data['slug'] = $this->redireccion;
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/edit', $data);
 		echo view('dashboard/footer', $data);
@@ -145,32 +177,65 @@ class Clientes extends BaseController
 	{
 		//Variable con todos los datos a pasar a las vistas
 		$data = [];
+		$idioma=session()->get('idioma');
+        $this->request->setLocale($idioma);
+        $data['idioma']=$idioma;
 
 		// Cargamos los helpers de formularios
 		helper(['form']);
 		$uri = service('uri');
 
 		$ClienteModel = new ClienteModel();
-		
-		$BancoModel = new BancoModel();
-		$data['bancos']=json_decode($BancoModel->getAll());
 
-		
 		$column1= array ('Field'=>'');
-		$column2= array ('Field'=>'Número');
-        $column3= array ('Field'=>'Letra');
-        $column4= array ('Field'=>'Categoría');
-        $column5= array ('Field'=>'Precio');
+		$column2= array ('Field'=>'ID');
+		$column3= array ('Field'=>lang('Translate.descripcion'));
+		$column4= array ('Field'=>lang('Translate.numero'));
+        $column5= array ('Field'=>lang('Translate.letra'));
+        $column6= array ('Field'=>lang('Translate.categoria'));
+        $column7= array ('Field'=>lang('Translate.precio'));
+		$column8= array ('Field'=>lang('Translate.disponible'));
 
-        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5);
+        $columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8);
+		$data['columnsArticulos'] = $columnasDatatable;
 		$data['columnsArticulosDisponibles'] = $columnasDatatable;
 		$articulosClientesModel = new ArticuloClienteModel();
-		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$data['articulosDisponibles'] = json_decode($articulosClientesModel->getArticulosDisponibles($seccion));
 
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>lang('Translate.comentario'));
+        $column3= array ('Field'=>lang('Translate.created'));
+        $column4= array ('Field'=>lang('Translate.updated'));
+
+        $columnasDatatableComentarios = array($column1,$column2,$column3,$column4);
+		$data['columnsComentarios'] = $columnasDatatableComentarios;
+		$data['dataComentarios'] =[];
+
+		$column1= array ('Field'=>'ID');
+		$column2= array ('Field'=>lang('Translate.titulo'));
+        $column3= array ('Field'=>lang('Translate.created'));
+        $column4= array ('Field'=>'Ruta');
+
+        $columnasDatatableDocumentos = array($column1,$column2,$column3,$column4);
+		$data['columnsDocumentos'] = $columnasDatatableDocumentos;
+		$data['dataDocumentos'] =[];
+
+		$formaPagoModel = new FormaPagoModel();
+		$data['formasPago']=json_decode($formaPagoModel->getAll($seccion));
+		//TRADUCIMOS LAS FORMAS DE PAGO
+		foreach ($data['formasPago'] as $item) {
+			$valor='Translate.'.$item->DESCRIPCION;
+			$descripcion=lang($valor);
+			$item->DESCRIPCION=$descripcion;
+		}
+
+		$zonaModel = new ZonaModel();
+		$data['zonas']=json_decode($zonaModel->getData($seccion));
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';		
 		$data['slug'] = $this->redireccion;
-
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/edit', $data);
 		echo view('dashboard/footer', $data);
@@ -189,13 +254,19 @@ class Clientes extends BaseController
 		$contacto = $response->contacto;
 		$telefono = $response->telefono;
 		$email = $response->email;
-		$iban = $response->iban;
-		$banco = $response->banco;
-		$agencia = $response->agencia;
+		$zona = $response->zona;
+		$numero = $response->numero;
+		$formaPago = $response->formaPago;
 		$cuenta = $response->cuenta;
 		$notas = $response->notas;
-
+		$seccion =session()->get('seccion');
+		
 		$model = new ClienteModel();
+		$datos=json_decode($model->existeDniActivoSeccion($dni,$seccion,$id));
+		if(isset($datos[0])){
+			return json_encode([false,lang('Translate.existeDni')]);
+		}
+
 		$newData = [
 			'NOMBRE' => $nombre,
 			'APELLIDOS' => $apellidos,
@@ -206,21 +277,20 @@ class Clientes extends BaseController
 			'CONTACTO' => $contacto,
 			'TELEFONO' => $telefono,
 			'EMAIL' => $email,
-			'IBAN' => $iban,
-			'BANCO_ID' => $banco,
-			'AGENCIA' => $agencia,
+			'FORMAPAGO_ID' => $formaPago,
 			'CUENTA' => $cuenta,
-			'NOTAS' => $notas
-
+			'NOTAS' => $notas,
+			'SECCION_ID' => $seccion,
+			'ZONA_ID' => $zona,
+			'NUMERO' => $numero
 		];
 		if($id!=0){
-			
 			$newData['ID'] = $id;
 			$model->save($newData);
 		} else{
 			$id = $model->insert($newData);
 		}
-		return json_encode(['id' => $id]);
+		return json_encode([true,$id]);
 
 	}
 
@@ -229,14 +299,17 @@ class Clientes extends BaseController
 		$response = json_decode($this->request->getPost('data'));
 		$idCliente = $response->idCliente;
 		$idArticulo = $response->idArticulo;
+		$cantidad = $response->cantidad;
 
 		$model = new ArticuloClienteModel();
 		$newData = [
 			'ARTICULO_ID' => $idArticulo,
-			'CLIENTE_ID' => $idCliente
+			'CLIENTE_ID' => $idCliente,
+			'CANTIDAD' => $cantidad
 		];
 		$id = $model->insert($newData);
-		$artDisponibles= json_decode($model->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$artDisponibles= json_decode($model->getArticulosDisponibles($seccion));
 		$articulosCliente=json_decode($model->getByCliente($idCliente));
 		return json_encode(array($articulosCliente,$artDisponibles));
 	}
@@ -249,7 +322,8 @@ class Clientes extends BaseController
 
 		$model = new ArticuloClienteModel();		
 		$id = $model->deleteById($id);
-		$artDisponibles= json_decode($model->getArticulosDisponibles());
+		$seccion=session()->get('seccion');
+		$artDisponibles= json_decode($model->getArticulosDisponibles($seccion));
 		$articulosCliente=json_decode($model->getByCliente($idCliente));
 		return json_encode(array($articulosCliente,$artDisponibles));
 	}
@@ -274,8 +348,8 @@ class Clientes extends BaseController
 		}
 		$comentariosCliente=json_decode($model->getByCliente($idCliente));
 		foreach ($comentariosCliente as $item) {
-			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">Editar</button>';
-			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.editar').'</button>';
+			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEditComentario;
 			$item->btnEliminar = $buttonDeleteComentario;
 		}
@@ -293,12 +367,117 @@ class Clientes extends BaseController
 		
 		$comentariosCliente=json_decode($model->getByCliente($idCliente));
 		foreach ($comentariosCliente as $item) {
-			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">Editar</button>';
-			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$buttonEditComentario = '<button type="Button" onclick="EditarComentario(this)" id="btnEditarComentario" class="btn btn-primary btnEditar"  data-comentario="' . $item->Comentario . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.editar').'Editar</button>';
+			$buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEditComentario;
 			$item->btnEliminar = $buttonDeleteComentario;
 		}
 		return json_encode(array($comentariosCliente));
+	}
+
+	public function guardarDocumentoCliente()
+	{
+		$modelClientesDocumentos=new ClienteDocumentoModel();
+		$response = json_decode($this->request->getPost('data'));
+		if ( 0 < $_FILES['archivo']['error'] ) 
+		{
+			echo 'Error: ' . $_FILES['archivo']['error'] . '<br>';
+		}
+		else 
+		{
+			$modelParametros=new ParametrosModel();
+			$param=$modelParametros->first();
+			$rutaServidor=$_SERVER['DOCUMENT_ROOT'];
+			if ($param['CARPETA_APP']!="") {
+				$rutaServidor .= '/'.$param['CARPETA_APP'];
+			}
+			$carpeta_destino =  'uploads/documentos';
+	
+			if (!file_exists($rutaServidor.'/'.$carpeta_destino)) 
+			{
+				mkdir($rutaServidor.'/'.$carpeta_destino, 0777, true);
+			}
+
+			$nombreArchivo = $_FILES['archivo']['name'];
+			$elementos = array_diff(scandir($rutaServidor.'/'.$carpeta_destino), array('..', '.'));			
+			$archivo = explode('.', $nombreArchivo);
+			//CAMBIO LOS ESPACIOS POR _ AL NOMBRE DE ARCHIVO QUE PARECE QUE ME DA PROBLEMAS EN EL CHEQUEO AL COPIAR LA IMAGEN DE EJEMPLO EN LA CARPETA DE CHEQUEO CORRESPONDIENTE
+			//ADEMAS EL mb_url_title ME REEMPLAZA LOS CARACTERES RAROS O ESPECIALES
+			$archivo[0] = mb_url_title($archivo[0], '_');
+
+			foreach ($elementos as $item) {				
+				while ($item == ($archivo[0] . "." . $archivo[1])) {
+					$archivo[0] = substr(md5(time()), 0, 16);
+				}
+			}
+			$nombre = $archivo[0] . '.' . $archivo[1];			
+			$idCliente = $this->request->getPost('idCliente');
+			$titulo = $this->request->getPost('titulo');
+
+			move_uploaded_file($_FILES['archivo']['tmp_name'], $rutaServidor.'/'.$carpeta_destino.'/'.$nombre);
+		}
+
+		$objetoGuardarDocumento = 
+		[
+			'CLIENTE_ID' => $idCliente,
+			'TITULO' => $titulo,
+			'RUTA' => $carpeta_destino."/".$nombre
+		];
+		
+		$modelClientesDocumentos->insert($objetoGuardarDocumento);
+
+		$documentosCliente=json_decode($modelClientesDocumentos->getByCliente($idCliente));
+		foreach ($documentosCliente as $item) {
+			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.descargar').'</button>';
+			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
+			$item->btnEditar = $buttonEditDocumento;
+			$item->btnEliminar = $buttonDeleteDocumento;
+		}
+		return json_encode(array($documentosCliente));
+	}
+
+	public function eliminarDocumentoCliente()
+	{		
+		$response = json_decode($this->request->getPost('data'));
+		$id = $response->id;
+		$idCliente = $response->idCliente;
+
+		$model = new ClienteDocumentoModel();
+		$answer = $model->deleteById($id);
+		
+		$documentosCliente=json_decode($model->getByCliente($idCliente));
+		foreach ($documentosCliente as $item) {
+			$buttonEditDocumento = '<button type="Button" onclick="DescargarDocumento(this)" id="btnDescargarDocumento" class="btn btn-info btnEditar"  data-ruta="' . $item->Ruta . '" data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.descargar').'</button>';
+			$buttonDeleteDocumento = '<button type="Button" onclick="EliminarDocumento(' . $item->ID . ')" id="btnEliminarDocumento" class="btn btn-danger btnEliminar" style="color:white;">'.lang('Translate.eliminar').'</button>';
+			$item->btnEditar = $buttonEditDocumento;
+			$item->btnEliminar = $buttonDeleteDocumento;
+		}
+		return json_encode(array($documentosCliente));
+	}
+
+	public function descargarDocumento($id)
+	{
+		$model = new ClienteDocumentoModel();
+		$datos=$model->where('ID', $id)->first();
+		$ruta=$datos['RUTA'];
+
+		$modelParametros=new ParametrosModel();
+		$param=$modelParametros->first();
+		$rutaServidor=$_SERVER['DOCUMENT_ROOT'];
+		if ($param['CARPETA_APP']!="") {
+			$rutaServidor .= '/'.$param['CARPETA_APP'];
+		}
+		$file=$rutaServidor.'/'. $ruta;
+		$nombre=basename($file);
+		if(file_exists($file)){
+
+			header("Content-Type: text/html/force-download");
+			header("Content-Disposition: attachment; filename=$nombre");
+		
+			// Read the file
+			readfile($file);
+		}
+        exit;
 	}
 
 	// Borrar
@@ -310,7 +489,7 @@ class Clientes extends BaseController
 
 		// Creamos una session para mostrar el mensaje de registro correcto
 		$session = session();
-		$session->setFlashdata('success', 'Eliminado correctamente');
+		$session->setFlashdata('success', lang('Translate.eliminado'));
 
 		// Redireccionamos a la pagina de login
 		return redirect()->to(base_url() . "/" .  $this->redireccion . '/show');
@@ -327,6 +506,7 @@ class Clientes extends BaseController
 			$numero = $datos[0]->NUMERO;
 			$letra = $datos[0]->LETRA;
 			$categoria = $datos[0]->CATEGORIA;
+			$porcentaje = $datos[0]->PORCENTAJE;
 			$nombre = $datos[0]->NOMBRE;
 			$apellidos = $datos[0]->APELLIDOS;
 			$dni = $datos[0]->DNI;
@@ -335,10 +515,6 @@ class Clientes extends BaseController
 			$codPostal = $datos[0]->COD_POSTAL;
 			$telefono = $datos[0]->TELEFONO;
 			$email = $datos[0]->EMAIL;
-			$iban = $datos[0]->IBAN;
-			$codBanco = $datos[0]->COD_BANCO;
-			$nombreBanco = $datos[0]->NOMBRE_BANCO;
-			$agencia = $datos[0]->AGENCIA;
 			$cuenta = $datos[0]->CUENTA;
 			$notas = $datos[0]->NOTAS;
 			$creado = $datos[0]->CREATED_AT;
@@ -364,7 +540,7 @@ class Clientes extends BaseController
 		$html .= '<label style="font-size:22px;"><strong>ELIZONDOko HILERRIA</label><br><label style="font-size:16px;text-align:center">Denboraldi bateko erabilpen txartela</strong></label>';
 		$html .= '</td>';
 		$html .= '<td colspan="2">';
-		$html .= '<img src="' . base_url() . '/assets/images/Logo.png" width="65" height="70">';
+		$html .= '<img src="' . base_url() . '/assets/images/Logo.jpg" width="65" height="70">';
 		$html .= '</td>';
 		$html .= '<td colspan="5">';
 		$html .= '<label style="font-size:22px;">CEMENTERIO de ELIZONDO</label><br><label style="font-size:16px;text-align:center">Tarjeta de uso temporal</label>';
@@ -383,15 +559,18 @@ class Clientes extends BaseController
 			$html .= '<table>';
 			$html .= '<tbody>';
 			$html .= '<tr>';  //FILA 1
-			$html .= '<td colspan="4">';
+			$html .= '<td colspan="3">';
 			$html .= '<strong>Zkia /</strong> Nº: ' . $numero;
 			$html .= '</td>';
-			$html .= '<td colspan="4">';
+			$html .= '<td colspan="3">';
 			$html .= '<strong>Karrika /</strong> Calle: ' . $letra;
 			$html .= '</td>';
-			$html .= '<td colspan="4">';
+			$html .= '<td colspan="3">';
 			$html .= '<strong>Maila/</strong> Categoría: ' . $categoria;
 			$html .= '</td>';
+			$html .= '<td colspan="3">';
+			$html .= '<strong>%</strong> ' . $porcentaje;
+			$html .= '</td>';			
 			$html .= '</tr>';
 			$html .= '</tbody>';
 			$html .= '</table>';
@@ -425,7 +604,7 @@ class Clientes extends BaseController
 		$html .= '</tr>';
 		$html .= '<tr>'; //FILA 5
 		$html .= '<td colspan="12">';
-		$html .= '<strong>Kontu Zkia /</strong> Nº de cuenta: ' . $nombreBanco . ' ' . $iban.$codBanco.$agencia.$cuenta;
+		$html .= '<strong>Kontu Zkia /</strong> Nº de cuenta: ' . $cuenta;
 		$html .= '</td>';
 		$html .= '</tr>';
 		$html .= '<br>';
@@ -555,7 +734,7 @@ class Clientes extends BaseController
         
         //---------------------------------------------------        
         header("Content-type:application/pdf");
-        header("Content-Disposition:inline;filename=consulta.pdf");
+        header("Content-Disposition:inline;filename=impreso.pdf");
 		$output = $dompdf->output();
         echo ($output);
         exit;

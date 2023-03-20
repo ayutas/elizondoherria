@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="fade-in">
                     <!-- titulo -->
-                    <h1>Personal</h1>
+                    <h1><?php echo lang('Translate.usuarios'); ?></h1>
                     <div clas="row">
                         <div class="container mt-4">
                             <?php if(session()->get('success')): ?>
@@ -21,11 +21,11 @@
                             <?php endif; ?>  
                         </div>
                         <form  action="<?php echo $action ?>" method="get">
-                            <button type="submit" class="btn btn-primary mb-2 ml-2" >Nuevo usuario</button>
+                            <button type="submit" class="btn btn-primary mb-2 ml-2" ><?php echo lang('Translate.newusuario'); ?></button>
                         </form>
 
                         <?php // Miga de pan    
-                            dataTable("Usuarios",$columns,$data,'usuarios','8,9','text-center','',12);     
+                            dataTable(lang('Translate.usuarios'),$columns,$data,'usuarios','7,8','text-center','',12);     
                         ?>
                     </div>
                 </div>

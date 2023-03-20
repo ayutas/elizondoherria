@@ -43,23 +43,19 @@ class UsuarioModel extends Model
         return $data;
     }
 
-    public function getAll($id=null){
+    public function getAll(){
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TU.ID As 'ID',
-                        TU.NOMBRE As 'Nombre',
-						TU.AP1 As 'Apellido1',
-                        TU.AP2 As 'Apellido2',
+                        TU.NOMBRE As '".lang('Translate.nombre')."',
+						TU.AP1 As '".lang('Translate.apellido1')."',
+                        TU.AP2 As '".lang('Translate.apellido2')."',
                         IF(TU.ADMINISTRADOR=1,'Si','No') AS 'Admin',
-                        TU.USUARIO AS 'Usuario',                        
-                        TU.CREATED_AT As 'Creado',
-                        TU.UPDATED_AT As 'Actualizado'
+                        TU.USUARIO AS '".lang('Translate.usuario')."',                        
+                        TU.CREATED_AT As '".lang('Translate.created')."',
+                        TU.UPDATED_AT As '".lang('Translate.updated')."'
                 FROM tbl_usuarios TU
-                WHERE ISNULL(TU.DELETED_AT)";   
-                    
-        if($id)
-        {   $sql.=   " WHERE TU.ID=$id";
-        }                    
+                WHERE ISNULL(TU.DELETED_AT)";                  
 
 		$query = $db->query($sql);
 		
@@ -68,7 +64,7 @@ class UsuarioModel extends Model
         return json_encode($results);
     }
 
-    public function getData($id=null){
+    public function getById($id){
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TU.ID As 'ID',
@@ -79,11 +75,8 @@ class UsuarioModel extends Model
                         TU.USUARIO AS 'Usuario',                        
                         TU.CREATED_AT As 'Creado',
                         TU.UPDATED_AT As 'Actualizado'
-                FROM tbl_usuarios TU";                   
-                    
-        if($id)
-        {   $sql.=   " WHERE TU.ID=$id";
-        }                    
+                FROM tbl_usuarios TU
+                WHERE TU.ID=$id";
 
 		$query = $db->query($sql);
 		

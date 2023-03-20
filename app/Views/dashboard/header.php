@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ELIZONDOKO HILERRIA</title>
+    <title>ELIZONDOKO HERRIA</title>
     <script
 			  src="https://code.jquery.com/jquery-3.5.1.js"
 			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -59,8 +59,8 @@
             <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/dashboard">
                     <svg class="c-sidebar-nav-icon" >
                         <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-speedometer"></use>
-                    </svg> Inicio</a></li>
-            <li class="c-sidebar-nav-title">Menu</li>
+                    </svg> <?php echo lang('Translate.inicio');?></a></li>
+            <li class="c-sidebar-nav-title"><?php echo lang('Translate.menu');?></li>
             
             <?php 
 
@@ -69,37 +69,40 @@
             <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/recibos">
                 <svg class="c-sidebar-nav-icon">
                     <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-clipboard"></use>
-                </svg> Recibos</a>
-            </li>
-            <?php if(session()->get('admin')==1){?>
+                </svg> <?php echo lang('Translate.recibos');?></a>
+            </li>            
                 <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/consultas">
                     <svg class="c-sidebar-nav-icon">
                         <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-search"></use>
                     </svg> Consultas</a>
                 </li>             -->
-                <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">                
-                    <svg class="c-sidebar-nav-icon">                        
-                        <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-trello"></use>
-                    </svg> Mantenimiento Tablas</a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/clientes">
-                        Clientes</a>
-                        </li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/articulos">
-                        Articulos</a>
-                        </li> 
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/bancos">
-                        Bancos</a>
-                        </li> 
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/categorias">
-                        Categorias</a>
-                        </li>
+            <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">                
+                <svg class="c-sidebar-nav-icon">                        
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-trello"></use>
+                </svg> <?php echo lang('Translate.mantenimiento');?></a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/clientes">
+                    <?php echo lang('Translate.clientes');?></a>
+                    </li>
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/articulos">
+                    <?php echo lang('Translate.articulos');?></a>
+                    </li> 
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/categorias">
+                    <?php echo lang('Translate.categorias');?></a>
+                    </li>
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/zonas">
+                    <?php echo lang('Translate.zonas');?></a>
+                    </li> 
+                    <?php if(session()->get('admin')==1){?>
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/usuarios">
-                        Usuarios</a>
-                        </li> 
-                    </ul>
-                </li>
-            <?php }?>
+                        <?php echo lang('Translate.usuarios');?></a>
+                        </li>
+                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/secciones">
+                        <?php echo lang('Translate.secciones');?></a>
+                        </li>
+                    <?php } ?>                        
+                </ul>
+            </li>
             
             <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
                 <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
@@ -153,6 +156,18 @@
             </li>
         </ul>
         <ul class="c-header-nav">
+            <div id="divSeccion" class="c-sidebar-nav-item" style="display:none;">
+                <!-- Campo Seccion -->
+                <select class="form-select" aria-label="Default select example" id="seccion" name="seccion">
+                    <?php if (isset($seccionesUsuario)) {
+                        foreach ($seccionesUsuario as $seccion) { ?>
+                            <option class="" value="<?php echo $seccion->SECCION_ID; ?>">
+                            <?php echo $seccion->DESCRIPCION; ?></option><?php
+                            }
+                        }
+                    ?>
+                </select>
+            </div>
             <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" 
                     role="button" aria-haspopup="true" aria-expanded="false">
                     <div class="c-avatar"><img class="c-avatar-img" src="<?=base_url()?>/assets/img/avatars/6.jpg" alt="user@email.com">
@@ -162,10 +177,17 @@
                         <!-- <svg class="c-icon mfe-2" href="<?= base_url() ?>/logout"> -->
                             <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-account-logout"></use>
                         <!-- </svg>  -->
-                        <a class="btn btn-primary mt-2 ml-2" href="<?= base_url() ?>/logout"> Cerrar Sesión</a>                        
+                        <a class="btn btn-primary mt-2 ml-2" href="<?= base_url() ?>/logout"> <?php echo lang('Translate.cerrarSesion');?></a>
                 </div>
-                
             </li>
+        </ul>
+        <ul class="c-header-nav">
+            <div id="divIdioma" class="c-sidebar-nav-item" style="display:none;">
+                <select class="form-select" aria-label="Default select example" id="idioma" name="idioma">
+                    <option value="eu">EUS</option>
+                    <option value="es">CAS</option>
+                </select>
+            </div>
         </ul>
         <!-- Menú Superior - Inicio -->
 
@@ -174,9 +196,10 @@
             
             <!-- Breadcum - Inicio -->
             <ol class="breadcrumb border-0 m-0 px-0 px-md-3">
-                <li class="breadcrumb-item">INICIO</li>
-                
-                <li class="breadcrumb-item"><a href="<?= base_url() ?>/<?php echo $uri->getSegment(1) ?>"><?php echo strtoupper($uri->getSegment(1)) ?></a></li>
+                <li class="breadcrumb-item"><a href="<?= base_url() ?>/dashboard"><?php echo lang('Translate.INICIO');?></a></li>
+                <?php if(strtoupper($uri->getSegment(1))!="DASHBOARD") { ?>
+                    <li class="breadcrumb-item"><a href="<?= base_url() ?>/<?php echo $uri->getSegment(1) ?>"><?php echo strtoupper($migapan) ?></a></li>
+                <?php } ?>
                 <!-- <li class="breadcrumb-item active">Dashboard</li> -->
             </ol>
             <!-- Breadcum - Inicio -->
@@ -186,3 +209,67 @@
 
     </header>
     <!-- Menu Superior + Breadcum - Fin -->
+<script>
+   
+   var cargado=0;
+
+    $(document).ready(function() { 
+
+        var idioma=<?php if (isset($idioma)) {echo json_encode($idioma);} else { echo json_encode('es'); };  ?>;
+        // console.log(idioma);
+        $("#idioma").val(idioma).change();
+        $("#divIdioma").show();
+
+        $("#seccion").attr('disabled', 'disabled');
+        var secciones=<?php if (isset($seccionesUsuario)) {echo json_encode($seccionesUsuario);} else { echo json_encode(array()); };  ?>;
+
+        if(secciones.length>1){
+            $("#divSeccion").show();
+            $("#seccion").attr('disabled', false);
+        }
+        cargado=1;
+    });
+
+    $("#seccion").on('click', async function() {
+        var seccion=$("#seccion").val();
+        var parametros = JSON.stringify({
+            seccion: seccion,
+        });
+        $.ajax({
+        data: {
+            'data': parametros
+        },
+        dataType: "json",
+        //data: formData,
+        url: '<?= base_url() ?>/Login/setSeccion',
+        type: 'post',
+
+        success: function(response) {
+        }
+        });
+    });
+
+    $("#idioma").on('change', async function() {
+        if(cargado==1){
+            var idioma=$("#idioma").val();
+            var parametros = JSON.stringify({
+                idioma: idioma,
+            });
+            $.ajax({
+                data: {
+                    'data': parametros
+                },
+                dataType: "json",
+                //data: formData,
+                url: '<?= base_url() ?>/Login/setidioma',
+                type: 'post',
+
+                success: function(response) {
+                    // console.log(response);
+                    location.reload();
+                }
+            });
+        }
+    });
+
+</script>

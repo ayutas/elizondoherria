@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\ReciboModel;
 use App\Models\ReciboLineaModel;
 use App\Models\ArticuloClienteModel;
+use App\Models\ParametrosModel;
+use App\Models\SeccionModel;
 use XMLWriter;
 
 class Recibos extends BaseController
@@ -15,6 +17,7 @@ class Recibos extends BaseController
 	// Ver
 	public function show()
 	{
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header');
 		echo view($this->redireccionView . '/opciones');
 		echo view('dashboard/footer');
@@ -30,31 +33,33 @@ class Recibos extends BaseController
 		$model = new ReciboModel();
 
 		$column1= array ('Field'=>'ID');
-		$column2= array ('Field'=>'Fecha');
-		$column3= array ('Field'=>'Número');
-		$column4= array ('Field'=>'Ref');
-		$column5= array ('Field'=>'Concepto');
-		$column6= array ('Field'=>'Nombre');
-		$column7= array ('Field'=>'DNI');
-		$column8= array ('Field'=>'Artículo');
-		$column9= array ('Field'=>'Categoría');
-		$column10= array ('Field'=>'Importe');
-		$column11= array ('Field'=>'Cuenta');
-		$column12= array ('Field'=>'Creado');
+		$column2= array ('Field'=>lang('Translate.fecha'));
+		$column3= array ('Field'=>lang('Translate.numero'));
+		$column4= array ('Field'=>lang('Translate.referencia'));
+		$column5= array ('Field'=>lang('Translate.concepto'));
+		$column6= array ('Field'=>lang('Translate.nombre'));
+		$column7= array ('Field'=>lang('Translate.dni'));
+		$column8= array ('Field'=>lang('Translate.articulo'));
+		$column9= array ('Field'=>lang('Translate.categoria'));
+		$column10= array ('Field'=>lang('Translate.importe'));
+		$column11= array ('Field'=>lang('Translate.cuenta'));
+		$column12= array ('Field'=>lang('Translate.created'));
 		
 		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8,$column9,$column10,$column11,$column12);
 		$data['columns'] = $columnasDatatable;
-		$data['data'] = json_decode($model->getAll());
+		$seccion=session()->get('seccion');
+		$data['data'] = json_decode($model->getAll($seccion));
 
 		foreach ($data['data'] as $item) {
-			$buttonEdit = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >Editar</button></form>';
-			$buttonDelete = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $item->ID . '" style="color:white;" class="btn btn-danger" >Eliminar</button>';
+			$buttonEdit = '<form method="get" action="' . base_url() . '/' . $this->redireccion . '/edit/' . $item->ID . '"><button id="btnEditar" type="submit" class="btn btn-primary btnEditar" data-toggle="modal" data-target="#Editar" data-id="' . $item->ID . '" style="color:white;"  >'.lang('Translate.editar').'</button></form>';
+			$buttonDelete = '<button id="btnEliminar" type="submit" data-toggle="model" data-target="#Eliminar" data-id="' . $item->ID . '" style="color:white;" class="btn btn-danger" >'.lang('Translate.eliminar').'</button>';
 			$item->btnEditar = $buttonEdit;
 			$item->btnEliminar = $buttonDelete;
 		}
 
 		// Cargamos las vistas en orden
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/show', $data);
 		echo view('dashboard/footer', $data);
@@ -73,19 +78,6 @@ class Recibos extends BaseController
 		$modelLineas = new ReciboLineaModel();
 
 		$data['id'] = $id;
-
-
-		if ($id == "") {
-
-			if ($id == "") {
-				// Creamos una session para mostrar el mensaje de denegación por permiso
-				$session = session();
-				$session->setFlashdata('error', 'No se ha seleccionado ningun elemento para editar');
-
-				// Redireccionamos a la pagina de login
-				return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
-			}
-		}
 		
 		$data['data'] = json_decode($model->getById($id));
 
@@ -94,6 +86,7 @@ class Recibos extends BaseController
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/edit/' . $id;
 		$data['slug'] =  $this->redireccion;
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/edit', $data);
 		echo view('dashboard/footer', $data);
@@ -113,43 +106,27 @@ class Recibos extends BaseController
 		$column1= array ('Field'=>'');
 		$column2= array ('Field'=>'');
 		$column3= array ('Field'=>'ID');
-		$column4= array ('Field'=>'Nombre');
-		$column5= array ('Field'=>'DNI');
-		$column6= array ('Field'=>'Número');
-		$column7= array ('Field'=>'Categoría');
-		$column8= array ('Field'=>'Importe');
-		$column9= array ('Field'=>'Cuenta');
+		$column4= array ('Field'=>lang('Translate.nombre'));
+		$column5= array ('Field'=>lang('Translate.dni'));
+		$column6= array ('Field'=>lang('Translate.numero'));
+		$column7= array ('Field'=>lang('Translate.categoria'));
+		$column8= array ('Field'=>lang('Translate.importe'));
+		$column9= array ('Field'=>lang('Translate.cuenta'));
 
 		
 		$columnasDatatable = array($column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8,$column9);
 		$data['columns'] = $columnasDatatable;
-		$data['data'] = json_decode($model->getAll());
+		$seccion=session()->get('seccion');
+		$data['data'] = json_decode($model->getAll($seccion));
 
 
 
 		$data['action'] = base_url() . '/' . $this->redireccion . '/new';		
 		$data['slug'] = $this->redireccion;
-
+		$data['migapan']=lang('Translate.'.$this->redireccion);
 		echo view('dashboard/header', $data);
 		echo view($this->redireccionView . '/new', $data);
 		echo view('dashboard/footer', $data);
-	}
-
-	public function crearxml()
-	{
-		//Variable con todos los datos a pasar a las vistas
-		$data = [];
-
-		// Cargamos los helpers de formularios
-		helper(['form']);
-		$uri = service('uri');
-
-		
-		$data['slug'] = $this->redireccion;
-
-		echo view('dashboard/header');
-		echo view($this->redireccionView . '/newxml');
-		echo view('dashboard/footer');
 	}
 
 	public function guardarRecibo()
@@ -173,7 +150,7 @@ class Recibos extends BaseController
 		$model->save($newData);
 		// Creamos una session para mostrar el mensaje de registro correcto
 		$session = session();
-		$session->setFlashdata('success', 'Modificado correctamente');
+		$session->setFlashdata('success',  lang('Translate.actualizado'));
 
 		// Redireccionamos a la pagina de login
 		return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
@@ -187,7 +164,7 @@ class Recibos extends BaseController
 		$answer = $model->deleteById($id,$usuarioId);
 		// Creamos una session para mostrar el mensaje de registro correcto
 		$session = session();
-		$session->setFlashdata('success', 'Eliminado correctamente');
+		$session->setFlashdata('success',  lang('Translate.eliminado'));
 
 		// Redireccionamos a la pagina de login
 		return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
@@ -208,21 +185,30 @@ class Recibos extends BaseController
 		}
 
 		$model->insertar($fecha,$ref,$concepto,$ids);
-
+		
 		$modelLineas = new ReciboLineaModel();
 		$modelLineas->insertar($ref,$ids);
 		$this->crearRecibosXML($ref);
-		return json_encode(array(true));
+
+		$modelParametros=new ParametrosModel();
+		$carpetaApp=json_decode($modelParametros->getAll());
+		$ruta= base_url();
+		if(isset($carpetaApp[0])){
+			$ruta .= '/'.$carpetaApp[0]->CARPETA_APP;
+		}
+		$ruta .= '/recibos/';
+		return json_encode(array(true,$ruta));
 		// return redirect()->to(base_url() . "/" . $this->redireccion . '/show');
 	}
 
 	Public function crearRecibosXML($ref)
     {		
 		$numRecibos=0;
+		$seccion=session()->get('seccion');
 
+		$modelSeccion=new SeccionModel();
 		$model = new ReciboModel();
 		$datosCabecera=json_decode($model->ObtenerDatosCabeceraRemesa($ref));
-		
 		
 		if (isset($datosCabecera[0])) {
 
@@ -231,16 +217,19 @@ class Recibos extends BaseController
 			$fechaVencimiento = date_format(date_create($datosCabecera[0]->FECHA),'Y-m-d');
 			$numremesa=$ref;
 			$fechaCreacion=date('Ymd');
-			$nombreEmpresa="LUGAR DE ELIZONDO";
-			$domicilioEmpresa="Jaime Urrutia 4";
-			$cpEmpresa="31700";
-			$poblacionEmpresa="Elizondo";
-			//hilerri
-			$numCuentaEmpresa="ES0630080043142303410910";
-			//herria
-			$numCuentaEmpresa="ES2330080043171214211813";
-			$bicEmpresa="BCOEESMM";//CODIGO SWIFT DEL BANCO empresa
-			$identificadorEmpresa="ES71000P3105008A";//Identificador calculo segun CIF -- PAIS+DIGITOS_CONTROL97_10(CIF+ES+00+000+CIF)+CIF
+			$datosEmpresa=$modelSeccion->where('ID', $seccion)->first();
+			if (isset($datosEmpresa)) {
+				$nombreEmpresa=$datosEmpresa['NOMBRE']; //"LUGAR DE ELIZONDO";
+				$domicilioEmpresa=$datosEmpresa['DOMICILIO']; //"Jaime Urrutia 4";
+				$cpEmpresa=$datosEmpresa['CPOSTAL']; //"31700";
+				$poblacionEmpresa=$datosEmpresa['POBLACION']; //"Elizondo";
+				//hilerri
+				$numCuentaEmpresa=$datosEmpresa['NUMCUENTA']; //"ES0630080043142303410910";
+				//herria
+				//$numCuentaEmpresa="ES2330080043171214211813";
+				$bicEmpresa=$datosEmpresa['BIC']; //"BCOEESMM";//CODIGO SWIFT DEL BANCO empresa
+				$identificadorEmpresa=$datosEmpresa['IDENTIFICADOR']; //"ES71000P3105008A";//Identificador calculo segun CIF -- PAIS+DIGITOS_CONTROL97_10(CIF+ES+00+000+CIF)+CIF
+			}
 		}
 
 

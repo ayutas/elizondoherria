@@ -53,7 +53,6 @@ $routes->get('/clientes/new', 'Clientes::new',['filter' => 'auth']);
 //Recibos
 $routes->get('/recibos', 'Recibos::show',['filter' => 'auth']);
 $routes->get('/consultas', 'Recibos::consultas',['filter' => 'auth']);
-$routes->get('/crearxml', 'Recibos::crearxml',['filter' => 'auth']);
 $routes->get('/newrecibos', 'Recibos::newrecibos',['filter' => 'auth']);
 
 //Mto Bancos
@@ -74,6 +73,17 @@ $routes->get('/usuarios/show', 'Usuarios::show',['filter' => 'auth']);
 $routes->get('/usuarios/edit', 'Usuarios::edit',['filter' => 'auth']);
 $routes->get('/usuarios/new', 'Usuarios::new',['filter' => 'auth']);
 
+//Mto Zonas
+$routes->get('/zonas', 'Zonas::show',['filter' => 'auth']);
+$routes->get('/zonas/show', 'Zonas::show',['filter' => 'auth']);
+$routes->get('/zonas/edit', 'Zonas::edit',['filter' => 'auth']);
+$routes->get('/zonas/new', 'Zonas::new',['filter' => 'auth']);
+
+//Mto Secciones
+$routes->get('/secciones', 'Secciones::show',['filter' => 'auth']);
+$routes->get('/secciones/show', 'Secciones::show',['filter' => 'auth']);
+$routes->get('/secciones/edit', 'Secciones::edit',['filter' => 'auth']);
+$routes->get('/secciones/new', 'Secciones::new',['filter' => 'auth']);
 
 /**
  * --------------------------------------------------------------------

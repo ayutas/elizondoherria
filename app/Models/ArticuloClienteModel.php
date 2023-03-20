@@ -10,6 +10,7 @@ class ArticuloClienteModel extends Model
     protected $allowedFields = [
         'ARTICULO_ID',
         'CLIENTE_ID', 
+        'CANTIDAD',
         'DELETED_AT',   
     ];
 
@@ -28,14 +29,13 @@ class ArticuloClienteModel extends Model
     public function getById($id){
         $db = \Config\Database::connect();
         
-        $sql = "SELECT  TA.NUMERO,TA.LETRA,TG.NOMBRE AS 'CATEGORIA',TC.NOMBRE,TC.APELLIDOS,TC.DNI,
-                TC.DOMICILIO,TC.POBLACION,TC.COD_POSTAL,TC.TELEFONO,TC.EMAIL,TC.IBAN,
-                TB.CODIGO AS 'COD_BANCO',TB.NOMBRE AS 'NOMBRE_BANCO',TC.AGENCIA,TC.CUENTA,TC.NOTAS,DATE_FORMAT(TAC.CREATED_AT,'%d/%m/%Y') AS CREATED_AT
+        $sql = "SELECT  TA.NUMERO,TA.LETRA,TG.NOMBRE AS 'CATEGORIA', TAC.CANTIDAD*100 AS PORCENTAJE,TC.NOMBRE,TC.APELLIDOS,TC.DNI,
+                TC.DOMICILIO,TC.POBLACION,TC.COD_POSTAL,TC.TELEFONO,TC.EMAIL,TC.CUENTA,TC.NOTAS,DATE_FORMAT(TAC.CREATED_AT,'%d/%m/%Y') AS CREATED_AT
                 FROM $this->table as TAC
                 INNER JOIN tbl_articulos AS TA ON TAC.ARTICULO_ID=TA.ID
                 INNER JOIN tbl_categorias AS TG ON TA.CATEGORIA_ID=TG.ID
                 INNER JOIN tbl_clientes TC ON TAC.CLIENTE_ID=TC.ID
-                INNER JOIN tbl_bancos TB ON TC.BANCO_ID=TB.ID
+                
                 WHERE TAC.ID=$id";
 
         $query = $db->query($sql);
@@ -49,10 +49,13 @@ class ArticuloClienteModel extends Model
         $db = \Config\Database::connect();
         
         $sql = "SELECT  TAC.ID,
-                        TA.NUMERO As 'Número',
-                        TA.LETRA AS 'Letra',
-                        TC.NOMBRE AS 'Categoría',
-                        TC.PRECIO AS 'Precio'
+                        TA.DESCRIPCION AS '".lang('Translate.descripcion')."',
+                        TA.NUMERO AS '".lang('Translate.numero')."',
+                        TA.LETRA AS '".lang('Translate.letra')."',
+                        TC.NOMBRE AS '".lang('Translate.categoria')."',
+                        TAC.CANTIDAD AS '".lang('Translate.cantidad')."',
+                        TC.PRECIO AS '".lang('Translate.precio')."',
+                        TC.PRECIO*TAC.CANTIDAD AS '".lang('Translate.importe')."'
                 FROM $this->table as TAC
                 INNER JOIN tbl_articulos as TA ON TAC.ARTICULO_ID=TA.ID
                 INNER JOIN tbl_categorias as TC ON TA.CATEGORIA_ID=TC.ID
@@ -66,19 +69,23 @@ class ArticuloClienteModel extends Model
         return json_encode($results);
     }
 
-    public function getArticulosDisponibles(){
+    public function getArticulosDisponibles($seccion){
         $db = \Config\Database::connect();
         
         $sql = "SELECT  '' as 'btnSeleccionar',
+        
                         TA.ID as 'ID',
-                        TA.NUMERO as 'Número',
-                        TA.LETRA as 'Letra',
-                        TC.NOMBRE AS 'Categoría',
-                        TC.PRECIO AS 'Precio'
+                        TA.DESCRIPCION AS '".lang('Translate.descripcion')."',
+                        TA.NUMERO AS '".lang('Translate.numero')."',
+                        TA.LETRA AS '".lang('Translate.letra')."',
+                        TC.NOMBRE AS '".lang('Translate.categoria')."',
+                        TC.PRECIO AS '".lang('Translate.precio')."',
+                        TA.DISPONIBLE-IFNULL(TAC.CANTIDAD,0) AS '".lang('Translate.disponible')."'
                 FROM tbl_articulos AS TA
                 INNER JOIN tbl_categorias as TC ON TA.CATEGORIA_ID=TC.ID
-                LEFT JOIN $this->table as TAC ON TA.ID=TAC.ARTICULO_ID AND ISNULL(TAC.DELETED_AT)
-                WHERE ISNULL(TAC.ID)";
+                LEFT JOIN (SELECT ARTICULO_ID,SUM(CANTIDAD) AS CANTIDAD FROM $this->table WHERE ISNULL(DELETED_AT) GROUP BY ARTICULO_ID) as TAC 
+                    ON TA.ID=TAC.ARTICULO_ID
+                WHERE TA.SECCION_ID=$seccion AND TA.DISPONIBLE-IFNULL(TAC.CANTIDAD,0)>0";
 
         $query = $db->query($sql);
 		
@@ -118,7 +125,7 @@ class ArticuloClienteModel extends Model
 		return $query->getResult();
     }    
    
-    public function getAll(){
+    public function getAll($seccion){
         $db = \Config\Database::connect();
         
         $sql = "SELECT  '' AS '',
@@ -127,18 +134,16 @@ class ArticuloClienteModel extends Model
                         TC.DNI AS 'DNI',
                         CONCAT(TA.NUMERO,TA.LETRA) AS 'Número',
                         TCA.NOMBRE AS 'Categoría',
-                        TCA.PRECIO AS 'Importe',
-                        CONCAT(TC.IBAN,TB.CODIGO,TC.AGENCIA,TC.CUENTA) AS 'Cuenta'                        
+                        TAC.CANTIDAD*TCA.PRECIO AS 'Importe',
+                        TC.CUENTA AS 'Cuenta'                        
                 FROM $this->table  as TAC
                 INNER JOIN tbl_clientes AS TC
                 ON TAC.CLIENTE_ID=TC.ID
-                INNER JOIN tbl_bancos AS TB
-                ON TC.BANCO_ID=TB.ID
                 INNER JOIN tbl_articulos AS TA
                 ON TAC.ARTICULO_ID=TA.ID
                 INNER JOIN tbl_categorias AS TCA
                 ON TA.CATEGORIA_ID=TCA.ID
-                WHERE ISNULL(TAC.DELETED_AT)";
+                WHERE ISNULL(TAC.DELETED_AT) AND TC.SECCION_ID=$seccion";
 
         $query = $db->query($sql);
 		

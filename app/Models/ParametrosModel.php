@@ -12,9 +12,7 @@ class ParametrosModel extends Model
     {
         $db = \Config\Database::connect();
 
-        $sql = "SELECT  TP.HOST_MULTI As 'multiApp',
-                        TP.RUTA_IMAGICK As 'rutaImagick',
-                        TP.RUTA_BAT As 'rutaBat'
+        $sql = "SELECT  TP.CARPETA_APP
                 FROM tbl_parametros TP";
 
         $query = $db->query($sql);

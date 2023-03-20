@@ -327,7 +327,7 @@ $(document).ready(function() {
     });
 
     $("#<?= $idTable ?> tbody").on('click', '#btnEliminar', function() {
-        var result = confirm("¿Desea eliminar el registro?");
+        var result = confirm("<?php echo lang('Translate.eliminarRegistro'); ?>");
         if (result) {
             window.location.replace('/<?= $slug ?>/delete/' + $(this).data('id'));
         }

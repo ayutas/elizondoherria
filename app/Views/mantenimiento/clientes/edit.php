@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="fade-in">
                     <!-- titulo -->
-                    <h1>Cliente</h1>
+                    <h1><?php echo lang('Translate.clientes'); ?></h1>
                     <div clas="row">
                         <div class="container mt-4">
                         <?php if(session()->get('success')): ?>
@@ -25,9 +25,9 @@
                             <div class="col-md-4">                        
                                 <!-- Campo Nombre -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="nombre">Nombre</label>
+                                    <label class="medium mb-1" for="nombre"><?php echo lang('Translate.nombre'); ?></label>
                                     <input class="form-control py-2" id="nombre" name="nombre" type="text"
-                                        placeholder="Introduce nombre" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaNombre'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Nombre;
                                         }  
@@ -40,9 +40,9 @@
                             <div class="col-md-4">
                                 <!-- Campo Apellidos -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="apellidos">Apellidos</label>
+                                    <label class="medium mb-1" for="apellidos"><?php echo lang('Translate.apellidos'); ?></label>
                                     <input class="form-control py-2" id="apellidos" name="apellidos" type="text"
-                                        placeholder="Introduce apellidos" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaApellidos'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Apellidos;
                                         }  
@@ -55,9 +55,9 @@
                             <div class="col-md-4">
                                 <!-- Campo DNI -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="dni">DNI</label>
+                                    <label class="medium mb-1" for="dni"><?php echo lang('Translate.dni'); ?></label>
                                     <input class="form-control py-2" id="dni" name="dni" type="text"
-                                        placeholder="Introduce DNI" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaDni'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->DNI;
                                         }  
@@ -72,9 +72,9 @@
                             <div class="col-md-4">                        
                                 <!-- Campo Domicilio -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="domicilio">Domicilio</label>
+                                    <label class="medium mb-1" for="domicilio"><?php echo lang('Translate.domicilio'); ?></label>
                                     <input class="form-control py-2" id="domicilio" name="domicilio" type="text"
-                                        placeholder="Introduce domicilio" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaDomicilio'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Domicilio;
                                         }  
@@ -87,9 +87,9 @@
                             <div class="col-md-4">
                                 <!-- Campo Poblacion -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="poblacion">Población</label>
+                                    <label class="medium mb-1" for="poblacion"><?php echo lang('Translate.poblacion'); ?></label>
                                     <input class="form-control py-2" id="poblacion" name="poblacion" type="text"
-                                        placeholder="Introduce población" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaPoblacion'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Poblacion;
                                         }  
@@ -102,9 +102,9 @@
                             <div class="col-md-4">
                                 <!-- Campo CPostal -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="cpostal">Código postal</label>
+                                    <label class="medium mb-1" for="cpostal"><?php echo lang('Translate.cpostal'); ?></label>
                                     <input class="form-control py-2" id="cpostal" name="cpostal" type="text"
-                                        placeholder="Introduce código postal" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaCPostal'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->CPostal;
                                         }  
@@ -119,9 +119,9 @@
                             <div class="col-md-4">
                                 <!-- Campo Contacto -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="contacto">Contacto</label>
+                                    <label class="medium mb-1" for="contacto"><?php echo lang('Translate.contacto'); ?></label>
                                     <input class="form-control py-2" id="contacto" name="contacto" type="text"
-                                        placeholder="Introduce nombre contacto" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaContacto'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Contacto;
                                         }  
@@ -134,9 +134,9 @@
                             <div class="col-md-4">
                                 <!-- Campo Telefono -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="telefono">Teléfono</label>
+                                    <label class="medium mb-1" for="telefono"><?php echo lang('Translate.telefono'); ?></label>
                                     <input class="form-control py-2" id="telefono" name="telefono" type="text"
-                                        placeholder="Introduce telefono contacto" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaTelefono'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Telefono;
                                         }  
@@ -149,9 +149,9 @@
                             <div class="col-md-4">
                                 <!-- Campo Email -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="email">Email</label>
+                                    <label class="medium mb-1" for="email"><?php echo lang('Translate.email'); ?></label>
                                     <input class="form-control py-2" id="email" name="email" type="text"
-                                        placeholder="Introduce email contacto" value="<?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaEmail'); ?>" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Email;
                                         }  
@@ -163,58 +163,63 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-3">
-                                <!-- Campo Iban -->
+                            <div class="col-md-2">
+                                <!-- Campo numero -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="iban">IBAN</label>
-                                    <input class="form-control py-2" id="iban" name="iban" type="text"
-                                        placeholder="Introduce iban" value="<?php if(isset($data[0]))
+                                    <label class="medium mb-1" for="numero"><?php echo lang('Translate.numero'); ?></label>
+                                    <input class="form-control py-2" id="numero" name="numero" type="text"
+                                        placeholder="<?php echo lang('Translate.introduzcaNumero'); ?>" value="<?php if(isset($data[0]))
                                         {
-                                            echo $data[0]->Iban;
+                                            echo $data[0]->Numero;
                                         }  
                                         else{
-                                            echo set_value('iban');
+                                            echo set_value('numero');
                                         }
                                         ?>" />
                                 </div>
-                            </div>                           
-                            <div class="col-md-3">
-                                <!-- Campo Banco -->
-                                <div id="comboBancos" class="form-group">
-                                    <label class="medium mb-1" for="banco">Banco</label>
-                                    <select class="form-control py-2" id="banco" name="banco">
+                            </div>                              
+                            <div class="col-md-2">
+                                <!-- Campo zona -->
+                                <div class="form-group">
+                                    <label class="medium mb-1" for="zona"><?php echo lang('Translate.zona'); ?></label>
+                                    <select class="form-control py-2" id="zona" name="zona">
                                         <option value="0">-</option>
-                                        <?php if (isset($bancos)) {
-                                            foreach ($bancos as $banco) { ?>
-                                                <option class="" value="<?php echo $banco->ID; ?>">
-                                                <?php echo $banco->Código .' - '.$banco->Nombre; ?></option><?php
+                                        <?php if (isset($zonas)) {
+                                            foreach ($zonas as $zona) { ?>
+                                                <option class="" value="<?php echo $zona->ID; ?>"
+                                                <?php if(isset($data[0])){ if ($zona->ID==$data[0]->Zona){?> selected <?php }};?>                                                    
+                                                >
+                                                <?php echo $zona->DESCRIPCION; ?></option><?php
                                                 }
                                             }
                                         ?>
-                                    </select>    
+                                    </select>                                          
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <!-- Campo Agencia -->
+                            </div>                            
+                            <div class="col-md-2">
+                                <!-- Campo Forma Pago -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="agencia">Agencia</label>
-                                    <input class="form-control py-2" id="agencia" name="agencia" type="text"
-                                        placeholder="Introduce agencia" value="<?php if(isset($data[0]))
-                                        {
-                                            echo $data[0]->Agencia;
-                                        }  
-                                        else{
-                                            echo set_value('agencia');
-                                        }
-                                        ?>" />
+                                    <label class="medium mb-1" for="formaPago"><?php echo lang('Translate.formaPago'); ?></label>
+                                    <select class="form-control py-2" id="formaPago" name="formaPago">
+                                        <option value="0">-</option>
+                                        <?php if (isset($formasPago)) {
+                                            foreach ($formasPago as $formaPago) { ?>
+                                                <option class="" value="<?php echo $formaPago->ID; ?>"
+                                                <?php if(isset($data[0])){ if ($formaPago->ID==$data[0]->FormaPago){?> selected <?php }};?>                                                    
+                                                >
+                                                <?php echo $formaPago->DESCRIPCION; ?></option><?php
+                                                }
+                                            }
+                                        ?>
+                                    </select>                                          
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <!-- Campo Cuenta -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="cuenta">Cuenta</label>
-                                    <input class="form-control py-2" id="cuenta" name="cuenta" type="text"
-                                        placeholder="Introduce resto de la cuenta" value="<?php if(isset($data[0]))
+                                    <label class="medium mb-1" for="cuenta"><?php echo lang('Translate.cuenta'); ?></label>
+                                    <input class="form-control py-2" id="cuenta" name="cuenta" type="text" disabled
+                                        placeholder="ES00 1111 2222 3333 4444 5555" value="<?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Cuenta;
                                         }  
@@ -229,9 +234,9 @@
                             <div class="col-md-12">
                                 <!-- Campo Notas -->
                                 <div class="form-group">
-                                    <label class="medium mb-1" for="notas">Notas</label>
+                                    <label class="medium mb-1" for="notas"><?php echo lang('Translate.notas'); ?></label>
                                     <textarea class="form-control py-2" id="notas" name="notas" rows="4" cols="50"
-                                        placeholder="Introduce notas"><?php if(isset($data[0]))
+                                        placeholder="<?php echo lang('Translate.introduzcaNotas'); ?>"><?php if(isset($data[0]))
                                         {
                                             echo $data[0]->Notas;
                                         }  
@@ -252,7 +257,7 @@
                                     <a class="nav-link active" data-toggle="tab" href="#comentarios-1"
                                         role="tab" aria-controls="comentarios" aria-selected="true">
                                         <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">Comentarios</font>
+                                            <font style="vertical-align: inherit;"><?php echo lang('Translate.comentarios'); ?></font>
                                         </font>
                                     </a>
                                 </li>                
@@ -261,7 +266,16 @@
                                     <a class="nav-link" data-toggle="tab" href="#articulos-1" role="tab"
                                         aria-controls="articulos" aria-selected="false">
                                         <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">Artículos</font>
+                                            <font style="vertical-align: inherit;"><?php echo lang('Translate.articulos'); ?></font>
+                                        </font>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <!-- TAB DOCUMENTOS -->
+                                    <a class="nav-link" data-toggle="tab" href="#documentos-1"
+                                        role="tab" aria-controls="documentos" aria-selected="false">
+                                        <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;"><?php echo lang('Translate.documentos'); ?></font>
                                         </font>
                                     </a>
                                 </li>
@@ -270,7 +284,7 @@
                                     <a class="nav-link" data-toggle="tab" href="#recibos-1"
                                         role="tab" aria-controls="recibos" aria-selected="false">
                                         <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">Recibos</font>
+                                            <font style="vertical-align: inherit;"><?php echo lang('Translate.recibos'); ?></font>
                                         </font>
                                     </a>
                                 </li>
@@ -279,14 +293,14 @@
                                 <div class="tab-pane active" id="comentarios-1" role="tabpanel">
                                     <div class="form-row">
                                         <div class="col-md-12">
-                                            <button type="Button" onclick="NuevoComentario()" id="btnNuevoComentario" class="btn btn-primary mb-2 ml-2" >Nuevo comentario</button>
+                                            <button type="Button" onclick="NuevoComentario()" id="btnNuevoComentario" class="btn btn-primary mb-2 ml-2" ><?php echo lang('Translate.newcomentario'); ?></button>
                                         </div>
                                     </div>
                                     <div id="tablaComentarios" name="tablaComentarios">
                                     <!--Tabla comentarios -->
-                                    <?php if(isset($columnsComentarios))
+                                    <?php if(isset($columnsComentarios[0]))
                                     {                                        
-                                        dataTable("", $columnsComentarios, $dataComentarios, 'Comentarios', '4', 'text-center', "0", 4, false, 0, 'datatableComentarios');
+                                        dataTable("", $columnsComentarios, $dataComentarios, 'Comentarios', '4,5', 'text-center', "0", 4, false, 0, 'datatableComentarios');
                                     }
                                     ?>
                                     </div>
@@ -294,7 +308,7 @@
                                 <div class="tab-pane" id="articulos-1" role="tabpanel">
                                     <div class="form-row">
                                         <div class="col-md-12">
-                                            <button type="Button" onclick="AsignarArticulo()" id="btnAsignarArticulo" class="btn btn-primary mb-2 ml-2" >Asignar articulo</button>
+                                            <button type="Button" onclick="AsignarArticulo()" id="btnAsignarArticulo" class="btn btn-primary mb-2 ml-2" ><?php echo lang('Translate.asignarArticulo'); ?></button>
                                         </div>
                                     </div>
 
@@ -303,10 +317,13 @@
                                             style="color:black;">
                                             <thead>
                                                 <tr>
-                                                    <th>Número</th>
-                                                    <th>Letra</th>
-                                                    <th>Categoría</th>
-                                                    <th>Precio</th>
+                                                    <th><?php echo lang('Translate.descripcion'); ?></th>
+                                                    <th><?php echo lang('Translate.numero'); ?></th>
+                                                    <th><?php echo lang('Translate.letra'); ?></th>
+                                                    <th><?php echo lang('Translate.categoria'); ?></th>
+                                                    <th><?php echo lang('Translate.cantidad'); ?></th>
+                                                    <th><?php echo lang('Translate.precio'); ?></th>
+                                                    <th><?php echo lang('Translate.importe'); ?></th>
                                                     <th></th>
                                                     <th></th>
                                                 </tr>
@@ -315,12 +332,15 @@
                                                 <?php if (isset($dataArticulos) && $dataArticulos != null) {
                                                     foreach ($dataArticulos as $articulo) { ?>
                                                 <tr>
+                                                    <td><?= $articulo->Descripción ?></td>
                                                     <td><?= $articulo->Número ?></td>
                                                     <td><?= $articulo->Letra ?></td>
                                                     <td><?= $articulo->Categoría ?></td>
+                                                    <td><?= $articulo->Cantidad ?></td>
                                                     <td><?= $articulo->Precio ?></td>
-                                                    <td><button type="Button" onclick="QuitarArticulo(<?=$articulo->ID?>)" id="btnQuitarArticulo" class="btn btn-danger mb-2 ml-2" >Quitar</button></td>
-                                                    <td><button type="Button" onclick="ImprimirArticulo(<?=$articulo->ID?>)" id="btnImprimirArticulo" class="btn btn-info mb-2 ml-2" >Imprimir</button></td>
+                                                    <td><?= $articulo->Importe ?></td>
+                                                    <td><button type="Button" onclick="QuitarArticulo(<?=$articulo->ID?>)" id="btnQuitarArticulo" class="btn btn-danger mb-2 ml-2" ><?php echo lang('Translate.quitar'); ?></button></td>
+                                                    <td><button type="Button" onclick="ImprimirArticulo(<?=$articulo->ID?>)" id="btnImprimirArticulo" class="btn btn-info mb-2 ml-2" ><?php echo lang('Translate.imprimir'); ?></button></td>
                                                 </tr>
                                                 <?php }
                                                 } ?>
@@ -329,7 +349,21 @@
                                         </table>
                                     </div>
                                 </div>
-
+                                <div class="tab-pane" id="documentos-1" role="tabpanel">
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <button type="Button" onclick="NuevoDocumento()" id="btnNuevoDocumento" class="btn btn-primary mb-2 ml-2" ><?php echo lang('Translate.newdocumento'); ?></button>
+                                        </div>
+                                    </div>
+                                    <!--Tabla documentos -->
+                                    <div id="tablaDocumentos" name="tablaDocumentos">
+                                        <?php if(isset($columnsDocumentos[0]))
+                                        {
+                                            dataTable("", $columnsDocumentos, $dataDocumentos, 'Documentos', '4,5', 'text-center', "0,3", 4, false, 0, 'datatableDocumentos');
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
                                 <div class="tab-pane" id="recibos-1" role="tabpanel">
                                     <!-- <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="checkDetalleRecibos" onclick="CargarDetalleRecibos()">
@@ -339,10 +373,10 @@
                                     </div> -->
                                     <!--Tabla recibos -->
                                     <?php if(isset($columnsRecibos[0]))
-                                    {
-                                    dataTable("Recibos cliente", $columnsRecibos, $dataRecibos, 'Recibos', '5', 'text-center', "0,6",  4, false, 0, 'tablaRecibos');
-                                    }
-                                ?>
+                                        {
+                                        dataTable(lang('Translate.recibosCliente'), $columnsRecibos, $dataRecibos, 'Recibos', '6', 'text-center', "0,7",  7, false, 0, 'tablaRecibos');
+                                        }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -362,10 +396,43 @@
                                         <!-- <div id="tablaSeleccion"> -->
                                             <div class="col-md-12">
                                             <?php if(isset($columnsArticulosDisponibles[0]))
-                                                dataTablePersonalizadaSeleccion($columnsArticulosDisponibles,$articulosDisponibles,$slug,'','text-center','', "Artículos (". count($articulosDisponibles).")",12,true,0,'datatableArticulosDisponibles',false,0,"AñadirArticulo(this)");
+                                                dataTablePersonalizadaSeleccion($columnsArticulosDisponibles,$articulosDisponibles,$slug,'','text-center','1', lang('Translate.articulos')."(". count($articulosDisponibles).")",12,true,0,'datatableArticulosDisponibles',false,0,"AñadirCantidad(this)");
                                                 ?>   
                                             </div>
                                         <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="modalInsertarCantidad" tabindex="-1" role="dialog" aria-labelledby="modalInsertarCantidad" aria-hidden="true">
+                        <div class="modal-dialog" role="document"  style="max-width: 1350px!important;">
+                            <div class="modal-content">
+                                <div style="background-color:white;" class="modal-header">
+                                    <h5 class="modal-title" id="modalInsertarCantidadLabel"></h5>
+                                    <button id="btnClosemodalInsertarCantidad" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span style="background-color:black;" aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div style="background-color:white;" class="modal-body" id="divModal">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="body-form-heavy" for="cantidad"><?php echo lang('Translate.cantidad'); ?></label>
+                                                    <input class="form-control body-form-light"  id="cantidad" name="cantidad"
+                                                    type="text" placeholder="<?php echo lang('Translate.cantidad'); ?>"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <button onclick="AñadirArticulo()"  type="button" class="btn btn-primary" data-dismiss="modal"><?php echo lang('Translate.aceptar'); ?></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -384,10 +451,41 @@
                                 <div style="background-color:white;" class="modal-body" id="divModal">
                                     <div class="row">
                                         <textarea name="comentario" id="comentario" rows="4" cols="50"
-                                        placeholder="Introduce comentario"></textarea>
+                                        placeholder="<?php echo lang('Translate.introduzcaComentario'); ?>"></textarea>
                                     </div>
                                     <div class="row">
-                                        <button type="Button" onclick="GuardarComentario()" id="btnGuardarComentario" class="btn btn-primary mb-2 ml-2" >Guardar</button>
+                                        <button type="Button" onclick="GuardarComentario()" id="btnGuardarComentario" class="btn btn-primary mt-2 mb-2 ml-2" ><?php echo lang('Translate.aceptar'); ?></button>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <!--Modal para los documentos-->
+                    <div class="modal fade" id="modalDocumentos" tabindex="-1" role="dialog" aria-labelledby="modalDocumentos" aria-hidden="true">
+                        <div class="modal-dialog" role="document"  >
+                            <div class="modal-content">
+                                <div style="background-color:white;" class="modal-header">
+                                    <h5 class="modal-title" id="modalDocumentosLabel"></h5>
+                                    <button id="btnClosemodalDocumentos" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span style="background-color:black;" aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div style="background-color:white;" class="modal-body" id="divModal">
+                                    <div class="form-group">
+                                        <label class="body-form-heavy" for="titulo"><?php echo lang('Translate.tituloDocumento'); ?></label>
+                                        <input class="form-control body-form-light"  id="titulo" name="titulo"
+                                        type="text" placeholder="<?php echo lang('Translate.introduzcaTitulo'); ?>"
+                                        />
+                                    </div>
+                                    <div class="custom-file mt-2 mb-2" id="div_etiqueta">
+                                        <input type="file" class="custom-file-input"
+                                            name="archivo" id="archivo"
+                                            accept="application/*">
+                                        <label class="custom-file-label" id="labelarchivo"
+                                            for="archivo" data-browse="<?php echo lang('Translate.examinar'); ?>"><?php echo lang('Translate.seleccionarArchivo'); ?></label>
+                                    </div>                                    
+                                    <div class="row">
+                                        <button type="Button" onclick="GuardarDocumento()" id="btnGuardarDocumento" class="btn btn-primary mt-2 mb-2 ml-2" ><?php echo lang('Translate.aceptar'); ?></button>
                                     </div>                                    
                                 </div>
                             </div>
@@ -404,13 +502,11 @@
 
                     <div class="col-12 form-group mt-4 mb-0">
                         <button class="btn btn-primary btn-block" type="button" onclick="GuardarCliente()"><?php if (isset($data[0]))
-                        { 
-                            echo 'Actualizar';
-                        }
-                        else
-                        {
-                            echo 'Crear';
-                        }
+                            { 
+                                echo lang('Translate.actualizar');
+                            } else {
+                                echo lang('Translate.crear');
+                            }
                         ?></button>
                     </div>
                         
@@ -431,48 +527,183 @@ $( document ).ready(function() {
         var data=<?php echo json_encode($data[0]); ?>;
         idCliente=data.ID;
     <?php }?>
+    if ($("#formaPago").val()==1){
+        $("#cuenta").attr('disabled', false);
+    }
 
+});
+
+$("#formaPago").on('change', async function() {
+    if ($("#formaPago").val()==1){
+        $("#cuenta").attr('disabled', false);
+    } else {
+        $("#cuenta").attr('disabled', 'disabled');
+    }
 });
 
 function AsignarArticulo(input)
 {
-    console.log(idCliente);
     if(idCliente!=0){            
         $("#modalSeleccionArticulos").modal('show');
     } else{
-        if (confirm("Para poder asignar es necesario guardar el cliente. ¿Continuar guardando?")) {
+        if (confirm("<?php echo lang('Translate.necesarioGuardarCliente'); ?>")) {
             ShowAlGuardar=0;
             GuardarCliente();
-            $("#modalSeleccionArticulos").modal('show');
-            ShowAlGuardar=1;
+            if(idCliente!=0){
+                $("#modalSeleccionArticulos").modal('show');
+            }
         }
     }
 }
 
 function NuevoComentario(input)
 {
-    console.log(idCliente);
     if(idCliente!=0){
         $('#modalComentarios').data('id', 0);
         $("#comentario").val('');
-        $("#modalComentarios").modal('show');        
+        $("#modalComentarios").modal('show');
+    } else{
+        if (confirm("<?php echo lang('Translate.necesarioGuardarCliente'); ?>")) {
+            ShowAlGuardar=0;
+            GuardarCliente();
+            if(idCliente!=0){
+                $('#modalComentarios').data('id', 0);
+                $("#comentario").val('');
+                $("#modalComentarios").modal('show');
+            }
+        }
     }
 }
 
 function EditarComentario(boton)
 {
-    // var btn = boton.parentElement.parentElement;
     var linea = boton.parentElement.parentElement;
     var table = $("#datatableComentarios").dataTable();
     var row = table.find("tr").eq(linea.rowIndex);
     var data = $("#datatableComentarios").dataTable().fnGetData(row);       
    
     if(idCliente!=0){
-        $("#comentario").val(data.Comentario);        
-        $('#modalComentarios').data('id', data.ID);        
-        $("#modalComentarios").modal('show');        
+        $("#comentario").val(data.Comentario);
+        $('#modalComentarios').data('id', data.ID);
+        $("#modalComentarios").modal('show');
     }
 }
+
+function NuevoDocumento(input)
+{
+    if(idCliente!=0){
+        $("#titulo").val('');
+        $("#archivo").val('');
+        $("#archivo").next('.custom-file-label').html('');
+        $("#modalDocumentos").modal('show');
+    } else{
+        if (confirm("<?php echo lang('Translate.necesarioGuardarCliente'); ?>")) {
+            ShowAlGuardar=0;
+            GuardarCliente();
+            if(idCliente!=0){
+                $("#titulo").val('');
+                $("#archivo").val('');
+                $("#archivo").next('.custom-file-label').html('');
+                $("#modalDocumentos").modal('show');
+            }
+        }
+    }
+}
+
+$('#archivo').on('change', function(e) 
+{
+    var fileName = e.target.files[0].name;
+    //replace the "Choose a file" label
+    $(this).next('.custom-file-label').html(fileName);
+    if($("#titulo").val()==""){
+        $("#titulo").val(fileName);
+    }
+});
+
+function GuardarDocumento(input)
+{
+    var titulo=$("#titulo").val();
+    if (titulo==""){
+        alert('<?php echo lang('Translate.introduzcaTitulo'); ?>');
+        return;
+    }
+    if ($('#archivo').val() == ''){
+        alert('<?php echo lang('Translate.noSeleccionadoArchivo'); ?>');
+        return;
+    }
+    var file_data = $('#archivo').prop('files')[0];  
+    var parametros = JSON.stringify({
+        idCliente:idCliente,
+        titulo:titulo,
+
+    });
+    var form_data = new FormData();
+         form_data.append('archivo', file_data);
+         form_data.append('idCliente', idCliente);
+         form_data.append('titulo', titulo);
+         
+         $.ajax({
+            url: '<?= base_url()?>/Clientes/guardarDocumentoCliente',
+            dataType: 'text',  
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(response) {
+                //Cargamos los documentos en la tabla
+                // console.log(JSON.parse(response));
+                //HAGO EL JSON.parse porque al hacer la llamada tipo text en vez de json para poder grabar el archivo, la respuesta viene como texto, 
+                //asi que lo convierto en JSON para poder cargar el dataTable
+                var DocumentosCliente = JSON.parse(response)[0];
+                CargarTablaDocumentos(DocumentosCliente);
+            }
+        
+    });
+    $("#modalDocumentos").modal('hide');
+}
+
+function EliminarDocumento(id)
+{    
+    if (confirm('<?php echo lang('Translate.eliminarDocumento'); ?>') == true) {
+    
+        var parametros = JSON.stringify({
+            id:id,
+            idCliente:idCliente,
+        });
+        // console.log(parametros);
+        $.ajax({
+            data: {
+                'data': parametros
+            },
+            dataType: "json",
+            //data: formData,
+            url: '<?= base_url() ?>/clientes/eliminarDocumentoCliente',
+            type: 'post',
+            beforeSend: function() {
+                $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
+            },
+            success: function(response) {
+                //Cargamos los articulos en la tabla
+                // console.log(response);
+                var DocumentosCliente = response[0];
+                CargarTablaDocumentos(DocumentosCliente);
+            }
+        });        
+    }
+}
+
+function DescargarDocumento(boton)
+{
+    var linea = boton.parentElement.parentElement;
+    var table = $("#datatableDocumentos").dataTable();
+    var row = table.find("tr").eq(linea.rowIndex);
+    var data = $("#datatableDocumentos").dataTable().fnGetData(row);
+    var id = data.ID;
+    window.open('<?= base_url() ?>/Clientes/descargarDocumento/'+id,
+                                "_blank");
+}
+
 
 function EditarRecibo(boton)
 {
@@ -484,19 +715,24 @@ function EditarRecibo(boton)
     var idRecibo=data.ID;
     
     if(idRecibo!=0){
-        window.location.replace("<?= base_url() ?>/recibos/edit/"+idRecibo);        
+        window.location.assign("<?= base_url() ?>/recibos/edit/"+idRecibo);
     }
 }
 
 function GuardarCliente()
-{       
+{   
     var nombre= $('#nombre').val();
+    if (nombre=="")
+    {
+        alert('<?php echo lang('Translate.introduzcaNombre'); ?>');
+        return false;
+    }
     var apellidos= $('#apellidos').val();
     var dni= $('#dni').val();
     if (!validar_dni_nif_nie(dni))
     {
-        alert('DNI no válido');
-        return;
+        alert('<?php echo lang('Translate.dniNoValido'); ?>');
+        return false;
     }
 
     var domicilio= $('#domicilio').val();
@@ -505,18 +741,20 @@ function GuardarCliente()
     var contacto= $('#contacto').val();
     var telefono= $('#telefono').val();
     var email= $('#email').val();
-    var iban= $('#iban').val();
-    var banco= $('#banco').val();
-    var agencia= $('#agencia').val();
+    var numero= $('#numero').val();
+    var zona= $('#zona').val();
+    var formaPago= $('#formaPago').val();
     var cuenta= $('#cuenta').val();
-    
-    if (!fn_ValidateIBAN(iban+banco+agencia+cuenta))
-    {
-        alert('IBAN de la cuenta no válido');
-        return;
+    //SI LA FORMA DE PAGO ES 1 (RECIBO), COMPROBAMOS IBAN
+    if(formaPago==1){
+        if (!fn_ValidateIBAN(cuenta))
+        {
+            alert('<?php echo lang('Translate.ibanIncorrecto'); ?>');
+            return false;
+        }
     }
     var notas= $('#notas').val();
-    console.log('idCliente: '+idCliente);
+    // console.log('idCliente: '+idCliente);
     var parametros = JSON.stringify({
         id:idCliente,
         nombre:nombre,
@@ -528,9 +766,9 @@ function GuardarCliente()
         contacto:contacto,
         telefono:telefono,
         email:email,
-        iban:iban,
-        banco:banco,
-        agencia:agencia,
+        numero:numero,
+        zona:zona,
+        formaPago:formaPago,
         cuenta:cuenta,
         notas:notas
     });
@@ -542,72 +780,74 @@ function GuardarCliente()
         //data: formData,
         url: '<?= base_url() ?>/clientes/guardarCliente',
         type: 'post',
+        async: false,
         beforeSend: function() {
-            $("#resultado").html("Procesando, espere por favor...");
+            $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
         },
         success: function(response) {
-            if(ShowAlGuardar){
-                // similar behavior as an HTTP redirect
-                window.location.replace("<?= base_url() ?>/hilerria/clientes/show/"); //le pongo hilerria porque no se porque no lo coge desde el base_url??
+            if(response[0]==true){
+                if(ShowAlGuardar==1){
+                    // similar behavior as an HTTP redirect
+                    window.location.assign("<?= base_url() ?>/clientes/show"); //le pongo hilerria porque no se porque no lo coge desde el base_url??
+                } else {
+                    idCliente = response[1];
+                    ShowAlGuardar=1;
+                    $(".alert").html("<?php echo lang('Translate.grabadoCliente'); ?>");
+                    if ($('.alert').hasClass('alert-warning')) {
+                        $('.alert').removeClass('alert-warning');
+                        $('.alert').addClass('alert-success');
+                    };
+                    if ($('.alert').hasClass('alert-danger')) {
+                        $('.alert').removeClass('alert-danger');
+                        $('.alert').addClass('alert-success');
+                    };
+                    $('.alert').show();
+                    setInterval(function() {
+                        $('.alert').hide();
+                    }, 5000)                    
+                };
             } else {
-                idCliente = response[0];
-                $(".alert").html(
-                    "Se ha grabado el cliente <strong>Correctamente!</strong>");
-                if ($('.alert').hasClass('alert-warning')) {
-                    $('.alert').removeClass('alert-warning');
-                    $('.alert').addClass('alert-success');
-                };
-                if ($('.alert').hasClass('alert-danger')) {
-                    $('.alert').removeClass('alert-danger');
-                    $('.alert').addClass('alert-success');
-                };
-                $('.alert').show();
-                setInterval(function() {
-                    $('.alert').hide();
-                }, 5000)
-
-            }
+                alert(response[1]);
+                return false;
+            };
         }
     });
 
-    // } else {
-    //     $(".alert").html("Debe elegir un chekclist para poder guardar sus items!");
-    //     if ($('.alert').hasClass('alert-success')) {
-    //         $('.alert').removeClass('alert-success');
-    //         $('.alert').addClass('alert-danger');
-    //     };
-    //     if ($('.alert').hasClass('alert-warning')) {
-    //         $('.alert').removeClass('alert-warning');
-    //         $('.alert').addClass('alert-danger');
-    //     };
-    //     $('.alert').show();
-    //     setInterval(function() {
-    //         $('.alert').hide();
-    //     }, 5000)
-    // }
-
 }
 
-function AñadirArticulo(boton)
+function AñadirCantidad(boton)
 {
-    console.log('llego');
     var linea = boton.parentElement.parentElement;
-    console.log('linea '+linea);
     var table = $("#datatableArticulosDisponibles").dataTable();
     var row = table.find("tr").eq(linea.rowIndex);
     var data = $("#datatableArticulosDisponibles").dataTable().fnGetData(row);
-    console.log('data '+data);
-    var idArticulo=data.ID;
-    console.log('articulo '+idArticulo);
-    var numero=data.Número;
-    var letra=data.Letra;
-    var categoria=data.Categoría;
-    var precio=data.Precio;
-    console.log('articulo '+idArticulo, 'num'+numero, 'letra'+letra, 'cat'+categoria,'precio'+precio);
 
+    $("#cantidad") .val("");
+    $('#modalInsertarCantidad').data('articulo',data.ID);
+    $('#modalInsertarCantidad').data('disponible',data.Disponible);
+    $("#modalSeleccionArticulos").modal('hide');
+    $("#modalInsertarCantidad").modal('show');
+}
+
+function AñadirArticulo(boton)
+{    
+    var idArticulo = $("#modalInsertarCantidad").data('articulo');
+    var disponible = $("#modalInsertarCantidad").data('disponible');
+    var cantidad = $("#cantidad") .val();
+    cantidad=cantidad.replace(',','.');
+    if (!isNumeric(cantidad)){
+        alert('<?php echo lang('Translate.cantidadNoNumerica'); ?>');
+        return;
+    }
+    if (cantidad>disponible){
+        alert('<?php echo lang('Translate.cantidadSuperaDisponible'); ?>');
+        return;
+    }
+    
     var parametros = JSON.stringify({
         idCliente:idCliente,
-        idArticulo:idArticulo
+        idArticulo:idArticulo,
+        cantidad:cantidad
     });
     $.ajax({
         data: {
@@ -618,11 +858,11 @@ function AñadirArticulo(boton)
         url: '<?= base_url() ?>/clientes/guardarArticuloCliente',
         type: 'post',
         beforeSend: function() {
-            $("#resultado").html("Procesando, espere por favor...");
+            $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
         },
         success: function(response) {
                 //Cargamos los articulos en la tabla
-                console.log(response);
+                // console.log(response);
                 var ArticulosCliente = response[0];
                 var ArticulosDisponibles = response[1];
                 CargarTablaArticulosCliente(ArticulosCliente);
@@ -642,7 +882,7 @@ function GuardarComentario()
         idCliente:idCliente,
         comentario:comentario
     });
-    console.log(parametros);
+    // console.log(parametros);
     $.ajax({
         data: {
             'data': parametros
@@ -652,11 +892,11 @@ function GuardarComentario()
         url: '<?= base_url() ?>/clientes/guardarComentarioCliente',
         type: 'post',
         beforeSend: function() {
-            $("#resultado").html("Procesando, espere por favor...");
+            $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
         },
         success: function(response) {
                 //Cargamos los articulos en la tabla
-                console.log(response);
+                // console.log(response);
                 var ComentariosCliente = response[0];
                 CargarTablaComentarios(ComentariosCliente);
             }
@@ -667,10 +907,11 @@ function GuardarComentario()
 
 function QuitarArticulo(id)
 {
-    console.log(id);
-    var parametros = JSON.stringify({
-            id:id,
-            idCliente:idCliente,
+    if (confirm('<?php echo lang('Translate.eliminarSeguro'); ?>') == true) {
+        // console.log(id);
+        var parametros = JSON.stringify({
+                id:id,
+                idCliente:idCliente,
         });
         $.ajax({
             data: {
@@ -682,24 +923,25 @@ function QuitarArticulo(id)
             type: 'post',
             success: function(response) {
                 //Cargamos los articulos en la tabla
-                console.log(response);
+                // console.log(response);
                 var ArticulosCliente = response[0];
                 var ArticulosDisponibles = response[1];
                 CargarTablaArticulosCliente(ArticulosCliente);
                 CargarTablaSeleccion(ArticulosDisponibles);        
             }    
         });
+    }
 }
 
 function EliminarComentario(id)
 {    
-    if (confirm('¿Eliminar comentario?') == true) {
+    if (confirm('<?php echo lang('Translate.eliminarSeguro'); ?>') == true) {
     
         var parametros = JSON.stringify({
             id:id,
             idCliente:idCliente,
         });
-        console.log(parametros);
+        // console.log(parametros);
         $.ajax({
             data: {
                 'data': parametros
@@ -709,29 +951,19 @@ function EliminarComentario(id)
             url: '<?= base_url() ?>/clientes/eliminarComentarioCliente',
             type: 'post',
             beforeSend: function() {
-                $("#resultado").html("Procesando, espere por favor...");
+                $("#resultado").html("<?php echo lang('Translate.procesando'); ?>");
             },
             success: function(response) {
-                    //Cargamos los articulos en la tabla
-                    console.log(response);
-                    var ComentariosCliente = response[0];
-                    CargarTablaComentarios(ComentariosCliente);
-                    // if (ComentariosCliente.length>0){
-                    //     $("#tablaComentarios").show;
-                    // } else{
-                    //     $("#tablaComentarios").hide;
-                    // }
-                }
-            
+                //Cargamos los articulos en la tabla
+                var ComentariosCliente = response[0];
+                CargarTablaComentarios(ComentariosCliente);
+            }
         });
-        $("#modalComentarios").modal('hide');
     }
 }
 
 function ImprimirArticulo(id)
 {
-    console.log(id);
-
     //con Window.open abrimos el pdf en una nueva pestaña
     window.open("<?= base_url() ?>/clientes/imprimirArticuloCliente/"+id,'_blank');    
 }
@@ -741,21 +973,29 @@ function CargarTablaArticulosCliente(dataArticulos)
     var html = '<table class="table table-responsive-sm table-sm mt-4" style="color:black;">';
     html += '<thead>';
     html += '<tr>';
-    html += '<th>Número</th>';
-    html += '<th>Letra</th>';
-    html += '<th>Categoría</th>';
-    html += '<th>Precio</th>';
+    html += '<th><?php echo lang('Translate.descripcion'); ?></th>';
+    html += '<th><?php echo lang('Translate.numero'); ?></th>';
+    html += '<th><?php echo lang('Translate.letra'); ?></th>';
+    html += '<th><?php echo lang('Translate.categoria'); ?></th>';
+    html += '<th><?php echo lang('Translate.cantidad'); ?></th>';
+    html += '<th><?php echo lang('Translate.precio'); ?></th>';
+    html += '<th><?php echo lang('Translate.importe'); ?></th>';
+    html += '<th></th>';
     html += '<th></th>';
     html += '</tr>';
     html += '</thead>';
     html += '<tbody id="articulosCliente">';
     dataArticulos.forEach(function(articulo) {
         html += '<tr>';
+        html += '<td>'+ articulo.Descripción+'</td>';
         html += '<td>'+ articulo.Número+'</td>';
         html += '<td>'+ articulo.Letra +'</td>';
         html += '<td>'+ articulo.Categoría +'</td>';
+        html += '<td>'+ articulo.Cantidad+'</td>';
         html += '<td>'+ articulo.Precio +'</td>';
+        html += '<td>'+ articulo.Importe+'</td>';
         html += '<td><button type="Button" onclick="QuitarArticulo('+articulo.ID+')" id="btnQuitarArticulo" class="btn btn-danger mb-2 ml-2" >Quitar</button></td>';
+        html += '<td><button type="Button" onclick="ImprimirArticulo('+articulo.ID+')" id="btnImprimirArticulo" class="btn btn-info mb-2 ml-2" >Imprimir</button></td>';
         html += '</tr>';
     });
     html += '</tbody>';
@@ -772,11 +1012,16 @@ function CargarTablaSeleccion(articulosDisponibles)
 
 function CargarTablaComentarios(comentariosCliente)
 {
-    console.log($("#datatableComentarios").DataTable());
-    console.log($("#datatableComentarios"));
     $("#datatableComentarios").DataTable().clear();
     $("#datatableComentarios").DataTable().rows.add(comentariosCliente);
     $("#datatableComentarios").DataTable().draw();
+}
+
+function CargarTablaDocumentos(documentosCliente)
+{
+    $("#datatableDocumentos").DataTable().clear();
+    $("#datatableDocumentos").DataTable().rows.add(documentosCliente);
+    $("#datatableDocumentos").DataTable().draw();
 }
 
 function CargarDetalleRecibos()
@@ -864,21 +1109,108 @@ function getnumIBAN(letra) {
     return ls_letras.search(letra) + 10;
 }
 
-$("#banco").on('change', function() {
-    if ($("#iban").val()==''){
-        if ($('#banco').val() == 0) {
-            $("#iban").val('');
-        } else {
-            
-            var banco = $('#banco').val();
-            var arrayBancos = <?php echo json_encode($bancos); ?>;
-            var arrayBanco = $.grep(arrayBancos, function(x) {
-                return x.ID == banco;
-            });
-            console.log(arrayBanco,banco,arrayBancos);
-            $("#iban").val(arrayBanco[0].País);
-        }
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+document.getElementById("cuenta").addEventListener("keypress",ctaPress);
+document.getElementById("cuenta").addEventListener("keyup",ctaUp);
+document.getElementById("cuenta").addEventListener("paste",paste);
+ 
+/**
+ * Evento que se ejecuta cuando se pulsa una tecla
+ */
+function ctaPress(e)
+{
+    var a=e;
+ 
+    var valor=e.target.value;
+    var longitud=valor.length;
+    if(valor.length>=29) {
+        e.preventDefault();
     }
-});
+ 
+    // verificamos que sea introduzcan dos letras al inicio y numeros a continuacion
+    var patronA=new RegExp(/^([a-zA-Z])$/);
+    var patron1=new RegExp(/^([0-9])$/);
+    if((longitud<2 && patronA.test(e.key)===false) || (longitud>=2 && patron1.test(e.key)===false))
+    {
+        e.preventDefault();
+    }
+ 
+    // una vez se haya validado el valor, lo redibujamos correctamente
+    setTimeout(() => {
+        a.target.value=redibujar(a.target.value);
+    });
+}
+ 
+/**
+ * Evento que se ejecuta cuando se suelta una tecla
+ * Lo utilizamos para controlar si borra algun digito
+ */
+function ctaUp(e)
+{
+    var tecla=e.which || e.keyCode;
+    // 8 - Backspace
+    // 46 - Delete
+    if(tecla==8 || tecla==46)
+    {
+        e.target.value=redibujar(e.target.value);
+    }
+}
+ 
+/**
+ * Función para redibujar el numero de cuenta
+ * Se utiliza para cuando de borra o copia un numero de cuenta
+ *
+ * @param string valor
+ */
+function redibujar(valor)
+{
+    // eliminamos los espacios de la cadena
+    valor=valor.replace(/\s/g, '').toUpperCase();
+ 
+    // dibujamos nuevamente la cadena con los espacios se separacion
+    var result="";
+    var longitud=0;
+    for(var i=0;i<valor.length;i++)
+    {
+ 
+        // añadimos los espacios de separacion
+        if(longitud==4 || longitud==9 || longitud==14 || longitud==19 || longitud==24)
+        {
+            result+=" ";
+        }
+        result+=valor[i];
+        longitud=result.length;
+    }
+    return result;
+}
+ 
+/**
+ * Funcion que se ejecuta cuando se intente pegar un código
+ * NOTA: Solo funciona si el campo esta vacio
+ */
+function paste(e)
+{
+    var a=e;
+ 
+    // obtenemos el valor pegado desde la API de clipboard
+    var clipboardData = e.clipboardData || window.clipboardData;
+    var pastedData = clipboardData.getData('Text');
+ 
+    var patron=new RegExp(/^([a-zA-Z]{2})([0-9]{1,22})?$/);
+    if(a.target.value!="" || patron.test(pastedData)===false)
+    {
+        e.stopPropagation();
+        e.preventDefault();
+        return;
+    }
+ 
+    // Una vez pegado se ejecuta esta funcion
+    window.setTimeout(() => {
+        a.target.value=redibujar(a.target.value);
+    });
+}
 
 </script>
