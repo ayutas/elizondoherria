@@ -130,12 +130,12 @@ class ArticuloClienteModel extends Model
         
         $sql = "SELECT  '' AS '',
                         TAC.ID,
-                        CONCAT(IFNULL(TC.NOMBRE,''),IFNULL(TC.APELLIDOS,'')) AS 'Nombre',
-                        TC.DNI AS 'DNI',
-                        CONCAT(TA.NUMERO,TA.LETRA) AS 'Número',
-                        TCA.NOMBRE AS 'Categoría',
-                        TAC.CANTIDAD*TCA.PRECIO AS 'Importe',
-                        TC.CUENTA AS 'Cuenta'                        
+                        CONCAT(IFNULL(TC.NOMBRE,''),IFNULL(TC.APELLIDOS,'')) AS '".lang('Translate.nombre')."',
+                        TC.DNI AS '".lang('Translate.dni')."',
+                        CONCAT(TA.NUMERO,TA.LETRA) AS '".lang('Translate.numero')."',
+                        TCA.NOMBRE AS '".lang('Translate.categoria')."',
+                        TAC.CANTIDAD*TCA.PRECIO AS '".lang('Translate.importe')."',
+                        TC.CUENTA AS '".lang('Translate.cuenta')."'
                 FROM $this->table  as TAC
                 INNER JOIN tbl_clientes AS TC
                 ON TAC.CLIENTE_ID=TC.ID
