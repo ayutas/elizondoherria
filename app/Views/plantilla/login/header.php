@@ -22,10 +22,6 @@
     
     <!------ Include the above in your HEAD tag ---------->         
     <style>
-        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: white !important;
-        opacity: 0.87; /* Firefox */
-        }
         .form-control {
             display: block;
             width: 100%;

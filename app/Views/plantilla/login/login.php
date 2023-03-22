@@ -30,7 +30,7 @@
                                         </svg>
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" name="email" placeholder="<?php echo lang('Translate.introduzcaUsuario'); ?>"
+                                <input class="form-control py-2" type="text" name="email" placeholder="<?php echo lang('Translate.introduzcaUsuario'); ?>"
                                     value="<?= set_value('email') ?>">
                             </div>
                             <div class="input-group mb-4">
@@ -43,7 +43,7 @@
                                         </svg>
                                     </span>
                                 </div>
-                                <input class="form-control" type="password" id="password" name="password"
+                                <input class="form-control py-2" type="password" id="password" name="password"
                                     placeholder="<?php echo lang('Translate.introduzcaContrasena'); ?>">
                             </div>
                             <div id="divMayus" style="visibility:hidden"><?php echo lang('Translate.mayusculasActivo'); ?></div> <br>
