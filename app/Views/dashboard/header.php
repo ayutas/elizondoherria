@@ -113,36 +113,15 @@
             <svg class="c-icon c-icon-lg">
                 <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-menu"></use>
             </svg>
-        </button><a class="c-header-brand d-lg-none c-header-brand-sm-up-center" href="<?= base_url() ?>/#">
-            <svg width="118" height="46" alt="CoreUI Logo">
-                <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-coreui"></use>
-            </svg></a>
+        </button>
         <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar"
             data-class="c-sidebar-lg-show" responsive="true">
             <svg class="c-icon c-icon-lg">
                 <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-menu"></use>
             </svg>
         </button>
-        <!-- <ul class="c-header-nav d-md-down-none">
-            <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="<?= base_url() ?>/chequeo">Chequeo</a></li>
-            <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="<?= base_url() ?>/consultas">Consultas</a></li>
-            <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="<?= base_url() ?>/tablas">Tablas</a></li>
-            <!-- <li class="c-header-nav-item px-3"><a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="<?= base_url() ?>/">Tablas</a>
-            <div class="dropdown-menu"> 
-                <a class="dropdown-item" href="<?= base_url() ?>/delegaciones">Delegaciones</a>
-                <a class="dropdown-item" href="">Personal</a>
-                <a class="dropdown-item" href="">Articulos</a>
-                <a class="dropdown-item" href="">Formularios</a>
-                <a class="dropdown-item" href="">Motivos</a>
-                <a class="dropdown-item" href="">Grupos</a>
-                <a class="dropdown-item" href="">Items</a>                
-            </div>
-        </li> 
-        </ul> -->
         <ul class="c-header-nav mfs-auto">
-            <li class="c-header-nav-item px-3 c-d-legacy-none">
-                
-            </li>
+            <li class="c-header-nav-item px-3 c-d-legacy-none"></li>
         </ul>
         <ul class="c-header-nav">
             <div id="divSeccion" class="c-sidebar-nav-item" style="display:none;">
@@ -169,8 +148,6 @@
                         <a class="btn btn-primary mt-2 ml-2" href="<?= base_url() ?>/logout"> <?php echo lang('Translate.cerrarSesion');?></a>
                 </div>
             </li>
-        </ul>
-        <ul class="c-header-nav">
             <div id="divIdioma" class="c-sidebar-nav-item" style="display:none;">
                 <select class="form-select" aria-label="Default select example" id="idioma" name="idioma">
                     <option value="eu">EUS</option>
