@@ -34,7 +34,6 @@ $routes->get('/', 'Login::index',['filter' => 'noauth']);
 $routes->get('/logout', 'Login::logout',['filter' => 'auth']);
 $routes->get('/dashboard', 'Dashboard::index',['filter' => 'auth']);
 $routes->get('/consultas', 'Consultas::show',['filter' => 'auth']);
-$routes->get('/tablas', 'Dashboard::tablas',['filter' => 'auth']);
 
 //Mto Articulos
 $routes->get('/articulos', 'Articulos::show',['filter' => 'auth']);

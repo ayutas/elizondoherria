@@ -44,65 +44,54 @@
     <!-- Menu Izq - Inicio -->
     <div class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-unfoldable" id="sidebar">
         <div class="c-sidebar-brand d-md-down-none">
-            <!-- <span class="c-sidebar-brand-full" style="font-size:2rem;">EA</span> -->
             <span class="c-sidebar-brand-minimized" style="font-size:1rem;">EH</span>
-
-            <img class="c-sidebar-brand-full" height="50" alt="Logo" src="<?= base_url() ?>/assets/images/Logo.png">
-                <!-- <img src="/assets/images/LogoBlanco.png" alt="ELABORADOS NATURALES"> -->
-
-            </img>
-            <!-- <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
-                <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-coreui-c"></use>
-            </svg> -->
+            <img class="c-sidebar-brand-full" height="50" alt="Logo" src="<?= base_url() ?>/assets/images/Logo.png"></img>
         </div>
         <ul class="c-sidebar-nav ps ps--active-y">
             <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/dashboard">
                     <svg class="c-sidebar-nav-icon" >
                         <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-speedometer"></use>
                     </svg> <?php echo lang('Translate.inicio');?></a></li>
-            <li class="c-sidebar-nav-title"><?php echo lang('Translate.menu');?></li>
             
-            <?php 
+                    <li class="c-sidebar-nav-title"><?php echo lang('Translate.menu');?></li>
 
-
-            ?>
             <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/recibos">
                 <svg class="c-sidebar-nav-icon">
-                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-clipboard"></use>
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-cash"></use>
                 </svg> <?php echo lang('Translate.recibos');?></a>
-            </li>            
-                <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/consultas">
-                    <svg class="c-sidebar-nav-icon">
-                        <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-search"></use>
-                    </svg> Consultas</a>
-                </li>             -->
-            <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">                
-                <svg class="c-sidebar-nav-icon">                        
-                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-trello"></use>
-                </svg> <?php echo lang('Translate.mantenimiento');?></a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/clientes">
-                    <?php echo lang('Translate.clientes');?></a>
-                    </li>
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/articulos">
-                    <?php echo lang('Translate.articulos');?></a>
-                    </li> 
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/categorias">
-                    <?php echo lang('Translate.categorias');?></a>
-                    </li>
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/zonas">
-                    <?php echo lang('Translate.zonas');?></a>
-                    </li> 
-                    <?php if(session()->get('admin')==1){?>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/usuarios">
-                        <?php echo lang('Translate.usuarios');?></a>
-                        </li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/secciones">
-                        <?php echo lang('Translate.secciones');?></a>
-                        </li>
-                    <?php } ?>                        
-                </ul>
             </li>
+            <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/clientes">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-people"></use>
+                </svg> <?php echo lang('Translate.clientes');?></a>                
+            </li>
+            <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/articulos">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-object-ungroup"></use>
+                </svg><?php echo lang('Translate.articulos');?></a>
+            </li> 
+            <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/categorias">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-education"></use>
+                </svg><?php echo lang('Translate.categorias');?></a>
+            </li>
+            <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/zonas">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-building"></use>
+                </svg><?php echo lang('Translate.zonas');?></a>
+            </li> 
+            <?php if(session()->get('admin')==1){?>                        
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/usuarios">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-user"></use>
+                    </svg> <?php echo lang('Translate.usuarios');?></a>                        
+                </li>
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/secciones">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-ban"></use>
+                    </svg> <?php echo lang('Translate.secciones');?></a>
+                </li>
+            <?php } ?>                        
             
             <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
                 <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>

@@ -11,6 +11,7 @@ class Dashboard extends BaseController
         $idioma=session()->get('idioma');
         $this->request->setLocale($idioma);
         $data['idioma']=$idioma;
+        $data['admin']=session()->get('admin');
         $usuarioId=session()->get('id');
         //Cargamos las secciones a las que tiene acceso el usuario
         $modelSeccionUsuario = new SeccionUsuarioModel();
@@ -19,21 +20,7 @@ class Dashboard extends BaseController
         echo view("dashboard/admin");
         echo view("dashboard/footer");
     }
-        
-    public function tablas()
-    {
-        $idioma=session()->get('idioma');
-        $this->request->setLocale($idioma);
-        $data['idioma']=$idioma;
-        $data['admin']=session()->get('admin');
-        $data['migapan']=lang('Translate.TABLAS');
-        echo view("dashboard/header",$data);
-        echo view("dashboard/tablas");
-        echo view("dashboard/footer");
-    }
 
-
-    
 	//--------------------------------------------------------------------
 
 }
