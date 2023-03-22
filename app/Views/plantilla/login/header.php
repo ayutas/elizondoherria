@@ -69,4 +69,4 @@
     </style>
 </head>
 	
-<body class="c-app c-dark-theme flex-row align-items-center" style="background-color:#181924;">
+<body class="c-app flex-row align-items-center" >

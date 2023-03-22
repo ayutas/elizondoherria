@@ -17,26 +17,26 @@
                         </div>
                         <?php endif; ?>
 
-                        <h1 class="text-center" style="color:white;"><?php echo lang('Translate.iniciarSesion'); ?></h1>
+                        <h1 class="text-center"><?php echo lang('Translate.iniciarSesion'); ?></h1>
                         <br>
                         <form action="<?= base_url()?>/" method="post">
                             <!-- <p class="text-muted">Sign In to your account</p> -->
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <svg class="c-icon" style="color:white !important;">
+                                        <svg class="c-icon">
                                             <use xlink:href="<?= base_url()?>/assets/icons/svg/free.svg#cil-user">
                                             </use>
                                         </svg>
                                     </span>
                                 </div>
                                 <input class="form-control" type="text" name="email" placeholder="<?php echo lang('Translate.introduzcaUsuario'); ?>"
-                                    style="color:white;" value="<?= set_value('email') ?>">
+                                    value="<?= set_value('email') ?>">
                             </div>
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <svg class="c-icon" style="color:white !important;">
+                                        <svg class="c-icon">
                                             <use
                                                 xlink:href="<?= base_url()?>/assets/icons/svg/free.svg#cil-lock-locked">
                                             </use>
@@ -66,7 +66,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="card text-white py-5 d-md-down-none" style="width:50%;background-color:white;">
+                <div class="card text-white py-5 d-md-down-none" style="width:50%;background-color:#3c4b64;">
                     <div class="card-body h-100 text-center">
                         <div class="row  h-100 align-items-center text-center">
                             <div class="col-12 mx-auto">
