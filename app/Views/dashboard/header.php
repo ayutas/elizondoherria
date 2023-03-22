@@ -40,7 +40,7 @@
 // return var_dump($uri) 
 ?>
 
-<body class="c-app c-dark-theme">
+<body class="c-app">
     <!-- Menu Izq - Inicio -->
     <div class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-unfoldable" id="sidebar">
         <div class="c-sidebar-brand d-md-down-none">
@@ -107,7 +107,7 @@
         
     <div class="c-wrapper">
     <!-- Menu Superior + Breadcum - Inicio -->
-    <header class="c-header c-header-dark c-header-fixed ">
+    <header class="c-header c-header-fixed ">
         <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
             data-class="c-sidebar-show">
             <svg class="c-icon c-icon-lg">
@@ -181,10 +181,10 @@
         <!-- Menú Superior - Inicio -->
 
         <!-- Breadcum - Inicio -->
-        <div class="c-subheader c-subheader-dark justify-content-between px-3 ">
+        <div class="c-subheader  justify-content-between px-3 ">
             
             <!-- Breadcum - Inicio -->
-            <ol class="breadcrumb border-0 m-0 px-0 px-md-3">
+            <ol class="breadcrumb border-0 m-0 px-0 px-md-3" style="background-color: #fff">
                 <li class="breadcrumb-item"><a href="<?= base_url() ?>/dashboard"><?php echo lang('Translate.INICIO');?></a></li>
                 <?php if(strtoupper($uri->getSegment(1))!="DASHBOARD") { ?>
                     <li class="breadcrumb-item"><a href="<?= base_url() ?>/<?php echo $uri->getSegment(1) ?>"><?php echo strtoupper($migapan) ?></a></li>
