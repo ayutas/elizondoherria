@@ -18,9 +18,9 @@ class Recibos extends BaseController
 	public function show()
 	{
 		$data['migapan']=lang('Translate.'.$this->redireccion);
-		echo view('dashboard/header');
-		echo view($this->redireccionView . '/opciones');
-		echo view('dashboard/footer');
+		echo view('dashboard/header',$data);
+		echo view($this->redireccionView . '/opciones',$data);
+		echo view('dashboard/footer',$data);
 	}
 
 	public function consultas()
