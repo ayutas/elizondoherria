@@ -76,14 +76,14 @@ class Articulos extends BaseController
 				// reglas de validación
 				$rules = [
 					'descripcion' =>  'required',
-					'numero' =>  'required',
+					// 'numero' =>  'required',
 					'categoria' => 'required|numeric|greater_than[0]'
 				];
 			} else {
 				// reglas de validación
 				$rules = [
-					'descripcion' =>  'required|is_unique[tbl_articulos.DESCRIPCION]',
-					'numero' =>  'required|',
+					'descripcion' =>  'required',
+					// 'numero' =>  'required',
 					'categoria' => 'required|numeric|greater_than[0]'
 				];
 			}

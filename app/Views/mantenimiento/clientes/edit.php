@@ -710,7 +710,7 @@ function EditarRecibo(boton)
     var linea = boton.parentElement.parentElement;
     var table = $("#tablaRecibos").dataTable();
     var row = table.find("tr").eq(linea.rowIndex);
-    var data = $("#tablaRecibos").dataTable().fnGetData(row);       
+    var data = $("#tablaRecibos").dataTable().fnGetData(row);
 
     var idRecibo=data.ID;
     
