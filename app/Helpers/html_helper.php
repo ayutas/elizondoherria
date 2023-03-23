@@ -1,3 +1,8 @@
+<style>
+.dataTables_filter {
+    padding-right: 10px;
+}
+</style>
 <?php
 //Funcion para crear un datatable autamatizado
 function dataTable($title,$columns,$data,$slug,$targets = 0,$targetClass = 'text-center',$ocultar="",$col = 12,$color = false,$colorCol = 0,$idTable='dataTable' )
