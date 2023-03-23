@@ -56,18 +56,18 @@
                                                     }
                                                     ?>" />
                                     </div>
-                                    <!-- Campo Banco -->
+                                    <!-- Campo Categoria -->
                                     <div id="comboCategorias" class="form-group">
                                         <label class="medium mb-1" for="categoria"><?php echo lang('Translate.categoria'); ?></label>
                                         <select class="form-control py-2" id="categoria" name="categoria">
                                             <option value="0">-</option>
                                             <?php if (isset($categorias)) {
                                                 foreach ($categorias as $categoria) { ?>
-                                                    <option class="" value="<?php echo $categoria->ID; ?>">
-                                                    <?php echo $categoria->Nombre; ?></option><?php
-                                                    }
+                                                    <option class="" value="<?php echo $categoria->ID; ?>"
+                                                    <?php if(isset($data[0])){ if ($categoria->ID==$data[0]->CATEGORIA_ID){?> selected <?php }};?>
+                                                ><?php echo $categoria->Nombre; ?></option><?php
                                                 }
-                                            ?>
+                                            } ?>
                                         </select>    
                                     </div>
                                     <!-- Campo Precio -->

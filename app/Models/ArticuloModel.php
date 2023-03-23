@@ -55,6 +55,7 @@ class ArticuloModel extends Model
                         TA.DESCRIPCION as 'Descripción',
                         TA.NUMERO as 'Número',
                         TA.LETRA as 'Letra',
+                        TA.CATEGORIA_ID,
                         TC.NOMBRE as 'Categoría',
                         TC.PRECIO as 'Precio',
                         TA.DISPONIBLE as 'Disponible'
