@@ -164,7 +164,7 @@
             <ol class="breadcrumb border-0 m-0 px-0 px-md-3" style="background-color: #fff">
                 <li class="breadcrumb-item"><a href="<?= base_url() ?>/dashboard"><?php echo lang('Translate.INICIO');?></a></li>
                 <?php if(strtoupper($uri->getSegment(1))!="DASHBOARD") { ?>
-                    <li class="breadcrumb-item"><a href="<?= base_url() ?>/<?php echo $uri->getSegment(1) ?>"><?php echo strtoupper($migapan) ?></a></li>
+                    <li class="breadcrumb-item"><a href="<?= base_url() ?>/<?php echo $uri->getSegment(1) ?>"><?php if(isset($migapan)) echo strtoupper($migapan); ?></a></li>
                 <?php } ?>
                 <!-- <li class="breadcrumb-item active">Dashboard</li> -->
             </ol>
