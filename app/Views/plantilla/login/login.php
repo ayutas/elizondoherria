@@ -1,7 +1,9 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card-group">
+
+    <main class="c-main">
+<div class="container mt-5">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8 mt-5">
+            <div class="card-group mt-5">
                 <div class="card p-4">
                     <div class="card-body">
                         <?php
@@ -79,6 +81,8 @@
         </div>
     </div>
 </div>
+</main>
+
 
 <script>
 $(document).ready(function() {
