@@ -74,13 +74,40 @@ class ArticuloModel extends Model
     {
         $db = \Config\Database::connect();
         
-        $sql = "UPDATE tbl_articulos
+        $sql = "UPDATE $this->table
                 SET DELETED_AT=NOW()
                 WHERE ID=$id";
 
 		$query = $db->query($sql);
 		
 		return $query->getResult();
-    } 
+    }
+
+    public function existeArticulo($id,$descripcion,$numero)
+    {
+        $db = \Config\Database::connect();
+
+        $sql = "SELECT *
+                FROM $this->table
+                WHERE DELETED_AT IS NULL AND DESCRIPCION='$descripcion'";
+
+        if($numero!=""){
+            if($id!=""){
+                $sql.=" AND NUMERO=$numero AND ID<>$id";
+            } else {
+                $sql.=" AND NUMERO=$numero";
+            }
+        } else {
+            if($id!=""){
+                $sql.=" AND ID<>$id";
+            }
+        }
+        
+        $query = $db->query($sql);
+		
+		$results = $query->getResult();
+		
+        return json_encode($results);
+    }
 }
 

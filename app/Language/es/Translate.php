@@ -94,6 +94,7 @@ return [
     "buscar"      => "Buscar",
     "imprimir"      => "Imprimir",
     "noCobrado"      => "No cobrado",
+    "yaExisteArticulo"      => "Ya existe articulo con misma descripcion y número",
     //-----------------------
 
     //Mensajes
