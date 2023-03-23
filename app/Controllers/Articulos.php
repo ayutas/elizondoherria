@@ -66,8 +66,6 @@ class Articulos extends BaseController
 		//$perm = $modelPerm->getPerms(session()->get('role'),$uri->getSegment(1));
 		$data['id'] = $id;
 
-
-
 		// Comprobamos el metodo de la petición
 		if ($this->request->getMethod() == 'post') {
 
@@ -76,17 +74,18 @@ class Articulos extends BaseController
 				// reglas de validación
 				$rules = [
 					'descripcion' =>  'required',
-					'numero' =>  'required',
+					// 'numero' =>  'required',
 					'categoria' => 'required|numeric|greater_than[0]'
 				];
 			} else {
 				// reglas de validación
 				$rules = [
-					'descripcion' =>  'required|is_unique[tbl_articulos.DESCRIPCION]',
-					'numero' =>  'required|',
+					'descripcion' =>  'required',
+					// 'numero' =>  'required',
 					'categoria' => 'required|numeric|greater_than[0]'
 				];
 			}
+
 
 			// Comprobación de las validaciones
 			if (!$this->validate($rules)) {
@@ -102,43 +101,53 @@ class Articulos extends BaseController
 				$data['validation'] = $this->validator;
 
 			} else {
+				$descripcion=$this->request->getVar('descripcion');
+				$numero=$this->request->getVar('numero');
+				$result=json_decode($model->existeArticulo($id,$descripcion,$numero));
 
-				$seccion=session()->get('seccion');
-				if ($id != "") {
-					
-					// Acutlizar articulo
-					$newData = [
-						'ID' => $id,
-						'NUMERO' => $this->request->getVar('numero'),
-						'DESCRIPCION' => $this->request->getVar('descripcion'),
-						'LETRA' => $this->request->getVar('letra'),
-						'CATEGORIA_ID' => $this->request->getVar('categoria'),						
-						'SECCION_ID' => $seccion,
-						'DISPONIBLE' => $this->request->getVar('disponible')
-					];
-					
-					//Guardamos
-					$model->save($newData);
-					$mensaje=lang('Translate.actualizado');
+				// return var_dump($result);
+				if(isset($result[0])){
+					// return var_dump($result);
+					$session = session();
+					$session->setFlashdata('error', lang('Translate.yaExisteArticulo'));
 				} else {
-					$newData = [						
-						'DESCRIPCION' => $this->request->getVar('descripcion'),
-						'NUMERO' => $this->request->getVar('numero'),
-						'LETRA' => $this->request->getVar('letra'),
-						'CATEGORIA_ID' => $this->request->getVar('categoria'),
-						'SECCION_ID' => $seccion,
-						'DISPONIBLE' => $this->request->getVar('disponible')
-					];
-					$id = $model->insert($newData);
-					$mensaje=lang('Translate.creado');
+					$seccion=session()->get('seccion');
+					if ($id != "") {
+						
+						// Acutlizar articulo
+						$newData = [
+							'ID' => $id,
+							'NUMERO' => $this->request->getVar('numero'),
+							'DESCRIPCION' => $this->request->getVar('descripcion'),
+							'LETRA' => $this->request->getVar('letra'),
+							'CATEGORIA_ID' => $this->request->getVar('categoria'),						
+							'SECCION_ID' => $seccion,
+							'DISPONIBLE' => $this->request->getVar('disponible')
+						];
+						
+						//Guardamos
+						$model->save($newData);
+						$mensaje=lang('Translate.actualizado');
+					} else {
+						$newData = [						
+							'DESCRIPCION' => $this->request->getVar('descripcion'),
+							'NUMERO' => $this->request->getVar('numero'),
+							'LETRA' => $this->request->getVar('letra'),
+							'CATEGORIA_ID' => $this->request->getVar('categoria'),
+							'SECCION_ID' => $seccion,
+							'DISPONIBLE' => $this->request->getVar('disponible')
+						];
+						$id = $model->insert($newData);
+						$mensaje=lang('Translate.creado');
+					}
+
+					// Creamos una session para mostrar el mensaje de registro correcto
+					$session = session();
+					$session->setFlashdata('success', $mensaje);
+
+					// Redireccionamos a la pagina
+					return redirect()->to(base_url() . '/' . $this->redireccion . '/show');
 				}
-
-				// Creamos una session para mostrar el mensaje de registro correcto
-				$session = session();
-				$session->setFlashdata('success', $mensaje);
-
-				// Redireccionamos a la pagina
-				return redirect()->to(base_url() . '/' . $this->redireccion . '/show');
 			}
 		}
 

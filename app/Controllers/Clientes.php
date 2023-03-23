@@ -146,10 +146,10 @@ class Clientes extends BaseController
 		// return var_dump($data['dataComentarios'] );
 		
 		foreach ($data['dataRecibos'] as $item) {
-			$buttonEditComentario = '<button type="Button" onclick="EditarRecibo(this)" id="btnEditarRecibo" class="btn btn-info btnEditar data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.ver').'</button>';
-			// $buttonDeleteComentario = '<button type="Button" onclick="EliminarComentario(' . $item->ID . ')" id="btnEliminarComentario" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
-			$item->btnEditar = $buttonEditComentario;
-			$item->btnEliminar =''; //$buttonDeleteComentario;
+			$buttonEditRecibo = '<button type="Button" onclick="EditarRecibo(this)" id="btnEditarRecibo" class="btn btn-info btnEditar data-id="' . $item->ID . '" style="color:white;">'.lang('Translate.ver').'</button>';
+			// $buttonDeleteRecibo = '<button type="Button" onclick="EliminarRecibo(' . $item->ID . ')" id="btnEliminarRecibo" class="btn btn-danger btnEliminar" style="color:white;">Eliminar</button>';
+			$item->btnEditar = $buttonEditRecibo;
+			$item->btnEliminar =''; //$buttonDeleteRecibo;
 		}
 		// return var_dump($data['dataRecibos'] );
 

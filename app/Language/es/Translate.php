@@ -83,6 +83,18 @@ return [
     "examinar"      => "Examinar",
     "iniciarSesion"      => "Iniciar sesión",
     "mayusculasActivo"      => "Bloq. Mayus. activado",
+    "cobrado"      => "Cobrado",
+    "linea"      => "Línea",
+    "guardar"      => "Guardar",
+    "recibo"      => "Recibo",
+    "cliente"      => "Cliente",
+    "consulta"      => "Consulta",
+    "fechaDesde"      => "Fecha Desde",
+    "fechaHasta"      => "Fecha Hasta",
+    "buscar"      => "Buscar",
+    "imprimir"      => "Imprimir",
+    "noCobrado"      => "No cobrado",
+    "yaExisteArticulo"      => "Ya existe articulo con misma descripcion y número",
     //-----------------------
 
     //Mensajes

@@ -1,7 +1,9 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card-group">
+
+    <main class="c-main">
+<div class="container mt-5">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8 mt-5">
+            <div class="card-group mt-5">
                 <div class="card p-4">
                     <div class="card-body">
                         <?php
@@ -17,33 +19,33 @@
                         </div>
                         <?php endif; ?>
 
-                        <h1 class="text-center" style="color:white;"><?php echo lang('Translate.iniciarSesion'); ?></h1>
+                        <h1 class="text-center"><?php echo lang('Translate.iniciarSesion'); ?></h1>
                         <br>
                         <form action="<?= base_url()?>/" method="post">
                             <!-- <p class="text-muted">Sign In to your account</p> -->
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <svg class="c-icon" style="color:white !important;">
+                                        <svg class="c-icon">
                                             <use xlink:href="<?= base_url()?>/assets/icons/svg/free.svg#cil-user">
                                             </use>
                                         </svg>
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" name="email" placeholder="<?php echo lang('Translate.introduzcaUsuario'); ?>"
-                                    style="color:white;" value="<?= set_value('email') ?>">
+                                <input class="form-control py-2" type="text" name="email" placeholder="<?php echo lang('Translate.introduzcaUsuario'); ?>"
+                                    value="<?= set_value('email') ?>">
                             </div>
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <svg class="c-icon" style="color:white !important;">
+                                        <svg class="c-icon">
                                             <use
                                                 xlink:href="<?= base_url()?>/assets/icons/svg/free.svg#cil-lock-locked">
                                             </use>
                                         </svg>
                                     </span>
                                 </div>
-                                <input class="form-control" type="password" id="password" name="password"
+                                <input class="form-control py-2" type="password" id="password" name="password"
                                     placeholder="<?php echo lang('Translate.introduzcaContrasena'); ?>">
                             </div>
                             <div id="divMayus" style="visibility:hidden"><?php echo lang('Translate.mayusculasActivo'); ?></div> <br>
@@ -66,7 +68,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="card text-white py-5 d-md-down-none" style="width:50%;background-color:white;">
+                <div class="card text-white py-5 d-md-down-none" style="width:50%;background-color:#3c4b64;">
                     <div class="card-body h-100 text-center">
                         <div class="row  h-100 align-items-center text-center">
                             <div class="col-12 mx-auto">
@@ -79,6 +81,8 @@
         </div>
     </div>
 </div>
+</main>
+
 
 <script>
 $(document).ready(function() {

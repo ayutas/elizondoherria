@@ -40,69 +40,58 @@
 // return var_dump($uri) 
 ?>
 
-<body class="c-app c-dark-theme">
+<body class="c-app">
     <!-- Menu Izq - Inicio -->
     <div class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-unfoldable" id="sidebar">
         <div class="c-sidebar-brand d-md-down-none">
-            <!-- <span class="c-sidebar-brand-full" style="font-size:2rem;">EA</span> -->
             <span class="c-sidebar-brand-minimized" style="font-size:1rem;">EH</span>
-
-            <img class="c-sidebar-brand-full" height="50" alt="Logo" src="<?= base_url() ?>/assets/images/Logo.png">
-                <!-- <img src="/assets/images/LogoBlanco.png" alt="ELABORADOS NATURALES"> -->
-
-            </img>
-            <!-- <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
-                <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-coreui-c"></use>
-            </svg> -->
+            <img class="c-sidebar-brand-full" height="50" alt="Logo" src="<?= base_url() ?>/assets/images/Logo.png"></img>
         </div>
         <ul class="c-sidebar-nav ps ps--active-y">
             <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/dashboard">
                     <svg class="c-sidebar-nav-icon" >
                         <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-speedometer"></use>
                     </svg> <?php echo lang('Translate.inicio');?></a></li>
-            <li class="c-sidebar-nav-title"><?php echo lang('Translate.menu');?></li>
             
-            <?php 
+                    <li class="c-sidebar-nav-title"><?php echo lang('Translate.menu');?></li>
 
-
-            ?>
             <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/recibos">
                 <svg class="c-sidebar-nav-icon">
-                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-clipboard"></use>
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-cash"></use>
                 </svg> <?php echo lang('Translate.recibos');?></a>
-            </li>            
-                <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/consultas">
-                    <svg class="c-sidebar-nav-icon">
-                        <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-search"></use>
-                    </svg> Consultas</a>
-                </li>             -->
-            <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">                
-                <svg class="c-sidebar-nav-icon">                        
-                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-trello"></use>
-                </svg> <?php echo lang('Translate.mantenimiento');?></a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/clientes">
-                    <?php echo lang('Translate.clientes');?></a>
-                    </li>
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/articulos">
-                    <?php echo lang('Translate.articulos');?></a>
-                    </li> 
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/categorias">
-                    <?php echo lang('Translate.categorias');?></a>
-                    </li>
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/zonas">
-                    <?php echo lang('Translate.zonas');?></a>
-                    </li> 
-                    <?php if(session()->get('admin')==1){?>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/usuarios">
-                        <?php echo lang('Translate.usuarios');?></a>
-                        </li>
-                        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/secciones">
-                        <?php echo lang('Translate.secciones');?></a>
-                        </li>
-                    <?php } ?>                        
-                </ul>
             </li>
+            <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/clientes">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-people"></use>
+                </svg> <?php echo lang('Translate.clientes');?></a>                
+            </li>
+            <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/articulos">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-object-ungroup"></use>
+                </svg><?php echo lang('Translate.articulos');?></a>
+            </li> 
+            <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/categorias">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-education"></use>
+                </svg><?php echo lang('Translate.categorias');?></a>
+            </li>
+            <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/zonas">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-building"></use>
+                </svg><?php echo lang('Translate.zonas');?></a>
+            </li> 
+            <?php if(session()->get('admin')==1){?>                        
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/usuarios">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-user"></use>
+                    </svg> <?php echo lang('Translate.usuarios');?></a>                        
+                </li>
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="<?= base_url() ?>/secciones">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-ban"></use>
+                    </svg> <?php echo lang('Translate.secciones');?></a>
+                </li>
+            <?php } ?>                        
             
             <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
                 <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
@@ -118,42 +107,21 @@
         
     <div class="c-wrapper">
     <!-- Menu Superior + Breadcum - Inicio -->
-    <header class="c-header c-header-dark c-header-fixed ">
+    <header class="c-header c-header-fixed ">
         <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
             data-class="c-sidebar-show">
             <svg class="c-icon c-icon-lg">
                 <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-menu"></use>
             </svg>
-        </button><a class="c-header-brand d-lg-none c-header-brand-sm-up-center" href="<?= base_url() ?>/#">
-            <svg width="118" height="46" alt="CoreUI Logo">
-                <use xlink:href="<?= base_url() ?>/assets/icons/svg/brand.svg#cib-coreui"></use>
-            </svg></a>
+        </button>
         <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar"
             data-class="c-sidebar-lg-show" responsive="true">
             <svg class="c-icon c-icon-lg">
                 <use xlink:href="<?= base_url() ?>/assets/icons/svg/free.svg#cil-menu"></use>
             </svg>
         </button>
-        <!-- <ul class="c-header-nav d-md-down-none">
-            <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="<?= base_url() ?>/chequeo">Chequeo</a></li>
-            <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="<?= base_url() ?>/consultas">Consultas</a></li>
-            <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="<?= base_url() ?>/tablas">Tablas</a></li>
-            <!-- <li class="c-header-nav-item px-3"><a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="<?= base_url() ?>/">Tablas</a>
-            <div class="dropdown-menu"> 
-                <a class="dropdown-item" href="<?= base_url() ?>/delegaciones">Delegaciones</a>
-                <a class="dropdown-item" href="">Personal</a>
-                <a class="dropdown-item" href="">Articulos</a>
-                <a class="dropdown-item" href="">Formularios</a>
-                <a class="dropdown-item" href="">Motivos</a>
-                <a class="dropdown-item" href="">Grupos</a>
-                <a class="dropdown-item" href="">Items</a>                
-            </div>
-        </li> 
-        </ul> -->
         <ul class="c-header-nav mfs-auto">
-            <li class="c-header-nav-item px-3 c-d-legacy-none">
-                
-            </li>
+            <li class="c-header-nav-item px-3 c-d-legacy-none"></li>
         </ul>
         <ul class="c-header-nav">
             <div id="divSeccion" class="c-sidebar-nav-item" style="display:none;">
@@ -180,8 +148,6 @@
                         <a class="btn btn-primary mt-2 ml-2" href="<?= base_url() ?>/logout"> <?php echo lang('Translate.cerrarSesion');?></a>
                 </div>
             </li>
-        </ul>
-        <ul class="c-header-nav">
             <div id="divIdioma" class="c-sidebar-nav-item" style="display:none;">
                 <select class="form-select" aria-label="Default select example" id="idioma" name="idioma">
                     <option value="eu">EUS</option>
@@ -192,13 +158,13 @@
         <!-- Menú Superior - Inicio -->
 
         <!-- Breadcum - Inicio -->
-        <div class="c-subheader c-subheader-dark justify-content-between px-3 ">
+        <div class="c-subheader  justify-content-between px-3 ">
             
             <!-- Breadcum - Inicio -->
-            <ol class="breadcrumb border-0 m-0 px-0 px-md-3">
+            <ol class="breadcrumb border-0 m-0 px-0 px-md-3" style="background-color: #fff">
                 <li class="breadcrumb-item"><a href="<?= base_url() ?>/dashboard"><?php echo lang('Translate.INICIO');?></a></li>
                 <?php if(strtoupper($uri->getSegment(1))!="DASHBOARD") { ?>
-                    <li class="breadcrumb-item"><a href="<?= base_url() ?>/<?php echo $uri->getSegment(1) ?>"><?php echo strtoupper($migapan) ?></a></li>
+                    <li class="breadcrumb-item"><a href="<?= base_url() ?>/<?php echo $uri->getSegment(1) ?>"><?php if(isset($migapan)) echo strtoupper($migapan); ?></a></li>
                 <?php } ?>
                 <!-- <li class="breadcrumb-item active">Dashboard</li> -->
             </ol>
