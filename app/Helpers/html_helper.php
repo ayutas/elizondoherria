@@ -4,7 +4,7 @@ function dataTable($title,$columns,$data,$slug,$targets = 0,$targetClass = 'text
 { ?>
 
 <div class="card">
-    <div class="card-header" style="color:white;">
+    <div class="card-header">
         <i class="fas fa-table mr-1"></i>
         <?= $title ?>
     </div>
@@ -479,7 +479,7 @@ function dataTablePersonalizadaConCheck($title, $columns, $data, $slug, $targets
 { ?>
 
 <div class="card">
-    <div class="card-header" style="color:white;">
+    <div class="card-header">
         <i class="fas fa-table mr-1"></i>
         <?= $title ?>
     </div>
