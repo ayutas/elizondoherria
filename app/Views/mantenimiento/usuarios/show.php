@@ -25,7 +25,7 @@
                         </form>
 
                         <?php // Miga de pan    
-                            dataTable(lang('Translate.usuarios'),$columns,$data,'usuarios','7,8','text-center','',12);     
+                            dataTable(lang('Translate.usuarios'),$columns,$data,'usuarios','7,8','text-center','0');     
                         ?>
                     </div>
                 </div>
