@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <?php 
-                            dataTableConsultas(lang('Translate.recibos'),$columns,$data,'recibos','','text-center','0,2',7,true,0,'datatableRecibos');
+                            dataTablePersonalizadaConCheck(lang('Translate.recibos'),$columns,$data,'recibos','','text-center','0,2',7,true,0,'datatableRecibos');
                         ?>
 
                         <!-- Errores de formulario -->
