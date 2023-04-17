@@ -1,7 +1,7 @@
 <footer class="py-2 mt-auto">
     <div class="container-fluid">
         <div class="d-flex align-items-center justify-content-between small ">
-            Version 1.0.0.3
+            Version 1.0.0.4
         </div>
     </div>
 </footer>
