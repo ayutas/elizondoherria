@@ -83,13 +83,13 @@ class ArticuloModel extends Model
 		return $query->getResult();
     }
 
-    public function existeArticulo($id,$descripcion,$numero)
+    public function existeArticulo($id,$seccion,$descripcion,$numero)
     {
         $db = \Config\Database::connect();
 
         $sql = "SELECT *
                 FROM $this->table
-                WHERE DELETED_AT IS NULL AND DESCRIPCION='$descripcion'";
+                WHERE DELETED_AT IS NULL AND SECCION_ID=$seccion AND DESCRIPCION='$descripcion'";
 
         if($numero!=""){
             if($id!=""){
