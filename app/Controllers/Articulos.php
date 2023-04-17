@@ -53,6 +53,7 @@ class Articulos extends BaseController
 		//Variable con todos los datos a pasar a las vistas
 		$data = [];
         $idioma=session()->get('idioma');
+		$seccion=session()->get('seccion');
         $this->request->setLocale($idioma);
         $data['idioma']=$idioma;
 
@@ -103,7 +104,7 @@ class Articulos extends BaseController
 			} else {
 				$descripcion=$this->request->getVar('descripcion');
 				$numero=$this->request->getVar('numero');
-				$result=json_decode($model->existeArticulo($id,$descripcion,$numero));
+				$result=json_decode($model->existeArticulo($id,$seccion,$descripcion,$numero));
 
 				// return var_dump($result);
 				if(isset($result[0])){

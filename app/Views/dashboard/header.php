@@ -129,8 +129,9 @@
                 <select class="form-select" aria-label="Default select example" id="seccion" name="seccion">
                     <?php if (isset($seccionesUsuario)) {
                         foreach ($seccionesUsuario as $seccion) { ?>
-                            <option class="" value="<?php echo $seccion->SECCION_ID; ?>">
-                            <?php echo $seccion->DESCRIPCION; ?></option><?php
+                            <option class="" value="<?php echo $seccion->SECCION_ID; ?>"
+                            <?php if(isset($seccionId)){ if ($seccion->SECCION_ID==$seccionId){?> selected <?php }};?>
+                            ><?php echo $seccion->DESCRIPCION; ?></option><?php
                             }
                         }
                     ?>

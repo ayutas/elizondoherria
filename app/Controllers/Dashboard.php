@@ -12,10 +12,11 @@ class Dashboard extends BaseController
         $this->request->setLocale($idioma);
         $data['idioma']=$idioma;
         $data['admin']=session()->get('admin');
+        $data['seccionId']=session()->get('seccion');
         $usuarioId=session()->get('id');
         //Cargamos las secciones a las que tiene acceso el usuario
         $modelSeccionUsuario = new SeccionUsuarioModel();
-        $data['seccionesUsuario']=json_decode($modelSeccionUsuario->getSeccionesByUsuario($usuarioId));        
+        $data['seccionesUsuario']=json_decode($modelSeccionUsuario->getSeccionesByUsuario($usuarioId));
         echo view("dashboard/header",$data);
         echo view("dashboard/admin");
         echo view("dashboard/footer");

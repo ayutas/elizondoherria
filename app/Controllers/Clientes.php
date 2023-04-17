@@ -443,6 +443,22 @@ class Clientes extends BaseController
 		$idCliente = $response->idCliente;
 
 		$model = new ClienteDocumentoModel();
+		$datos=$model->where('ID', $id)->first();
+		$ruta=$datos['RUTA'];
+
+		$modelParametros=new ParametrosModel();
+		$param=$modelParametros->first();
+		$rutaServidor=$_SERVER['DOCUMENT_ROOT'];
+		if ($param['CARPETA_APP']!="") {
+			$rutaServidor .= '/'.$param['CARPETA_APP'];
+		}
+		$file=$rutaServidor.'/'. $ruta;
+		$nombre=basename($file);
+		if(file_exists($file)){
+			//ELIMINAMOS EL ARCHIVO
+			unlink($file);
+		}
+
 		$answer = $model->deleteById($id);
 		
 		$documentosCliente=json_decode($model->getByCliente($idCliente));
